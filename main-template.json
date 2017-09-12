@@ -92,7 +92,7 @@
             "installJenkinsScriptName": "install_jenkins.sh",
             "jenkinsReleaseType": "LTS",
             "baseUrl": "[variables('baseUrl')]",
-            "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'')]"
+            "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh?token=AT3pTVqxNw2IMbYI1G2I56O4XZIC4hddks5ZwPlEwA%3D%3D')]"
         },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
@@ -236,7 +236,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('baseUrl'),'nested/jenkins.json?token=AT3pTdzvAaIYp84GpiIesw5TpCE1WPYGks5ZwOthwA%3D%3D')]",
+                    "uri": "[concat(variables('baseUrl'),'nested/jenkins.json?token=AT3pTdV3EvDSK89J1Rlh9v-Uv9N1L8vdks5ZwPl-wA%3D%3D')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
