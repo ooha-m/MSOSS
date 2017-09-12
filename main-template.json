@@ -88,7 +88,11 @@
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "jenkinsVmSize": "[parameters('jenkinsVmSize')]",
-            "ubuntuSku": "16.04-LTS"
+            "ubuntuSku": "16.04-LTS",
+            "installJenkinsScriptName": "install_jenkins.sh",
+            "jenkinsReleaseType": "LTS",
+            "baseUrl": "[variables('baseUrl')]",
+            "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'')]"
         },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",

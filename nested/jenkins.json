@@ -13,6 +13,7 @@
         }
     },
     "variables": {
+        "sasToken": "",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('networkSettings').virtualNetworkName)]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('networkSettings').subnet2Name)]",
         "sshKeyPath": "[concat('/home/',parameters('jenkinsSettings').adminUsername,'/.ssh/authorized_keys')]",
@@ -124,6 +125,29 @@
                         "enabled": true,
                         "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('jenkinsSettings').jenkinsDiagnosticsStorageAccountName)).primaryEndpoints.blob]"
                     }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/Init')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "[parameters('apiVersions').computeApiVersion]",
+            "location": "[parameters('jenkinsSettings').location]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[concat(parameters('jenkinsSettings').installJenkinsScriptUrl)]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('./' , parameters('jenkinsSettings').installJenkinsScriptName, ' -jf \"', reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn, '\" -pi \"', parameters('jenkinsSettings').jenkinsVmPrivateIP, '\" -jrt \"', parameters('jenkinsSettings').jenkinsReleaseType , '\" -al \"', parameters('jenkinsSettings').baseUrl, '\" -st \"', variables('sasToken'), '\"' )]"
                 }
             }
         }
