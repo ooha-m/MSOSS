@@ -19,7 +19,6 @@
         "osProfilesshPublicKey": {
             "computerName": "[parameters('gitLabSettings').gitLabVmName]",
             "adminUsername": "[parameters('gitLabSettings').adminUsername]",
-            "adminPassword": "[parameters('gitLabSettings').adminPassword]",
             "linuxConfiguration": {
                 "disablePasswordAuthentication": true,
                 "ssh": {
