@@ -125,7 +125,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('baseUrl'), 'nested/gitlab.json?token=AT3pTVZFuxn2xzWNXD_ZdfFuGlcBU86Tks5ZwL91wA%3D%3D')]",
+                    "uri": "[concat(variables('baseUrl'), 'nested/gitlab.json?token=AT3pTVWH26h5G3wsIPzSLWaBWR2SJpkDks5ZwMFIwA%3D%3D')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
