@@ -147,6 +147,7 @@
             "apiVersion": "[parameters('apiVersions').computeApiVersion]",
             "location": "[parameters('gitLabSettings').location]",
             "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('gitLabSettings').gitLabDiagnosticsStorageAccountName)]",
                 "[concat('Microsoft.Network/networkInterfaces/', parameters('gitLabSettings').gitLabNicName)]"
             ],
             "plan": {
