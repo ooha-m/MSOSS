@@ -25,6 +25,13 @@
             "defaultValue": "Standard_DS1",
             "metadata": {
                 "description": "vm size"
+            } 
+        },
+        "jenkinsVmSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS2_v2",
+            "metadata": {
+                "description": "vm size"
             }
         }
     },
@@ -67,7 +74,23 @@
             "gitLabSku": "gitlab-ce",
             "gitLabVersion": "latest"
         },
-        "jenkinsSettings":{
+        "jenkinsSettings": {
+            "location": "[variables('location')]",
+            "jenkinsDiagnosticsStorageAccountName": "[concat('jenkinsstrg',variables('suffix'))]",
+            "jenkinsPipName": "jenkins-pip",
+            "publicIpAddressType": "[variables('publicIpAddressType')]",
+            "jenkinsDnsLabelPrefix": "[concat('jenkinsserver',variables('suffix'))]",
+            "jenkinsfrontEndNSGName": "jenkins-nsg",
+            "jenkinsNicName":"jenkins-nic",
+            "jenkinsVmPrivateIP":"10.0.1.5",
+            "jenkinsVmName":"jenkinsserver",
+            "adminUsername":"[parameters('adminUsername')]",
+            "authenticationType": "[parameters('authenticationType')]",
+            "sshPublicKey": "[parameters('sshPublicKey')]",
+            "jenkinsVmSize":"[parameters('jenkinsVmSize')]",
+            "ubuntuSku":"16.04-LTS",
+            
+
 
         },
         "publicIpAddressType": "Dynamic",
@@ -78,6 +101,44 @@
         "baseUrl": "https://raw.githubusercontent.com/sysgain/MSOSS/master/"
     },
     "resources": [
+        {
+            "name": "[variables('jenkinsSettings').jenkinsfrontEndNSGName]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "[variables('apiVersions').networkApiVersion]",
+            "location": "[variables('jenkinsSettings').location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "ssh-rule",
+                        "properties": {
+                            "access": "Allow",
+                            "description": "Allow SSH",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "22",
+                            "direction": "Inbound",
+                            "priority": 100,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "Internet",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "http-rule",
+                        "properties": {
+                            "access": "Allow",
+                            "description": "Allow HTTP",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "80",
+                            "direction": "Inbound",
+                            "priority": 101,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "Internet",
+                            "sourcePortRange": "*"
+                        }
+                    }
+                ]
+            }
+        },
         {
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('networkSettings').virtualNetworkName]",
@@ -100,7 +161,10 @@
                     {
                         "name": "[variables('networkSettings').subnet2Name]",
                         "properties": {
-                            "addressPrefix": "[variables('networkSettings').subnet2Prefix]"
+                            "addressPrefix": "[variables('networkSettings').subnet2Prefix]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('jenkinsSettings').jenkinsfrontEndNSGName)]"
+                            }
                         }
                     },
                     {
