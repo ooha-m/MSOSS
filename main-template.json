@@ -1,0 +1,131 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "adminuser"
+        },
+        "authenticationType": {
+            "type": "string",
+            "allowedValues": [
+                "password",
+                "sshPublicKey"
+            ]
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "defaultValue": "Password@1234"
+        },
+        "sshPublicKey": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "vmssName": {
+            "maxLength": 61,
+            "type": "string",
+            "metadata": {
+                "description": "String used as a base for naming resources. Must be 3-61 characters in length."
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_D1_v2",
+            "metadata": {
+                "description":"vm size"
+            }
+        }
+    },
+    "variables": {
+        "apiVersions": {
+            "deploymentApiVersion": "2016-02-01",
+            "computeApiVersion": "2016-04-30-preview",
+            "networkApiVersion": "2016-09-01",
+            "storageApiVersion": "2016-01-01"
+          },
+        "networkSettings": {
+            "location": "[variables('location')]",
+            "networkApiVersion": "2016-03-30",
+            "virtualNetworkName": "MyVNET",
+            "addressPrefix": "10.0.0.0/16",
+            "subnet1Name": "GitLab",
+            "subnet1Prefix": "10.0.0.0/24",
+            "subnet2Name": "Jenkins",
+            "subnet2Prefix": "10.0.1.0/24",
+            "subnet3Name": "habitat",
+            "subnet3Prefix": "10.0.2.0/24",
+            "subnet4Name": "ELK",
+            "subnet4Prefix": "10.0.3.0/24"
+          },
+        "location": "[resourceGroup().location]",
+        "suffix": "[substring(uniqueString(resourceGroup().id), 0, 5)]",
+        "storageAccountType": "Standard_LRS",
+        "osProfilepassword": {
+            "computerNamePrefix": "[variables('computerName')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+        },
+        "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
+        "osProfilesshPublicKey": {
+            "computerNamePrefix": "[variables('computerName')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]",
+            "linuxConfiguration": {
+                "disablePasswordAuthentication": true,
+                "ssh": {
+                    "publicKeys": [
+                        {
+                            "path": "[variables('sshKeyPath')]",
+                            "keyData": "[parameters('sshPublicKey')]"
+                        }
+                    ]
+                }
+            }
+        },
+        "osProfileReference": "[variables(concat('osProfile', parameters('authenticationType')))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('networkSettings').virtualNetworkName]",
+            "apiVersion": "[variables('apiVersions').networkApiVersion]",
+            "location": "[variables('networkSettings').location]",
+            "dependsOn": [
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('networkSettings').addressPrefix]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('networkSettings').subnet1Name]",
+                        "properties": {
+                            "addressPrefix": "[variables('networkSettings').subnet1Prefix]"
+                        }
+                    },
+                    {
+                        "name": "[variables('networkSettings').subnet2Name]",
+                        "properties": {
+                            "addressPrefix": "[variables('networkSettings').subnet2Prefix]"
+                        }
+                    },
+                    {
+                        "name": "[variables('networkSettings').subnet3Name]",
+                        "properties": {
+                            "addressPrefix": "[variables('networkSettings').subnet3Prefix]"
+                        }
+                    },
+                    {
+                        "name": "[variables('networkSettings').subnet4Name]",
+                        "properties": {
+                            "addressPrefix": "[variables('networkSettings').subnet4Prefix]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}
