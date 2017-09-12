@@ -65,7 +65,7 @@
             "gitLabPublisher": "gitlab",
             "gitLabOffer": "gitlab-ce",
             "gitLabSku": "gitlab-ce",
-            "gitLabvversion": "latest"
+            "gitLabVersion": "latest"
         },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
