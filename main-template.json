@@ -132,6 +132,20 @@
                             "sourceAddressPrefix": "Internet",
                             "sourcePortRange": "*"
                         }
+                    },
+                    {
+                        "name": "Port_8080",
+                        "properties": {
+                            "access": "Allow",
+                            "description": "Allow HTTP",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "8080",
+                            "direction": "Inbound",
+                            "priority": 102,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "Internet",
+                            "sourcePortRange": "*"
+                        }
                     }
                 ]
             }
