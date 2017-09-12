@@ -253,7 +253,7 @@ echo "${nginx_reverse_proxy_conf}" | sudo tee /etc/nginx/sites-enabled/default >
 sudo sed -i "s|.*server_tokens.*|server_tokens off;|" /etc/nginx/nginx.conf
 
 #install jenkins-on-azure web page
-run_util_script "jenkins/jenkins-on-azure/install-web-page.sh" -u "${jenkins_fqdn}"  -l "${azure_web_page_location}" -al "${artifacts_location}" -st "${artifacts_location_sas_token}"
+run_util_script "scripts/install-web-page.sh" -u "${jenkins_fqdn}"  -l "${azure_web_page_location}" -al "${artifacts_location}" -st "${artifacts_location_sas_token}"
 
 #restart nginx
 sudo service nginx restart
