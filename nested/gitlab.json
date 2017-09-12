@@ -8,7 +8,7 @@
         "apiVersions": {
             "type": "object"
         },
-        "networkSettings":{
+        "networkSettings": {
             "type": "object"
         }
     },
@@ -37,7 +37,7 @@
                 }
             }
         },
-        "osProfileReference": "[variables(concat('osProfile', parameters('gitLabSettings').authenticationType))]" 
+        "osProfileReference": "[variables(concat('osProfile', parameters('gitLabSettings').authenticationType))]"
     },
     "resources": [
         {
@@ -162,9 +162,9 @@
                 "storageProfile": {
                     "imageReference": {
                         "publisher": "[parameters('gitLabSettings').gitLabPublisher]",
-                        "offer":  "[parameters('gitLabSettings').gitLabOffer]",
-                        "sku":  "[parameters('gitLabSettings').gitLabSku]",
-                        "version":  "[parameters('gitLabSettings').gitLabVersion]"
+                        "offer": "[parameters('gitLabSettings').gitLabOffer]",
+                        "sku": "[parameters('gitLabSettings').gitLabSku]",
+                        "version": "[parameters('gitLabSettings').gitLabVersion]"
                     },
                     "osDisk": {
                         "createOption": "fromImage",
