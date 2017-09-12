@@ -88,10 +88,7 @@
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "jenkinsVmSize":"[parameters('jenkinsVmSize')]",
-            "ubuntuSku":"16.04-LTS",
-            
-
-
+            "ubuntuSku":"16.04-LTS"
         },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
