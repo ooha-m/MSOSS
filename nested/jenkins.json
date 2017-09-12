@@ -70,20 +70,17 @@
                     {
                         "name": "ipconfig1",
                         "properties": {
-                            "subnet": {
-                                "id": "[variables('subnetRef')]"
-                            },
                             "privateIpAddress": "[parameters('jenkinsSettings').jenkinsVmPrivateIP]",
                             "privateIPAllocationMethod": "Static",
                             "publicIpAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('jenkinsSettings').jenkinsPipName)]"
+                            },
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
                             }
                         }
                     }
-                ],
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('jenkinsSettings').jenkinsfrontEndNSGName)]"
-                }
+                ]
             }
         },
         {
