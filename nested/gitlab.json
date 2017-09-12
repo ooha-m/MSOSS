@@ -2,11 +2,192 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "gitLabSettings": {
+            "type": "object"
+        },
+        "apiVersions": {
+            "type": "object"
+        },
+        "networkSettings":{
+            "type": "object"
+        }
     },
     "variables": {
-        
+        "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('networkSettings').virtualNetworkName)]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('networkSettings').subnet1Name)]",
+        "osProfilepassword": {
+            "computerName": "[parameters('gitLabSettings').gitLabVmName]",
+            "adminUsername": "[parameters('gitLabSettings').adminUsername]",
+            "adminPassword": "[parameters('gitLabSettings').adminPassword]"
+        },
+        "sshKeyPath": "[concat('/home/',parameters('gitLabSettings').adminUsername,'/.ssh/authorized_keys')]",
+        "osProfilesshPublicKey": {
+            "computerName": "[parameters('gitLabSettings').gitLabVmName]",
+            "adminUsername": "[parameters('gitLabSettings').adminUsername]",
+            "adminPassword": "[parameters('gitLabSettings').adminPassword]",
+            "linuxConfiguration": {
+                "disablePasswordAuthentication": true,
+                "ssh": {
+                    "publicKeys": [
+                        {
+                            "path": "[variables('sshKeyPath')]",
+                            "keyData": "[parameters('gitLabSettings').sshPublicKey]"
+                        }
+                    ]
+                }
+            }
+        },
+        "osProfileReference": "[variables(concat('osProfile', parameters('gitLabSettings').authenticationType))]" 
     },
     "resources": [
-        
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[parameters('gitLabSettings').gitLabDiagnosticsStorageAccountName]",
+            "apiVersion": "[parameters('apiVersions').storageApiVersion]",
+            "location": "[parameters('gitLabSettings').location]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "Storage",
+            "properties": {}
+        },
+        {
+            "name": "[parameters('gitLabSettings').gitLabPipName]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "[parameters('apiVersions').networkApiVersion]",
+            "location": "[parameters('gitLabSettings').location]",
+            "properties": {
+                "publicIpAllocationMethod": "[parameters('gitLabSettings').publicIpAddressType]",
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('gitLabSettings').gitLabDnsLabelPrefix]"
+                }
+            }
+        },
+        {
+            "name": "[parameters('gitLabSettings').gitLabNsgName]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "[parameters('apiVersions').networkApiVersion]",
+            "location": "[parameters('gitLabSettings').location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "SSH",
+                        "properties": {
+                            "priority": 1010,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "TCP",
+                            "destinationPortRange": "22",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "HTTP",
+                        "properties": {
+                            "priority": 1020,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "TCP",
+                            "destinationPortRange": "80",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "HTTPS",
+                        "properties": {
+                            "priority": 1030,
+                            "sourceAddressPrefix": "*",
+                            "protocol": "TCP",
+                            "destinationPortRange": "443",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('gitLabSettings').gitLabNicName]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "[parameters('apiVersions').networkApiVersion]",
+            "location": "[parameters('gitLabSettings').location]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('gitLabSettings').gitLabPipName)]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('gitLabSettings').gitLabNsgName)]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('gitLabSettings').gitLabPipName)]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('gitLabSettings').gitLabNsgName)]"
+                }
+            }
+        },
+        {
+            "name": "[parameters('gitLabSettings').gitLabVmName]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "[parameters('apiVersions').computeApiVersion]",
+            "location": "[parameters('gitLabSettings').location]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('gitLabSettings').gitLabNicName)]"
+            ],
+            "plan": {
+                "name": "[parameters('gitLabSettings').gitLabSku]",
+                "publisher": "[parameters('gitLabSettings').gitLabPublisher]",
+                "product": "[parameters('gitLabSettings').gitLabOffer]"
+            },
+            "properties": {
+                "osProfile": "[variables('osProfileReference')]",
+                "hardwareProfile": {
+                    "vmSize": "[parameters('gitLabSettings').gitLabVmSize]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[parameters('gitLabSettings').gitLabPublisher]",
+                        "offer":  "[parameters('gitLabSettings').gitLabOffer]",
+                        "sku":  "[parameters('gitLabSettings').gitLabSku]",
+                        "version":  "[parameters('gitLabSettings').gitLabVersion]"
+                    },
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    },
+                    "dataDisks": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('gitLabSettings').gitLabNicName)]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('gitLabSettings').gitLabDiagnosticsStorageAccountName)).primaryEndpoints.blob]"
+                    }
+                }
+            }
+        }
     ]
 }

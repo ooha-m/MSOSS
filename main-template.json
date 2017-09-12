@@ -9,17 +9,16 @@
         "authenticationType": {
             "type": "string",
             "allowedValues": [
-                "password",
                 "sshPublicKey"
             ]
-        },
-        "adminPassword": {
-            "type": "securestring",
-            "defaultValue": "Password@1234"
         },
         "sshPublicKey": {
             "defaultValue": "",
             "type": "string"
+        },
+        "addressPrefix":{
+            "type": "string",
+            "defaultValue": "10.0.0.0/16"
         },
         "vmssName": {
             "maxLength": 61,
@@ -28,26 +27,26 @@
                 "description": "String used as a base for naming resources. Must be 3-61 characters in length."
             }
         },
-        "vmSize": {
+        "gitLabVmSize": {
             "type": "string",
-            "defaultValue": "Standard_D1_v2",
+            "defaultValue": "Standard_DS1",
             "metadata": {
-                "description":"vm size"
+                "description": "vm size"
             }
         }
     },
     "variables": {
         "apiVersions": {
-            "deploymentApiVersion": "2016-02-01",
+            "deploymentApiVersion": "[variables('deploymentApiVersion')]",
             "computeApiVersion": "2016-04-30-preview",
             "networkApiVersion": "2016-09-01",
             "storageApiVersion": "2016-01-01"
-          },
+        },
         "networkSettings": {
             "location": "[variables('location')]",
             "networkApiVersion": "2016-03-30",
             "virtualNetworkName": "MyVNET",
-            "addressPrefix": "10.0.0.0/16",
+            "addressPrefix": "[parameters('addressPrefix')]",
             "subnet1Name": "GitLab",
             "subnet1Prefix": "10.0.0.0/24",
             "subnet2Name": "Jenkins",
@@ -56,33 +55,31 @@
             "subnet3Prefix": "10.0.2.0/24",
             "subnet4Name": "ELK",
             "subnet4Prefix": "10.0.3.0/24"
-          },
+        },
+        "gitLabSettings": {
+            "location": "[variables('location')]",
+            "gitLabPipName": "gitlab-pip",
+            "publicIpAddressType": "[variables('publicIpAddressType')]",
+            "gitLabDnsLabelPrefix":"[concat('gitlab',variables('suffix'))]",
+            "gitLabDiagnosticsStorageAccountName":"gitlab-strgaccnt",
+            "gitLabNsgName":"gitlab-nsg",
+            "gitLabNicName":"gitlab-nic",
+            "gitLabVmName":"gitlabserver",
+            "adminUsername":"[parameters('adminUsername')]",
+            "authenticationType":"[parameters('authenticationType')]",
+            "sshPublicKey":"[parameters('sshPublicKey')]",
+            "gitLabVmSize":"[parameters('gitLabVmSize')]",
+            "gitLabPublisher": "gitlab",
+            "gitLabOffer": "gitlab-ce",
+            "gitLabSku": "gitlab-ce",
+            "gitLabvversion": "latest"
+        },
+        "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
-        "suffix": "[substring(uniqueString(resourceGroup().id), 0, 5)]",
         "storageAccountType": "Standard_LRS",
-        "osProfilepassword": {
-            "computerNamePrefix": "[variables('computerName')]",
-            "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]"
-        },
-        "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
-        "osProfilesshPublicKey": {
-            "computerNamePrefix": "[variables('computerName')]",
-            "adminUsername": "[parameters('adminUsername')]",
-            "adminPassword": "[parameters('adminPassword')]",
-            "linuxConfiguration": {
-                "disablePasswordAuthentication": true,
-                "ssh": {
-                    "publicKeys": [
-                        {
-                            "path": "[variables('sshKeyPath')]",
-                            "keyData": "[parameters('sshPublicKey')]"
-                        }
-                    ]
-                }
-            }
-        },
-        "osProfileReference": "[variables(concat('osProfile', parameters('authenticationType')))]"
+        "deploymentApiVersion": "2016-02-01",
+        "suffix": "[substring(uniqueString(resourceGroup().id), 0, 5)]",
+        "baseUrl": ""
     },
     "resources": [
         {
@@ -90,8 +87,7 @@
             "name": "[variables('networkSettings').virtualNetworkName]",
             "apiVersion": "[variables('apiVersions').networkApiVersion]",
             "location": "[variables('networkSettings').location]",
-            "dependsOn": [
-            ],
+            "dependsOn": [],
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -124,6 +120,32 @@
                         }
                     }
                 ]
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "GitLab",
+            "apiVersion": "[variables('deploymentApiVersion')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/',variables('networkSettings').virtualNetworkName)]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('baseUrl'), 'nested/gitlab.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "gitLabSettings": {
+                        "value": "[variables('gitLabSettings')]"
+                    },
+                    "apiVersions": {
+                        "value": "[variables('apiVersions')]"
+                    },
+                    "networkSettings": {
+                        "value": "[variables('networkSettings')]"
+                      }
+                }
             }
         }
     ],
