@@ -72,7 +72,7 @@
         "storageAccountType": "Standard_LRS",
         "deploymentApiVersion": "2016-02-01",
         "suffix": "[substring(uniqueString(resourceGroup().id), 0, 5)]",
-        "baseUrl": ""
+        "baseUrl": "https://raw.githubusercontent.com/sysgain/MSOSS/master/"
     },
     "resources": [
         {
@@ -125,7 +125,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('baseUrl'), 'nested/gitlab.json')]",
+                    "uri": "[concat(variables('baseUrl'), 'nested/gitlab.json?token=AT3pTVZFuxn2xzWNXD_ZdfFuGlcBU86Tks5ZwL91wA%3D%3D')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
