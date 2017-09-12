@@ -67,6 +67,9 @@
             "gitLabSku": "gitlab-ce",
             "gitLabVersion": "latest"
         },
+        "jenkinsSettings":{
+
+        },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
         "storageAccountType": "Standard_LRS",
