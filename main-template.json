@@ -114,10 +114,7 @@
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "nodeVmSize":"[parameters('nodeVmSize')]",
-            "ubuntuSku":"16.04-LTS",
-
-
-
+            "ubuntuSku":"16.04-LTS"
         },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
@@ -267,6 +264,32 @@
                 "parameters": {
                     "jenkinsSettings": {
                         "value": "[variables('jenkinsSettings')]"
+                    },
+                    "apiVersions": {
+                        "value": "[variables('apiVersions')]"
+                    },
+                    "networkSettings": {
+                        "value": "[variables('networkSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "node",
+            "apiVersion": "[variables('deploymentApiVersion')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/',variables('networkSettings').virtualNetworkName)]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('baseUrl'),'nested/applicationnode.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nodeSettings": {
+                        "value": "[variables('nodeSettings')]"
                     },
                     "apiVersions": {
                         "value": "[variables('apiVersions')]"
