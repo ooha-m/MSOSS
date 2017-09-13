@@ -33,6 +33,13 @@
             "metadata": {
                 "description": "vm size"
             }
+        },
+        "nodeVmSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS1_v2",
+            "metadata": {
+                "description": "vm size"
+            }
         }
     },
     "variables": {
@@ -94,6 +101,24 @@
             "baseUrl": "[variables('baseUrl')]",
             "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh')]"
         },
+        "nodeSettings":{
+            "location": "[variables('location')]",
+            "nodeDiagnosticsStorageAccountName":"[concat('nodestrg',variables('suffix'))]",
+            "nodePipName":"node-pip",
+            "publicIpAddressType": "[variables('publicIpAddressType')]",
+            "nodeDnsLabelPrefix":"[concat('nodeserver',variables('suffix'))]",
+            "nodeNsgName":"node-nsg",
+            "nodeNicName":"node-nic",
+            "nodeVmName":"nodeserver",
+            "adminUsername":"[parameters('adminUsername')]",
+            "authenticationType": "[parameters('authenticationType')]",
+            "sshPublicKey": "[parameters('sshPublicKey')]",
+            "nodeVmSize":"[parameters('nodeVmSize')]",
+            "ubuntuSku":"16.04-LTS",
+
+
+
+        },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
         "storageAccountType": "Standard_LRS",
@@ -141,7 +166,7 @@
                         "name": "Port_8080",
                         "properties": {
                             "access": "Allow",
-                            "description": "Allow HTTP",
+                            "description": "Allow",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "8080",
                             "direction": "Inbound",
