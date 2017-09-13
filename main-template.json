@@ -4,21 +4,31 @@
     "parameters": {
         "adminUsername": {
             "type": "string",
-            "defaultValue": "adminuser"
+            "defaultValue": "adminuser",
+            "metadata": {
+                "description": "User name for the Virtual Machines."
+              }
         },
         "authenticationType": {
             "type": "string",
+            "defaultValue": "sshPublicKey",
             "allowedValues": [
                 "sshPublicKey"
             ]
         },
         "sshPublicKey": {
+            "type": "string",
             "defaultValue": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAr8HZ2JCXEb5Dpd3VmaxK/PE4/nu6mULEr7KfYBQdtDsjfLy7l+flHBwaRqo6LzFh+VTf55iHjAioJCJPLo5XJxIxIqZxpxdiNJWS9ai1dVtM+nOrzexyUNNovuATqBHLikvCGy4E0TeObNjIOIei70c+LaGUiHOf6KUe6KB3zbRRxtbL/s4XPWsVBuxwCsEGQkWl41HAruZRTf6pGdtopxL27vWd8nafJxf0jPFh9WVTC0UlgfOGrOt6UKIaJc+Q1bE7apDdd0Nqrx8ewDq8soJ6rOkpTwc4VrDifHsT0/vqwF88MYkItbwYMOYrlURINrUM1SHVsI9uy6toAyBWtw== rsa-key-20170912",
-            "type": "string"
+            "metadata": {
+                "description": "SSH rsa public key file as a string."
+              }
         },
         "addressPrefix": {
             "type": "string",
-            "defaultValue": "10.0.0.0/16"
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "Address space for the VNet, in CIDR format."
+              }
         },
         "gitLabVmSize": {
             "type": "string",
@@ -118,7 +128,6 @@
         },
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
-        "storageAccountType": "Standard_LRS",
         "deploymentApiVersion": "2016-02-01",
         "suffix": "[substring(uniqueString(resourceGroup().id), 0, 5)]",
         "baseUrl": "https://raw.githubusercontent.com/sysgain/MSOSS/master/"
@@ -276,7 +285,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "name": "node",
+            "name": "applicationNode",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/',variables('networkSettings').virtualNetworkName)]"
