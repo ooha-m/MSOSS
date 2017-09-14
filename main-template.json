@@ -73,24 +73,6 @@
             "subnet4Name": "ELK",
             "subnet4Prefix": "10.0.3.0/24"
         },
-        "gitLabSettings": {
-            "location": "[variables('location')]",
-            "gitLabPipName": "gitlab-pip",
-            "publicIpAddressType": "[variables('publicIpAddressType')]",
-            "gitLabDnsLabelPrefix": "[concat('gitlabserver',variables('suffix'))]",
-            "gitLabDiagnosticsStorageAccountName": "[concat('gitlabstrg',variables('suffix'))]",
-            "gitLabNsgName": "gitlab-nsg",
-            "gitLabNicName": "gitlab-nic",
-            "gitLabVmName": "gitlabserver",
-            "adminUsername": "[parameters('adminUsername')]",
-            "authenticationType": "[parameters('authenticationType')]",
-            "sshPublicKey": "[parameters('sshPublicKey')]",
-            "gitLabVmSize": "[parameters('gitLabVmSize')]",
-            "gitLabPublisher": "gitlab",
-            "gitLabOffer": "gitlab-ce",
-            "gitLabSku": "gitlab-ce",
-            "gitLabVersion": "latest"
-        },
         "jenkinsSettings": {
             "location": "[variables('location')]",
             "jenkinsDiagnosticsStorageAccountName": "[concat('jenkinsstrg',variables('suffix'))]",
@@ -232,32 +214,6 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "name": "GitLab",
-            "apiVersion": "[variables('deploymentApiVersion')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/virtualNetworks/',variables('networkSettings').virtualNetworkName)]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('baseUrl'),'nested/gitlab.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "gitLabSettings": {
-                        "value": "[variables('gitLabSettings')]"
-                    },
-                    "apiVersions": {
-                        "value": "[variables('apiVersions')]"
-                    },
-                    "networkSettings": {
-                        "value": "[variables('networkSettings')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
             "name": "Jenkins",
             "apiVersion": "[variables('deploymentApiVersion')]",
             "dependsOn": [
@@ -273,32 +229,6 @@
                 "parameters": {
                     "jenkinsSettings": {
                         "value": "[variables('jenkinsSettings')]"
-                    },
-                    "apiVersions": {
-                        "value": "[variables('apiVersions')]"
-                    },
-                    "networkSettings": {
-                        "value": "[variables('networkSettings')]"
-                    }
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "name": "applicationNode",
-            "apiVersion": "[variables('deploymentApiVersion')]",
-            "dependsOn": [
-                "[concat('Microsoft.Network/virtualNetworks/',variables('networkSettings').virtualNetworkName)]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('baseUrl'),'nested/applicationnode.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "nodeSettings": {
-                        "value": "[variables('nodeSettings')]"
                     },
                     "apiVersions": {
                         "value": "[variables('apiVersions')]"
