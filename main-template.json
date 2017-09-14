@@ -57,14 +57,12 @@
             "networkApiVersion": "2016-03-30",
             "virtualNetworkName": "MyVNET",
             "addressPrefix": "[parameters('addressPrefix')]",
-            "subnet1Name": "GitLab",
+            "subnet1Name": "Jenkins",
             "subnet1Prefix": "10.0.0.0/24",
-            "subnet2Name": "Jenkins",
+            "subnet2Name": "Applicationnode",
             "subnet2Prefix": "10.0.1.0/24",
-            "subnet3Name": "habitat",
-            "subnet3Prefix": "10.0.2.0/24",
-            "subnet4Name": "ELK",
-            "subnet4Prefix": "10.0.3.0/24"
+            "subnet3Name": "ELK",
+            "subnet3Prefix": "10.0.2.0/24"
         },
         "jenkinsSettings": {
             "location": "[variables('location')]",
@@ -178,28 +176,22 @@
                     {
                         "name": "[variables('networkSettings').subnet1Name]",
                         "properties": {
-                            "addressPrefix": "[variables('networkSettings').subnet1Prefix]"
-                        }
-                    },
-                    {
-                        "name": "[variables('networkSettings').subnet2Name]",
-                        "properties": {
-                            "addressPrefix": "[variables('networkSettings').subnet2Prefix]",
+                            "addressPrefix": "[variables('networkSettings').subnet1Prefix]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('jenkinsSettings').jenkinsfrontEndNSGName)]"
                             }
                         }
                     },
                     {
-                        "name": "[variables('networkSettings').subnet3Name]",
+                        "name": "[variables('networkSettings').subnet2Name]",
                         "properties": {
-                            "addressPrefix": "[variables('networkSettings').subnet3Prefix]"
+                            "addressPrefix": "[variables('networkSettings').subnet2Prefix]"
                         }
                     },
                     {
-                        "name": "[variables('networkSettings').subnet4Name]",
+                        "name": "[variables('networkSettings').subnet3Name]",
                         "properties": {
-                            "addressPrefix": "[variables('networkSettings').subnet4Prefix]"
+                            "addressPrefix": "[variables('networkSettings').subnet3Prefix]"
                         }
                     }
                 ]
