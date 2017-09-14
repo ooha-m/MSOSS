@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "nodeSettings": {
+        "buildInstanceSettings": {
             "type": "object"
         },
         "apiVersions": {
@@ -14,31 +14,31 @@
     },
     "variables": {
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('networkSettings').virtualNetworkName)]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('networkSettings').subnet3Name)]",
-        "sshKeyPath": "[concat('/home/',parameters('nodeSettings').adminUsername,'/.ssh/authorized_keys')]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('networkSettings').subnet1Name)]",
+        "sshKeyPath": "[concat('/home/',parameters('buildInstanceSettings').adminUsername,'/.ssh/authorized_keys')]",
         "osProfilesshPublicKey": {
-            "computerName": "[parameters('nodeSettings').nodeVmName]",
-            "adminUsername": "[parameters('nodeSettings').adminUsername]",
+            "computerName": "[parameters('buildInstanceSettings').buildInstanceVmName]",
+            "adminUsername": "[parameters('buildInstanceSettings').adminUsername]",
             "linuxConfiguration": {
                 "disablePasswordAuthentication": true,
                 "ssh": {
                     "publicKeys": [
                         {
                             "path": "[variables('sshKeyPath')]",
-                            "keyData": "[parameters('nodeSettings').sshPublicKey]"
+                            "keyData": "[parameters('buildInstanceSettings').sshPublicKey]"
                         }
                     ]
                 }
             }
         },
-        "osProfileReference": "[variables(concat('osProfile', parameters('nodeSettings').authenticationType))]"
+        "osProfileReference": "[variables(concat('osProfile', parameters('buildInstanceSettings').authenticationType))]"
     },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('nodeSettings').nodeDiagnosticsStorageAccountName]",
+            "name": "[parameters('buildInstanceSettings').buildInstanceDiagnosticsStorageAccountName]",
             "apiVersion": "[parameters('apiVersions').storageApiVersion]",
-            "location": "[parameters('nodeSettings').location]",
+            "location": "[parameters('buildInstanceSettings').location]",
             "sku": {
                 "name": "Standard_LRS"
             },
@@ -46,22 +46,22 @@
             "properties": {}
         },
         {
-            "name": "[parameters('nodeSettings').nodePipName]",
+            "name": "[parameters('buildInstanceSettings').buildInstancePipName]",
             "type": "Microsoft.Network/publicIpAddresses",
             "apiVersion": "[parameters('apiVersions').networkApiVersion]",
-            "location": "[parameters('nodeSettings').location]",
+            "location": "[parameters('buildInstanceSettings').location]",
             "properties": {
-                "publicIpAllocationMethod": "[parameters('nodeSettings').publicIpAddressType]",
+                "publicIpAllocationMethod": "[parameters('buildInstanceSettings').publicIpAddressType]",
                 "dnsSettings": {
-                    "domainNameLabel": "[parameters('nodeSettings').nodeDnsLabelPrefix]"
+                    "domainNameLabel": "[parameters('buildInstanceSettings').buildInstanceDnsLabelPrefix]"
                 }
             }
         },
         {
-            "name": "[parameters('nodeSettings').nodeNsgName]",
+            "name": "[parameters('buildInstanceSettings').buildInstanceSettingsNsgName]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "[parameters('apiVersions').networkApiVersion]",
-            "location": "[parameters('nodeSettings').location]",
+            "location": "[parameters('buildInstanceSettings').location]",
             "properties": {
                 "securityRules": [
                     {
@@ -94,13 +94,13 @@
             }
         },
         {
-            "name": "[parameters('nodeSettings').nodeNicName]",
+            "name": "[parameters('buildInstanceSettings').buildInstanceSettingsNicName]",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "[parameters('apiVersions').networkApiVersion]",
-            "location": "[parameters('nodeSettings').location]",
+            "location": "[parameters('buildInstanceSettings').location]",
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('nodeSettings').nodePipName)]",
-                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('nodeSettings').nodeNsgName)]"
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('buildInstanceSettings').buildInstanceSettingsPipName)]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('buildInstanceSettings').buildInstanceSettingsNsgName)]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -112,35 +112,35 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('nodeSettings').nodePipName)]"
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('buildInstanceSettings').buildInstanceSettingsPipName)]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('nodeSettings').nodeNsgName)]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('buildInstanceSettings').buildInstanceSettingsNsgName)]"
                 }
             }
         },
         {
-            "name": "[parameters('nodeSettings').nodeVmName]",
+            "name": "[parameters('buildInstanceSettings').buildInstanceSettingsVmName]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "[parameters('apiVersions').computeApiVersion]",
-            "location": "[parameters('nodeSettings').location]",
+            "location": "[parameters('buildInstanceSettings').location]",
             "dependsOn": [
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('nodeSettings').nodeDiagnosticsStorageAccountName)]",
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('nodeSettings').nodeNicName)]"
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('buildInstanceSettings').buildInstanceSettingsDiagnosticsStorageAccountName)]",
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('buildInstanceSettings').buildInstanceSettingsNicName)]"
             ],
             "properties": {
                 "osProfile": "[variables('osProfileReference')]",
                 "hardwareProfile": {
-                    "vmSize": "[parameters('nodeSettings').nodeVmSize]"
+                    "vmSize": "[parameters('buildInstanceSettings').buildInstanceSettingsVmSize]"
                 },
                 "storageProfile": {
                     "imageReference": {
                         "offer": "UbuntuServer",
                         "publisher": "Canonical",
-                        "sku": "[parameters('nodeSettings').ubuntuSku]",
+                        "sku": "[parameters('buildInstanceSettings').ubuntuSku]",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -154,14 +154,14 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('nodeSettings').nodeNicName)]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('buildInstanceSettings').buildInstanceSettingsNicName)]"
                         }
                     ]
                 },
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('nodeSettings').nodeDiagnosticsStorageAccountName)).primaryEndpoints.blob]"
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('buildInstanceSettings').buildInstanceSettingsDiagnosticsStorageAccountName)).primaryEndpoints.blob]"
                     }
                 }
             }

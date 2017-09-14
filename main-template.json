@@ -30,13 +30,6 @@
                 "description": "Address space for the VNet, in CIDR format."
               }
         },
-        "gitLabVmSize": {
-            "type": "string",
-            "defaultValue": "Standard_DS1",
-            "metadata": {
-                "description": "vm size"
-            }
-        },
         "jenkinsVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS2_v2",
@@ -44,7 +37,7 @@
                 "description": "vm size"
             }
         },
-        "nodeVmSize": {
+        "buildInstanceVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS1_v2",
             "metadata": {
@@ -93,19 +86,19 @@
             "baseUrl": "[variables('baseUrl')]",
             "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh')]"
         },
-        "nodeSettings":{
+        "buildInstanceSettings":{
             "location": "[variables('location')]",
-            "nodeDiagnosticsStorageAccountName":"[concat('nodestrg',variables('suffix'))]",
-            "nodePipName":"node-pip",
+            "buildInstanceDiagnosticsStorageAccountName":"[concat('nodestrg',variables('suffix'))]",
+            "buildInstancePipName":"build-pip",
             "publicIpAddressType": "[variables('publicIpAddressType')]",
-            "nodeDnsLabelPrefix":"[concat('nodeserver',variables('suffix'))]",
-            "nodeNsgName":"node-nsg",
-            "nodeNicName":"node-nic",
-            "nodeVmName":"nodeserver",
+            "buildInstanceDnsLabelPrefix":"[concat('buildserver',variables('suffix'))]",
+            "buildInstanceNsgName":"build-nsg",
+            "buildInstanceNicName":"build-nic",
+            "buildInstanceVmName":"buildinstance",
             "adminUsername":"[parameters('adminUsername')]",
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
-            "nodeVmSize":"[parameters('nodeVmSize')]",
+            "buildInstanceVmSize":"[parameters('buildInstanceVmSize')]",
             "ubuntuSku":"16.04-LTS"
         },
         "publicIpAddressType": "Dynamic",
@@ -229,6 +222,32 @@
                 "parameters": {
                     "jenkinsSettings": {
                         "value": "[variables('jenkinsSettings')]"
+                    },
+                    "apiVersions": {
+                        "value": "[variables('apiVersions')]"
+                    },
+                    "networkSettings": {
+                        "value": "[variables('networkSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "name": "BuildInstance",
+            "apiVersion": "[variables('deploymentApiVersion')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/',variables('networkSettings').virtualNetworkName)]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('baseUrl'),'nested/build-instance.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nodeSettings": {
+                        "value": "[variables('buildInstanceSettings')]"
                     },
                     "apiVersions": {
                         "value": "[variables('apiVersions')]"
