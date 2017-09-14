@@ -94,13 +94,13 @@
             }
         },
         {
-            "name": "[parameters('buildInstanceSettings').buildInstanceSettingsNicName]",
+            "name": "[parameters('buildInstanceSettings').buildInstanceNicName]",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "[parameters('apiVersions').networkApiVersion]",
             "location": "[parameters('buildInstanceSettings').location]",
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('buildInstanceSettings').buildInstanceSettingsPipName)]",
-                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('buildInstanceSettings').buildInstanceSettingsNsgName)]"
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('buildInstanceSettings').buildInstancePipName)]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('buildInstanceSettings').buildInstanceNsgName)]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -112,29 +112,29 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('buildInstanceSettings').buildInstanceSettingsPipName)]"
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('buildInstanceSettings').buildInstancePipName)]"
                             }
                         }
                     }
                 ],
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('buildInstanceSettings').buildInstanceSettingsNsgName)]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('buildInstanceSettings').buildInstanceNsgName)]"
                 }
             }
         },
         {
-            "name": "[parameters('buildInstanceSettings').buildInstanceSettingsVmName]",
+            "name": "[parameters('buildInstanceSettings').buildInstanceVmName]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "[parameters('apiVersions').computeApiVersion]",
             "location": "[parameters('buildInstanceSettings').location]",
             "dependsOn": [
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('buildInstanceSettings').buildInstanceSettingsDiagnosticsStorageAccountName)]",
-                "[concat('Microsoft.Network/networkInterfaces/', parameters('buildInstanceSettings').buildInstanceSettingsNicName)]"
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('buildInstanceSettings').buildInstanceDiagnosticsStorageAccountName)]",
+                "[concat('Microsoft.Network/networkInterfaces/', parameters('buildInstanceSettings').buildInstanceNicName)]"
             ],
             "properties": {
                 "osProfile": "[variables('osProfileReference')]",
                 "hardwareProfile": {
-                    "vmSize": "[parameters('buildInstanceSettings').buildInstanceSettingsVmSize]"
+                    "vmSize": "[parameters('buildInstanceSettings').buildInstanceVmSize]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -154,14 +154,14 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('buildInstanceSettings').buildInstanceSettingsNicName)]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('buildInstanceSettings').buildInstanceNicName)]"
                         }
                     ]
                 },
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('buildInstanceSettings').buildInstanceSettingsDiagnosticsStorageAccountName)).primaryEndpoints.blob]"
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', parameters('buildInstanceSettings').buildInstanceDiagnosticsStorageAccountName)).primaryEndpoints.blob]"
                     }
                 }
             }
