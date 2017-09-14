@@ -58,7 +58,7 @@
             }
         },
         {
-            "name": "[parameters('buildInstanceSettings').buildInstanceSettingsNsgName]",
+            "name": "[parameters('buildInstanceSettings').buildInstanceNsgName]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "[parameters('apiVersions').networkApiVersion]",
             "location": "[parameters('buildInstanceSettings').location]",
