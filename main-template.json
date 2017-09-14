@@ -88,7 +88,7 @@
         },
         "buildInstanceSettings":{
             "location": "[variables('location')]",
-            "buildInstanceDiagnosticsStorageAccountName":"[concat('nodestrg',variables('suffix'))]",
+            "buildInstanceDiagnosticsStorageAccountName":"[concat('buildstrg',variables('suffix'))]",
             "buildInstancePipName":"build-pip",
             "publicIpAddressType": "[variables('publicIpAddressType')]",
             "buildInstanceDnsLabelPrefix":"[concat('buildserver',variables('suffix'))]",
@@ -246,7 +246,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "nodeSettings": {
+                    "buildInstanceSettings": {
                         "value": "[variables('buildInstanceSettings')]"
                     },
                     "apiVersions": {
