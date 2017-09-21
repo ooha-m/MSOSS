@@ -7,7 +7,7 @@
             "defaultValue": "adminuser",
             "metadata": {
                 "description": "User name for the Virtual Machines."
-              }
+            }
         },
         "authenticationType": {
             "type": "string",
@@ -21,14 +21,14 @@
             "defaultValue": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAr8HZ2JCXEb5Dpd3VmaxK/PE4/nu6mULEr7KfYBQdtDsjfLy7l+flHBwaRqo6LzFh+VTf55iHjAioJCJPLo5XJxIxIqZxpxdiNJWS9ai1dVtM+nOrzexyUNNovuATqBHLikvCGy4E0TeObNjIOIei70c+LaGUiHOf6KUe6KB3zbRRxtbL/s4XPWsVBuxwCsEGQkWl41HAruZRTf6pGdtopxL27vWd8nafJxf0jPFh9WVTC0UlgfOGrOt6UKIaJc+Q1bE7apDdd0Nqrx8ewDq8soJ6rOkpTwc4VrDifHsT0/vqwF88MYkItbwYMOYrlURINrUM1SHVsI9uy6toAyBWtw== rsa-key-20170912",
             "metadata": {
                 "description": "SSH rsa public key file as a string."
-              }
+            }
         },
         "addressPrefix": {
             "type": "string",
             "defaultValue": "10.0.0.0/16",
             "metadata": {
                 "description": "Address space for the VNet, in CIDR format."
-              }
+            }
         },
         "jenkinsVmSize": {
             "type": "string",
@@ -84,21 +84,22 @@
             "baseUrl": "[variables('baseUrl')]",
             "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh')]"
         },
-        "buildInstanceSettings":{
+        "buildInstanceSettings": {
             "location": "[variables('location')]",
-            "buildInstanceDiagnosticsStorageAccountName":"[concat('buildstrg',variables('suffix'))]",
-            "buildInstancePipName":"build-pip",
+            "buildInstanceDiagnosticsStorageAccountName": "[concat('buildstrg',variables('suffix'))]",
+            "buildInstancePipName": "build-pip",
             "publicIpAddressType": "[variables('publicIpAddressType')]",
-            "buildInstanceDnsLabelPrefix":"[concat('buildserver',variables('suffix'))]",
-            "buildInstanceNsgName":"build-nsg",
-            "buildInstanceNicName":"build-nic",
-            "buildInstanceVmName":"buildinstance",
-            "adminUsername":"[parameters('adminUsername')]",
+            "buildInstanceDnsLabelPrefix": "[concat('buildserver',variables('suffix'))]",
+            "buildInstanceNsgName": "build-nsg",
+            "buildInstanceNicName": "build-nic",
+            "buildInstanceVmName": "buildinstance",
+            "adminUsername": "[parameters('adminUsername')]",
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
-            "buildInstanceVmSize":"[parameters('buildInstanceVmSize')]",
-            "ubuntuSku":"16.04-LTS"
+            "buildInstanceVmSize": "[parameters('buildInstanceVmSize')]",
+            "ubuntuSku": "16.04-LTS"
         },
+        "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
         "deploymentApiVersion": "2016-02-01",
@@ -106,6 +107,17 @@
         "baseUrl": "https://raw.githubusercontent.com/sysgain/MSOSS/staging/"
     },
     "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('packerStorageAccountName')]",
+            "apiVersion": "[variables('apiVersions').storageApiVersion]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "Storage",
+            "properties": {}
+        },
         {
             "name": "[variables('jenkinsSettings').jenkinsfrontEndNSGName]",
             "type": "Microsoft.Network/networkSecurityGroups",
