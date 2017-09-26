@@ -33,7 +33,7 @@ resource "azurerm_network_security_rule" "SSH" {
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
 }
-esource "azurerm_network_security_rule" "kibana" {
+resource "azurerm_network_security_rule" "kibana" {
   name                        = "kibana"
   priority                    = 300
   direction                   = "Inbound"
@@ -59,7 +59,7 @@ resource "azurerm_network_security_rule" "ssh" {
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
 }
-esource "azurerm_network_security_rule" "elastic" {
+resource "azurerm_network_security_rule" "elastic" {
   name                        = "Elastic"
   priority                    = 400
   direction                   = "Inbound"
@@ -72,7 +72,7 @@ esource "azurerm_network_security_rule" "elastic" {
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
 }
-esource "azurerm_network_security_rule" "logStash" {
+resource "azurerm_network_security_rule" "logStash" {
   name                        = "Logstash"
   priority                    = 100
   direction                   = "Inbound"
@@ -177,4 +177,7 @@ EOF
     tags {                                                                                                                             
         environment = "dev"
     }
+}
+output "DNSName" {
+    value = "${azurerm_public_ip.publicIP.domain_name_label}.westus.cloudapp.azure.com}"
 }
