@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>terraformjob</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/SrikalaRekapalli/terraform.git</url>
+        <credentialsId></credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/staging1</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders/>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <org.jenkinsci.plugins.terraform.TerraformBuildWrapper plugin="terraform@1.0.9">
+      <variables>subscription_id = &quot;7eab3893-bd71-4690-84a5-47624df0b0e5&quot;
+client_id = &quot;d4962dd2-e97e-4f3e-aa00-45e202305782&quot;
+client_secret = &quot;+u9VpFP/ZeqpBKuKoLcAUV8vQmB9xwOhi+RZT7Am/Ys=&quot;
+tenant_id = &quot;dcf9e4d3-f44a-4c28-be12-8245c0d35668&quot;
+ResourceGroup = &quot;srikala-newterraform&quot;
+Location = &quot;west us&quot;
+Vnet_AddressPrefix = &quot;10.0.0.0/16&quot;
+Subnet1 = &quot;10.0.1.0/24&quot;
+DynamicIP = &quot;dynamic&quot;
+DynamicDNS = &quot;dns&quot;
+storageAccType = &quot;Standard_LRS&quot;
+uniqueid = &quot;unique&quot;
+vmSize = &quot;Standard_DS1_v2&quot;
+os_type = &quot;linux&quot;
+vmName = &quot;TerraformVM&quot;
+userName = &quot;adminuser&quot;
+password = &quot;Password@1234&quot;
+existing_resource_group = &quot;jenkinstestrg&quot;
+existing_storage_acct = &quot;jenkinstestrgdiag334&quot;
+source_img_uri = &quot;https://jenkinstestrgdiag334.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.4457b934-e720-4502-af02-74067092ae1a.vhd&quot;</variables>
+      <doDestroy>false</doDestroy>
+      <doGetUpdate>true</doGetUpdate>
+      <doNotApply>false</doNotApply>
+      <config>
+        <value>file</value>
+        <fileConfig>/var/lib/jenkins/workspace/terraformjob/oss</fileConfig>
+        <mode>FILE</mode>
+      </config>
+      <terraformInstallation>Terraform 0.9.11</terraformInstallation>
+    </org.jenkinsci.plugins.terraform.TerraformBuildWrapper>
+  </buildWrappers>
+</project>
