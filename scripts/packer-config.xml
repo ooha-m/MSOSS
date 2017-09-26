@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>packerjob</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
@@ -31,7 +31,7 @@
   <publishers>
     <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.4">
       <name>Packer Ubuntu</name>
-      <jsonTemplate>/var/lib/jenkins/workspace/sample-packer-app1/packer1.json</jsonTemplate>
+      <jsonTemplate>/var/lib/jenkins/workspace/packerjob/packer1.json</jsonTemplate>
       <jsonTemplateText></jsonTemplateText>
       <params></params>
       <useDebug>false</useDebug>
