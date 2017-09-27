@@ -156,6 +156,32 @@
                     "commandToExecute": "[concat('./' , parameters('jenkinsSettings').installJenkinsScriptName, ' -jf \"', reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn, '\" -pi \"', parameters('jenkinsSettings').jenkinsVmPrivateIP, '\" -jrt \"', parameters('jenkinsSettings').jenkinsReleaseType , '\" -al \"', parameters('jenkinsSettings').baseUrl, '\" -st \"', variables('sasToken'), '\"' )]"
                 }
             }
+        },
+       {
+            "type": "Microsoft.Resources/deployments",
+            "name": "Extension",
+            "apiVersion": "[variables('deploymentApiVersion')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('baseUrl'),'nested/jenkins-jobs.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "apiVersions": {
+                        "value": "[parameters('apiVersions')]"
+                    },
+                    "networkSettings": {
+                        "value": "[parameters('networkSettings')]"
+                    },
+                    "jenkinsSettings" :{
+                        "value": "[parameters('jenkinsSettings')]"
+                    }
+                }
+            }
         }
     ],
     "outputs": {
