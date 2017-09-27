@@ -274,7 +274,7 @@
                     "storageAccountKey": {
                         "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('packerStorageAccountName')), variables('apiVersions').storageApiVersion).keys[0].value]"
                     },
-                    "resourceGroupName":{
+                    "resourceGroupName": {
                         "value": "[variables('resourceGroupName')]"
                     },
                     "AzureSubscriptionId": {
@@ -288,6 +288,12 @@
                     },
                     "AzureTenantId": {
                         "value": "[parameters('AzureTenantId')]"
+                    },
+                    "deploymentApiVersion": {
+                        "value": "[variables('deploymentApiVersion')]"
+                    },
+                    "baseUrl": {
+                        "value": "[variables('baseUrl')]"
                     }
                 }
             }
