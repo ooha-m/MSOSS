@@ -38,10 +38,6 @@
     },
     "variables": {
         "sasToken": "",
-         "jenkinsSettings": {
-             "jenkinsVmName": "jenkinsserver",
-             "location":"[variables('location')]"
-        },
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('networkSettings').virtualNetworkName)]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('networkSettings').subnet1Name)]",
         "sshKeyPath": "[concat('/home/',parameters('jenkinsSettings').adminUsername,'/.ssh/authorized_keys')]",
@@ -201,7 +197,7 @@
                         "value": "[parameters('networkSettings')]"
                     },
                     "jenkinsSettings" :{
-                        "value": "[variables('jenkinsSettings')]"
+                        "value": "[parameters('jenkinsSettings')]"
                     }
                 }
             }
