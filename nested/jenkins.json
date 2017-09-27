@@ -39,8 +39,8 @@
     "variables": {
         "sasToken": "",
          "jenkinsSettings": {
-             "jenkinsVmName": "jenkinsserver",
-        }
+             "jenkinsVmName": "jenkinsserver"
+        },
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('networkSettings').virtualNetworkName)]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('networkSettings').subnet1Name)]",
         "sshKeyPath": "[concat('/home/',parameters('jenkinsSettings').adminUsername,'/.ssh/authorized_keys')]",
