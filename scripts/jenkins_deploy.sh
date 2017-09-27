@@ -15,3 +15,5 @@ curl -X POST -d '<jenkins><install plugin="terraform@current" /></jenkins>' --he
 systemctl restart jenkins && sleep 5
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/packer-config.xml
+sleep 5
+curl -X POST "http://$admin:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
