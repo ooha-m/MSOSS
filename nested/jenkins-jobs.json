@@ -22,7 +22,8 @@
             "apiVersion": "[parameters('apiVersions').computeApiVersion]",
             "location": "[parameters('jenkinsSettings').location]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]"
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]",
+                "Microsoft.Compute/virtualMachines/jenkinsserver/extensions/Init"
             ],
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
