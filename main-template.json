@@ -207,6 +207,7 @@
             "apiVersion": "[variables('apiVersions').networkApiVersion]",
             "location": "[variables('networkSettings').location]",
             "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', variables('packerStorageAccountName'))]",
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('jenkinsSettings').jenkinsfrontEndNSGName)]"
             ],
             "properties": {
@@ -314,11 +315,7 @@
         },
         "JenkinsDNS": {
             "type": "string",
-<<<<<<< HEAD
-            "value": "[reference('JenkinsDNS').outputs.jenkinsDNS.value]"
-=======
             "value": "[reference('Jenkins').outputs.jenkinsDNS.value]"
->>>>>>> 9f80ef6a5e4c4955b4211be9be8a25abbee2c7a7
         },
         "StorageAccountName": {
             "type": "string",
