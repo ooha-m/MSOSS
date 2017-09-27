@@ -19,6 +19,21 @@
         },
         "deploymentApiVersion" : {
              "type": "string"
+        },
+        "resourceGroupName": {
+            "type": "string"
+        },
+        "AzureSubscriptionId": {
+            "type": "string"
+        },
+        "AzureApplicationId": {
+            "type": "string"
+        },
+        "AzureClientSecret": {
+            "type": "string"
+        },
+        "AzureTenantId": {
+            "type": "string"
         }
     },
     "variables": {
