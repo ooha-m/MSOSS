@@ -1,29 +1,28 @@
+variable "subscription_id" {
+description = "existing subscription id"  
+default = "086ef973-2199-477b-9b40-c3d05c01a287"
+}
+variable "vnetName"{
+description = "Exisiting virtual network name"
+default = "MyVNET"
+}
+variable "subnetName" {
+description = "Exisiting subnet name"
+default = "ELK"
+}
 variable "ResourceGroup" {
 description = "name of the resource group which we created the vnet"
 default = "srikala-newterraform"
 }
-variable "Location"
- { 
+variable "Location"{
  description = "where the vnet is create"
  default = "West Us"
  }
-variable "Vnet_AddressPrefix" 
-{ 
-description = "CIDR block for virtual network"
-default = "10.0.0.0/16"
-} 
-variable "subnetElk"
-{
-description = "CIDR block for subnet"
-default = "10.0.2.0/24"
-}
-variable "DynamicIP"
-{
+variable "DynamicIP"{
 description =  "public_ip_address_allocation dynamic type"
 default = "dynamic"
 }
-variable "storageAccType"
-{
+variable "storageAccType"{
 description = "storage account type"
 default = "Standard_LRS"
 }
@@ -42,5 +41,4 @@ variable "userName" {
 variable "password" {
 description = "virtual machine admin password"
 default = "Password@1234"
-
 }
