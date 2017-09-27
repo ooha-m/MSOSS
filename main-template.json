@@ -129,7 +129,7 @@
             "buildInstanceVmSize": "[parameters('buildInstanceVmSize')]",
             "ubuntuSku": "16.04-LTS"
         },
-        "resourceGroupName":"[resourceGroup().name]",
+        "resourceGroupName": "[resourceGroup().name]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
@@ -272,7 +272,7 @@
                     },
                     "storageAccountKey": {
                         "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('packerStorageAccountName')), variables('apiVersions').storageApiVersion).keys[0].value]"
-                        }
+                    }
                 }
             }
         },
