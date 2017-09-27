@@ -62,7 +62,9 @@
             "subnet2Name": "Applicationnode",
             "subnet2Prefix": "10.0.1.0/24",
             "subnet3Name": "ELK",
-            "subnet3Prefix": "10.0.2.0/24"
+            "subnet3Prefix": "10.0.2.0/24",
+            "subnet4Name": "DB",
+            "subnet4Prefix": "10.0.3.0/24"
         },
         "jenkinsSettings": {
             "location": "[variables('location')]",
