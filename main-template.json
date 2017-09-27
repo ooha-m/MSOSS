@@ -44,39 +44,39 @@
                 "description": "vm size"
             }
         },
-        "resourceGroupName":{
+        "resourceGroupName": {
             "type": "string",
             "defaultValue": "[resourceGroup().name]",
             "metadata": {
-                "description":"ResourceGroup Name"
+                "description": "ResourceGroup Name"
             }
         },
-        "AzureSubscriptionId":{
+        "AzureSubscriptionId": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description":"Azure Subscription ID"
+                "description": "Azure Subscription ID"
             }
         },
-        "AzureApplicationId":{
+        "AzureApplicationId": {
             "type": "securestring",
             "defaultValue": "",
             "metadata": {
-                "description":"AD Application ID"
+                "description": "AD Application ID"
             }
         },
-        "AzureClientSecret":{
+        "AzureClientSecret": {
             "type": "securestring",
             "defaultValue": "",
             "metadata": {
-                "description":"AD ClientSecret"
+                "description": "AD ClientSecret"
             }
         },
-        "AzureTenantId":{
+        "AzureTenantId": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description":"Azure Tenant ID"
+                "description": "Azure Tenant ID"
             }
         }
     },
@@ -307,9 +307,21 @@
         }
     ],
     "outputs": {
-    "ResourceGroupName":{
-        "type": "string",
-        "value": "[parameters('resourceGroupName')]"
-    }
+        "ResourceGroupName": {
+            "type": "string",
+            "value": "[parameters('resourceGroupName')]"
+        },
+        "VirtualNetworkName": {
+            "type": "string",
+            "value": "[variables('networkSettings').virtualNetworkName]"
+        },
+        "JenkinsDNS": {
+            "type": "string",
+            "value": "[reference('BastionHost').outputs.jenkinsDNS.value]"
+        },
+        "StorageAccountName": {
+            "type": "string",
+            "value": "[variables('packerStorageAccountName')]"
+        }
     }
 }

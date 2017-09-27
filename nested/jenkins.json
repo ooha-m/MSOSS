@@ -151,5 +151,11 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "jenkinsDNS":{
+            "type": "string",
+            "value":"[reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn]"
+        }
+    }
 }
