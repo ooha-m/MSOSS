@@ -180,7 +180,7 @@
             "name": "Extension",
             "apiVersion": "[parameters('deploymentApiVersion')]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', jenkinsserver]",
+                "Microsoft.Compute/virtualMachines/jenkinsserver",
                 "Microsoft.Compute/virtualMachines/jenkinsserver/extensions/Init"
             ],
             "properties": {
