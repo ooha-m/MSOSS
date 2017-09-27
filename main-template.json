@@ -307,6 +307,9 @@
         }
     ],
     "outputs": {
-        ""
+    "ResourceGroupName":{
+        "type": "string",
+        "value": "[parameters('resourceGroupName')]"
+    }
     }
 }
