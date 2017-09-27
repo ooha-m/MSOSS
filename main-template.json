@@ -43,6 +43,34 @@
             "metadata": {
                 "description": "vm size"
             }
+        },
+        "AzureSubscriptionId":{
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description":"Azure Subscription ID"
+            }
+        },
+        "AzureApplicationId":{
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description":"AD Application ID"
+            }
+        },
+        "AzureClientSecret":{
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description":"AD ClientSecret"
+            }
+        },
+        "AzureTenantId":{
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description":"Azure Tenant ID"
+            }
         }
     },
     "variables": {
