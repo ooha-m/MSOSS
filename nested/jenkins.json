@@ -11,23 +11,14 @@
         "networkSettings": {
             "type": "object"
         },
-        "storageAccountKey": {
+        "storageAccountKey":{
             "type": "securestring"
         },
-        "resourceGroupName": {
+        "baseUrl":{
             "type": "string"
         },
-        "AzureSubscriptionId": {
-            "type": "string"
-        },
-        "AzureApplicationId": {
-            "type": "securestring"
-        },
-        "AzureClientSecret": {
-            "type": "securestring"
-        },
-        "AzureTenantId": {
-            "type": "string"
+        "deploymentApiVersion" : {
+             "type": "string"
         }
     },
     "variables": {
@@ -169,17 +160,17 @@
                 }
             }
         },
-       {
+        {
             "type": "Microsoft.Resources/deployments",
             "name": "Extension",
-            "apiVersion": "[variables('deploymentApiVersion')]",
+            "apiVersion": "[parameters('deploymentApiVersion')]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('baseUrl'),'nested/jenkins-jobs.json')]",
+                    "uri": "[concat(parameters('baseUrl'),'nested/jenkins-jobs.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -197,9 +188,9 @@
         }
     ],
     "outputs": {
-        "jenkinsDNS": {
+        "jenkinsDNS":{
             "type": "string",
-            "value": "[reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn]"
+            "value":"[reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn]"
         }
     }
 }
