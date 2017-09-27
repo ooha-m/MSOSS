@@ -276,6 +276,18 @@
                     },
                     "resourceGroupName":{
                         "value": "[variables('resourceGroupName')]"
+                    },
+                    "AzureSubscriptionId": {
+                        "value": "[parameters('AzureSubscriptionId')]"
+                    },
+                    "AzureApplicationId": {
+                        "value": "[parameters('AzureApplicationId')]"
+                    },
+                    "AzureClientSecret": {
+                        "value": "[parameters('AzureClientSecret')]"
+                    },
+                    "AzureTenantId": {
+                        "value": "[parameters('AzureTenantId')]"
                     }
                 }
             }

@@ -11,10 +11,22 @@
         "networkSettings": {
             "type": "object"
         },
-        "storageAccountKey":{
+        "storageAccountKey": {
             "type": "securestring"
         },
-        "resourceGroupName":{
+        "resourceGroupName": {
+            "type": "string"
+        },
+        "AzureSubscriptionId": {
+            "type": "string"
+        },
+        "AzureApplicationId": {
+            "type": "securestring"
+        },
+        "AzureClientSecret": {
+            "type": "securestring"
+        },
+        "AzureTenantId": {
             "type": "string"
         }
     },
@@ -159,9 +171,9 @@
         }
     ],
     "outputs": {
-        "jenkinsDNS":{
+        "jenkinsDNS": {
             "type": "string",
-            "value":"[reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn]"
+            "value": "[reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn]"
         }
     }
 }
