@@ -273,6 +273,9 @@
                     },
                     "storageAccountKey": {
                         "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('packerStorageAccountName')), variables('apiVersions').storageApiVersion).keys[0].value]"
+                    },
+                    "resourceGroupName":{
+                        "value": "[variables('resourceGroupName')]"
                     }
                 }
             }
