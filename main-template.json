@@ -311,7 +311,7 @@
         },
         "JenkinsDNS": {
             "type": "string",
-            "value": "[reference('BastionHost').outputs.jenkinsDNS.value]"
+            "value": "[reference('Jenkins').outputs.jenkinsDNS.value]"
         },
         "StorageAccountName": {
             "type": "string",
