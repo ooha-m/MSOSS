@@ -207,6 +207,12 @@
                         "properties": {
                             "addressPrefix": "[variables('networkSettings').subnet3Prefix]"
                         }
+                    },
+                    {
+                        "name": "[variables('networkSettings').subnet4Name]",
+                        "properties": {
+                            "addressPrefix": "[variables('networkSettings').subnet4Prefix]"
+                        }
                     }
                 ]
             }
