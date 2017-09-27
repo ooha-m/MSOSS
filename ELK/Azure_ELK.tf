@@ -2,19 +2,6 @@ resource "azurerm_resource_group" "resourceGroup" {
   name     =  "${var.ResourceGroup}"
   location = "${var.Location}"
 }
- resource "azurerm_virtual_network" "vnet" {
-  name                = "MyVNET"
-  address_space       = ["${var.Vnet_AddressPrefix}"]
-  location            = "${var.Location}"
-  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
-}
- 
-resource "azurerm_subnet" "subnet3Name" {
-  name                 = "ELK"
-  resource_group_name  = "${azurerm_resource_group.resourceGroup.name}"
-  virtual_network_name = "${azurerm_virtual_network.vnet.name}"
-  address_prefix       = "${var.subnetElk}"
-}
 resource "azurerm_network_security_group" "Nsg" {
   name                = "nsg"
   location            = "${var.Location}"
@@ -110,13 +97,13 @@ resource "azurerm_storage_container" "storageContainer" {
   storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
   container_access_type = "private"
 }
-resource "azurerm_network_interface" "networkInterface" {
-  name                = "Networkinterface"
+resource "azurerm_network_interface" "networkInterfaceElk" {
+  name                = "NetworkinterfaceELK"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   ip_configuration {
     name                          = "configuration1"
-    subnet_id                     = "${azurerm_subnet.subnet3Name.id}"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnet/${var.subnetName}"
     private_ip_address_allocation = "${var.DynamicIP}"
      public_ip_address_id = "${azurerm_public_ip.publicIP.id}"
   }
