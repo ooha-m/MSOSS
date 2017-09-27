@@ -1,3 +1,18 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "jenkinsSettings": {
+            "type": "object"
+        },
+        "apiVersions": {
+            "type": "object"
+        },
+        "networkSettings": {
+            "type": "object"
+        }
+    },
+    "resources": [
        {
             "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/Extension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
@@ -13,11 +28,13 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "[concat(parameters('jenkinsSettings').installJenkinsScriptUrl)]"
+                        "[concat(parameters('jenkinsSettings').installJenkinsjobsScriptUrl)]"
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('./' , parameters('jenkinsSettings').installJenkinsScriptName, ' -jf \"', reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn, '\" -pi \"', parameters('jenkinsSettings').jenkinsVmPrivateIP, '\" -jrt \"', parameters('jenkinsSettings').jenkinsReleaseType , '\" -al \"', parameters('jenkinsSettings').baseUrl, '\" -st \"', variables('sasToken'), '\"' )]"
+                    "commandToExecute": "sh jenkins_deploy.sh"
                 }
             }
         }
+    ]
+}
