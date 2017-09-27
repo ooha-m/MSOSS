@@ -10,6 +10,9 @@
         },
         "networkSettings": {
             "type": "object"
+        },
+        "storageAccountKey":{
+            "type": "securestring"
         }
     },
     "variables": {
