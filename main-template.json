@@ -44,13 +44,6 @@
                 "description": "vm size"
             }
         },
-        "resourceGroupName": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().name]",
-            "metadata": {
-                "description": "ResourceGroup Name"
-            }
-        },
         "AzureSubscriptionId": {
             "type": "string",
             "defaultValue": "",
@@ -136,6 +129,7 @@
             "buildInstanceVmSize": "[parameters('buildInstanceVmSize')]",
             "ubuntuSku": "16.04-LTS"
         },
+        "resourceGroupName":"[resourceGroup().name]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
@@ -309,7 +303,7 @@
     "outputs": {
         "ResourceGroupName": {
             "type": "string",
-            "value": "[parameters('resourceGroupName')]"
+            "value": "[variables('resourceGroupName')]"
         },
         "VirtualNetworkName": {
             "type": "string",
