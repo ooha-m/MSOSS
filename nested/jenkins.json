@@ -13,6 +13,9 @@
         },
         "storageAccountKey":{
             "type": "securestring"
+        },
+        "resourceGroupName":{
+            "type": "string"
         }
     },
     "variables": {
