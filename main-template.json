@@ -112,7 +112,8 @@
             "installJenkinsScriptName": "install_jenkins.sh",
             "jenkinsReleaseType": "LTS",
             "baseUrl": "[variables('baseUrl')]",
-            "installJenkinsjobsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh')]"
+            "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh')]",
+            "installJenkinsjobsScriptUrl":"[concat(variables('baseUrl'),'scripts/jenkins_deploy.sh')]"
         },
         "buildInstanceSettings": {
             "location": "[variables('location')]",
