@@ -42,4 +42,3 @@ variable "password" {
 description = "virtual machine admin password"
 default = "Password@1234"
 }
-© 2017 GitHub, Inc.
