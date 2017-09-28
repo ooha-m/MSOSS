@@ -28,7 +28,7 @@ default = "sushmitha-jenkins"
 }
 variable "Location"{
  description = "where the vnet is create"
- default = "West Us"
+ default = "East Us"
  }
 variable "DynamicIP"{
 description =  "public_ip_address_allocation dynamic type"
