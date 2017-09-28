@@ -24,7 +24,7 @@ default = "ELK"
 }
 variable "ResourceGroup" {
 description = "name of the resource group which we created the vnet"
-default = "srikala-newterraform"
+default = "sushmitha-jenkins"
 }
 variable "Location"{
  description = "where the vnet is create"
