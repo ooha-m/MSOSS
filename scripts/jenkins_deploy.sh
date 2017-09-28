@@ -12,8 +12,8 @@ echo $api $CRUMB
 echo $CRUMB
 curl -X POST -d '<jenkins><install plugin="packer@current" /></jenkins>' --header 'Content-Type: text/xml' -H "$CRUMB" http://$user:$api@$url/pluginManager/installNecessaryPlugins
 curl -X POST -d '<jenkins><install plugin="terraform@current" /></jenkins>' --header 'Content-Type: text/xml' -H "$CRUMB" http://$user:$api@$url/pluginManager/installNecessaryPlugins
-systemctl restart jenkins && sleep 5
+systemctl restart jenkins && sleep 30
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/packer-config.xml
-sleep 5
+sleep 30
 curl -X POST "http://$admin:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
