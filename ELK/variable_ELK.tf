@@ -1,18 +1,18 @@
 variable "subscription_id" {
 description = "existing subscription id"  
-default = "086ef973-2199-477b-9b40-c3d05c01a287"
+default = ""
 }
 variable "client_id" {
 description = "existing subscription client_id"  
-default = "d4962dd2-e97e-4f3e-aa00-45e202305782"
+default = ""
 }
 variable "client_secret" {
 description = "existing subscription client_secret"  
-default = "+u9VpFP/ZeqpBKuKoLcAUV8vQmB9xwOhi+RZT7Am/Ys="
+default = ""
 }
 variable "tenant_id" {
 description = "existing subscription tenant_id "  
-default = "dcf9e4d3-f44a-4c28-be12-8245c0d35668"
+default = ""
 }
 variable "vnetName"{
 description = "Exisiting virtual network name"
@@ -24,11 +24,11 @@ default = "ELK"
 }
 variable "ResourceGroup" {
 description = "name of the resource group which we created the vnet"
-default = "sushmitha-jenkins"
+default = ""
 }
 variable "Location"{
  description = "where the vnet is create"
- default = "East Us"
+ default = ""
  }
 variable "DynamicIP"{
 description =  "public_ip_address_allocation dynamic type"
