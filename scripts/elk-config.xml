@@ -40,22 +40,16 @@
 client_id = &quot;d4962dd2-e97e-4f3e-aa00-45e202305782&quot;
 client_secret = &quot;+u9VpFP/ZeqpBKuKoLcAUV8vQmB9xwOhi+RZT7Am/Ys=&quot;
 tenant_id = &quot;dcf9e4d3-f44a-4c28-be12-8245c0d35668&quot;
-ResourceGroup = &quot;srikala-newterraform&quot;
+ResourceGroup = &quot;msoss1&quot;
 Location = &quot;west us&quot;
-Vnet_AddressPrefix = &quot;10.0.0.0/16&quot;
-Subnet1 = &quot;10.0.1.0/24&quot;
+vnetName = &quot;MyVNET&quot;
 DynamicIP = &quot;dynamic&quot;
-DynamicDNS = &quot;dns&quot;
+subnetName = &quot;ELK&quot;
 storageAccType = &quot;Standard_LRS&quot;
-uniqueid = &quot;unique&quot;
 vmSize = &quot;Standard_DS1_v2&quot;
-os_type = &quot;linux&quot;
-vmName = &quot;TerraformVM&quot;
+vmName = &quot;ELk_kibanavm&quot;
 userName = &quot;adminuser&quot;
 password = &quot;Password@1234&quot;
-existing_resource_group = &quot;jenkinstestrg&quot;
-existing_storage_acct = &quot;jenkinstestrgdiag334&quot;
-source_img_uri = &quot;https://jenkinstestrgdiag334.blob.core.windows.net/system/Microsoft.Compute/Images/images/packer-osDisk.4457b934-e720-4502-af02-74067092ae1a.vhd&quot;</variables>
       <doDestroy>false</doDestroy>
       <doGetUpdate>true</doGetUpdate>
       <doNotApply>false</doNotApply>
