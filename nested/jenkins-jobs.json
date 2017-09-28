@@ -8,9 +8,7 @@
         "apiVersions": {
             "type": "object"
         },
-        "baseUrl":{
-            "type": "string"
-        },
+    
         "networkSettings": {
             "type": "object"
         }
