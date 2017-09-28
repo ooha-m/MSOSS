@@ -15,7 +15,7 @@
     },
     "resources": [
        {
-            "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/CustomScriptExtension')]",
+            "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/Init')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "[parameters('apiVersions').computeApiVersion]",
             "location": "[parameters('jenkinsSettings').location]",
