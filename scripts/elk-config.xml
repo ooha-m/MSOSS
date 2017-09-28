@@ -61,7 +61,7 @@ source_img_uri = &quot;https://jenkinstestrgdiag334.blob.core.windows.net/system
       <doNotApply>false</doNotApply>
       <config>
         <value>file</value>
-        <fileConfig>/var/lib/jenkins/workspace/ELKJob/oss</fileConfig>
+        <fileConfig>/var/lib/jenkins/workspace/ELKJob/ELK</fileConfig>
         <mode>FILE</mode>
       </config>
       <terraformInstallation>Terraform 0.9.11</terraformInstallation>
