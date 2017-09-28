@@ -103,7 +103,7 @@ resource "azurerm_network_interface" "networkInterfaceElk" {
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   ip_configuration {
     name                          = "configuration1"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnet/${var.subnetName}"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
     private_ip_address_allocation = "${var.DynamicIP}"
      public_ip_address_id = "${azurerm_public_ip.publicIP.id}"
   }
