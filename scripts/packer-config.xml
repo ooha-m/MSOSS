@@ -31,7 +31,7 @@
   <publishers>
     <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.4">
       <name>Packer Ubuntu</name>
-      <jsonTemplate>/var/lib/jenkins/workspace/packer/packer.json</jsonTemplate>
+      <jsonTemplate>/var/lib/jenkins/workspace/PackerBuildJob/packer.json</jsonTemplate>
       <jsonTemplateText></jsonTemplateText>
       <params></params>
       <useDebug>false</useDebug>
