@@ -112,7 +112,7 @@ resource "azurerm_virtual_machine" "mastervm" {
   name                  = "ELk_kibanavm"
   location              = "${var.Location}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
-   network_interface_ids = ["${azurerm_network_interface.networkInterface.id}"]
+   network_interface_ids = ["${azurerm_network_interface.networkInterfaceElk.id}"]
   vm_size               = "${var.vmSize}"
   storage_image_reference {
     publisher = "Canonical"
