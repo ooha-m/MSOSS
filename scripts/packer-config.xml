@@ -8,13 +8,13 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/udaykumartadka/packer.git</url>
+        <url>https://github.com/sysgain/MSOSS.git</url>
         <credentialsId></credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
+        <name>*/staging</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -31,7 +31,7 @@
   <publishers>
     <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.4">
       <name>Packer Ubuntu</name>
-      <jsonTemplate>/var/lib/jenkins/workspace/packerjob/packer1.json</jsonTemplate>
+      <jsonTemplate>/var/lib/jenkins/workspace/packer/packer.json</jsonTemplate>
       <jsonTemplateText></jsonTemplateText>
       <params></params>
       <useDebug>false</useDebug>
