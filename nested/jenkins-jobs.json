@@ -17,14 +17,10 @@
     },
     "resources": [
        {
-            "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/Extension')]",
+            "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/CustomScriptExtension')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "[parameters('apiVersions').computeApiVersion]",
             "location": "[parameters('jenkinsSettings').location]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]",
-                "Microsoft.Compute/virtualMachines/jenkinsserver/extensions/Init"
-            ],
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",
