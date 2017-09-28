@@ -1,5 +1,5 @@
 #!/bin/sh
-srcdir="/usr/share/jenkins/"
+srcdir="/usr/share/jenkins"
 user="admin"
 passwd=`cat /var/lib/jenkins/secrets/initialAdminPassword`
 url="localhost:8080"
