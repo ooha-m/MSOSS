@@ -49,7 +49,7 @@ storageAccType = &quot;Standard_LRS&quot;
 vmSize = &quot;Standard_DS1_v2&quot;
 vmName = &quot;ELk_kibanavm&quot;
 userName = &quot;adminuser&quot;
-password = &quot;Password@1234&quot;
+password = &quot;Password@1234&quot;</variables>
       <doDestroy>false</doDestroy>
       <doGetUpdate>true</doGetUpdate>
       <doNotApply>false</doNotApply>
