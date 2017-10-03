@@ -1,12 +1,4 @@
 {
-  "variables": {
-     "client_id": "d4962dd2-e97e-4f3e-aa00-45e202305782",
-    "client_secret": "+u9VpFP/ZeqpBKuKoLcAUV8vQmB9xwOhi+RZT7Am/Ys=",
-    "resource_group": "oohaNewRG",
-    "storage_account": "oohanewsa",
-    "subscription_id": "7eab3893-bd71-4690-84a5-47624df0b0e5",
-    "tenant_id": "dcf9e4d3-f44a-4c28-be12-8245c0d35668"
-  },
   "builders": [{
     "type": "azure-arm",
 
@@ -36,16 +28,16 @@
   "provisioners": [{
     "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
     "inline": [
-      "apt-get update",
-      "sudo apt-get install openjdk-8-jdk -y",
+     "apt-get update",
+     "sudo apt-get install openjdk-8-jdk -y",
      "addgroup hab",
-"sudo useradd -g hab hab",
-"usermod -aG sudo hab",
-"curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
-"sudo hab sup load learn/mongodb",
-"sudo hab sup config learn/mongodb >> mongodb.toml",
-"hab config apply --peer 127.0.0.1 mongodb.default 1 mongodb.toml",
-"DEBUG=1 hab sup load learn/national-parks --bind database:mongodb.default",
+     "sudo useradd -g hab hab",
+     "usermod -aG sudo hab",
+     "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
+     "sudo hab sup load learn/mongodb",
+     "sudo hab sup config learn/mongodb >> mongodb.toml",
+     "hab config apply --peer 127.0.0.1 mongodb.default 1 mongodb.toml",
+     "DEBUG=1 hab sup load learn/national-parks --bind database:mongodb.default",
     
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
