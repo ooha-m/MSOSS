@@ -20,6 +20,6 @@ wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scri
 wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/org.jenkinsci.plugins.terraform.TerraformBuildWrapper.xml
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd && sleep 30
 curl -X POST "http://$user:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
-curl -X POST "http://$user:$api@$url/createItem?name=PackerBuildJob" --data-binary "@$srcdir/elk-config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
+curl -X POST "http://$user:$api@$url/createItem?name=PackerBuildJob" --data-binary "@$srcdir/packer-config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=AppDeployJob" --data-binary "@$srcdir/elk-config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/elk-config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
