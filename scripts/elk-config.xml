@@ -36,9 +36,9 @@
       <externalDelete></externalDelete>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <org.jenkinsci.plugins.terraform.TerraformBuildWrapper plugin="terraform@1.0.9">
-      <variables>subscription_id = &quot;7eab3893-bd71-4690-84a5-47624df0b0e5&quot;
-client_id = &quot;d4962dd2-e97e-4f3e-aa00-45e202305782&quot;
-client_secret = &quot;+u9VpFP/ZeqpBKuKoLcAUV8vQmB9xwOhi+RZT7Am/Ys=&quot;
+      <variables>subscription_id = &quot;086ef973-2199-477b-9b40-c3d05c01a287&quot;
+client_id = &quot;a382813c-e42b-44da-b84e-33acc27554e9&quot;
+client_secret = &quot;022fd881-d0fa-45f1-99eb-e32cbe428b0d&quot;
 tenant_id = &quot;dcf9e4d3-f44a-4c28-be12-8245c0d35668&quot;
 ResourceGroup = &quot;msoss1&quot;
 Location = &quot;west us&quot;
