@@ -32,7 +32,7 @@ then
 	vmSize= &quot;${11}&quot;
 	vmName= &quot;${12}&quot;
 	userName= &quot;${13}&quot;
-	password= &quot;${14}&quot;" $srcdir/elk-config.xml | sed "s/&amp;//g" > $srcdir/elk-newconfig.xml
+	password= &quot;${14}&quot;" $srcdir/elk-config.xml | sed "s/&amp;quot;/\"/g" > $srcdir/elk-newconfig.xml
 fi
 
 if [ ! -f "packer-config.xml" ]
