@@ -109,11 +109,12 @@
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "jenkinsVmSize": "[parameters('jenkinsVmSize')]",
             "ubuntuSku": "16.04-LTS",
+            "storageAccountType": "Standard_LRS",
             "installJenkinsScriptName": "install_jenkins.sh",
             "jenkinsReleaseType": "LTS",
             "baseUrl": "[variables('baseUrl')]",
             "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh')]",
-            "installJenkinsjobsScriptUrl":"[concat(variables('baseUrl'),'scripts/jenkins_deploy.sh')]"
+            "installJenkinsjobsScriptUrl": "[concat(variables('baseUrl'),'scripts/jenkins_deploy.sh')]"
         },
         "buildInstanceSettings": {
             "location": "[variables('location')]",
@@ -274,6 +275,9 @@
                     },
                     "storageAccountKey": {
                         "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('packerStorageAccountName')), variables('apiVersions').storageApiVersion).keys[0].value]"
+                    },
+                    "packerStorageAccountName": {
+                        "value": "[variables('packerStorageAccountName')]"
                     },
                     "resourceGroupName": {
                         "value": "[variables('resourceGroupName')]"

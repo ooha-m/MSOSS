@@ -8,13 +8,30 @@
         "apiVersions": {
             "type": "object"
         },
-    
         "networkSettings": {
             "type": "object"
+        },
+        "resourceGroupName": {
+            "type": "string"
+        },
+        "AzureSubscriptionId": {
+            "type": "string"
+        },
+        "AzureApplicationId": {
+            "type": "string"
+        },
+        "AzureClientSecret": {
+            "type": "string"
+        },
+        "AzureTenantId": {
+            "type": "string"
+        },
+        "packerStorageAccountName": {
+            "type": "string"
         }
     },
     "resources": [
-       {
+        {
             "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/Init')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "[parameters('apiVersions').computeApiVersion]",
@@ -30,7 +47,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "sh jenkins_deploy.sh"
+                    "commandToExecute": "[concat('sh jenkins_deploy.sh',' ',parameters('AzureSubscriptionId'),' ',parameters('AzureApplicationId'),' ',parameters('AzureClientSecret'),' ',parameters('AzureTenantId'),' ',parameters('resourceGroupName'),' ',parameters('jenkinsSettings').location,' ',parameters('networkSettings').virtualNetworkName,' ',parameters('jenkinsSettings').publicIpAddressType,' ',parameters('networkSettings').subnet3Name,' ',parameters('jenkinsSettings').storageAccountType,' ','Standard_DS1_v2',' ','ELk_kibanavm',' ','adminuser',' ','Password@1234',' ',parameters('packerStorageAccountName'))]"
                 }
             }
         }

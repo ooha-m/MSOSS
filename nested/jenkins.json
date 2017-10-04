@@ -11,14 +11,17 @@
         "networkSettings": {
             "type": "object"
         },
-        "storageAccountKey":{
+        "storageAccountKey": {
             "type": "securestring"
         },
-        "baseUrl":{
+        "packerStorageAccountName": {
             "type": "string"
         },
-        "deploymentApiVersion" : {
-             "type": "string"
+        "baseUrl": {
+            "type": "string"
+        },
+        "deploymentApiVersion": {
+            "type": "string"
         },
         "resourceGroupName": {
             "type": "string"
@@ -196,17 +199,35 @@
                     "networkSettings": {
                         "value": "[parameters('networkSettings')]"
                     },
-                    "jenkinsSettings" :{
+                    "jenkinsSettings": {
                         "value": "[parameters('jenkinsSettings')]"
+                    },
+                    "resourceGroupName": {
+                        "value": "[parameters('resourceGroupName')]"
+                    },
+                    "AzureSubscriptionId": {
+                        "value": "[parameters('AzureSubscriptionId')]"
+                    },
+                    "AzureApplicationId": {
+                        "value": "[parameters('AzureApplicationId')]"
+                    },
+                    "AzureClientSecret": {
+                        "value": "[parameters('AzureClientSecret')]"
+                    },
+                    "AzureTenantId": {
+                        "value": "[parameters('AzureTenantId')]"
+                    },
+                    "packerStorageAccountName": {
+                        "value": "[parameters('packerStorageAccountName')]"
                     }
                 }
             }
         }
     ],
     "outputs": {
-        "jenkinsDNS":{
+        "jenkinsDNS": {
             "type": "string",
-            "value":"[reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn]"
+            "value": "[reference(parameters('jenkinsSettings').jenkinsPipName).dnsSettings.fqdn]"
         }
     }
 }
