@@ -32,19 +32,19 @@ then
 	vmSize= &quot;${11}&quot;
 	vmName= &quot;${12}&quot;
 	userName= &quot;${13}&quot;
-	password= &quot;${14}&quot;" "@$srcdir/elk-config.xml" | sed "s/&amp;//g" > "@$srcdir/elk_config.xml"
+	password= &quot;${14}&quot;" $srcdir/elk-config.xml | sed "s/&amp;//g" > $srcdir/elk-newconfig.xml
 fi
 
 if [ ! -f "packer-config.xml" ]
 then
-	xmlstarlet ed -u '//publishers/biz.neustar.jenkins.plugins.packer.PackerPublisher/params' -v "-var &apos;client_id=$2&apos; -var &apos;client_secret=$3&apos; -var &apos;resource_group=$5&apos; -var &apos;storage_account=${15}&apos; -var &apos;subscription_id=$1&apos; -var &apos;tenant_id=$4&apos;" "@$srcdir/packer-config.xml" | sed "s/amp;//g" > "@$srcdir/packer_config.xml"
+	xmlstarlet ed -u '//publishers/biz.neustar.jenkins.plugins.packer.PackerPublisher/params' -v "-var &apos;client_id=$2&apos; -var &apos;client_secret=$3&apos; -var &apos;resource_group=$5&apos; -var &apos;storage_account=${15}&apos; -var &apos;subscription_id=$1&apos; -var &apos;tenant_id=$4&apos;" $srcdir/packer-config.xml | sed "s/amp;//g" > $srcdir/packer-newconfig.xml
 
 fi
 	
 wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml
 wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/org.jenkinsci.plugins.terraform.TerraformBuildWrapper.xml
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd && sleep 30
-curl -X POST "http://$user:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk_config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
-curl -X POST "http://$user:$api@$url/createItem?name=PackerBuildJob" --data-binary "@$srcdir/packer_config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
-curl -X POST "http://$user:$api@$url/createItem?name=AppDeployJob" --data-binary "@$srcdir/elk_config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
-curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/elk_config.xml" -H "$CRUMB" -H "Content-Type: text/xml"
+curl -X POST "http://$user:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
+curl -X POST "http://$user:$api@$url/createItem?name=PackerBuildJob" --data-binary "@$srcdir/packer-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
+curl -X POST "http://$user:$api@$url/createItem?name=AppDeployJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
+curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
