@@ -16,7 +16,7 @@ curl -X POST -d '<jenkins><install plugin="terraform@current" /></jenkins>' --he
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/packer-config.xml
-
+apt-get install xmlstarlet
 if [ ! -f "elk-config.xml" ]
 then
 	xmlstarlet ed -u '//buildWrappers/org.jenkinsci.plugins.terraform.TerraformBuildWrapper/variables' -v "subscription_id = &quot;$1&quot;
