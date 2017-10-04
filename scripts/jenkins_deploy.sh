@@ -32,12 +32,12 @@ then
 	vmSize= &quot;${11}&quot;
 	vmName= &quot;${12}&quot;
 	userName= &quot;${13}&quot;
-	password= &quot;${14}&quot;" @$srcdir/elk-config.xml | sed "s/&amp;//g" > @$srcdir/elk_config.xml
+	password= &quot;${14}&quot;" "@$srcdir/elk-config.xml" | sed "s/&amp;//g" > "@$srcdir/elk_config.xml"
 fi
 
 if [ ! -f "packer-config.xml" ]
 then
-	xmlstarlet ed -u '//publishers/biz.neustar.jenkins.plugins.packer.PackerPublisher/params' -v "-var &apos;client_id=$2&apos; -var &apos;client_secret=$3&apos; -var &apos;resource_group=$5&apos; -var &apos;storage_account=${15}&apos; -var &apos;subscription_id=$1&apos; -var &apos;tenant_id=$4&apos;" @$srcdir/packer-config.xml | sed "s/amp;//g" >@$srcdir/packer_config.xml
+	xmlstarlet ed -u '//publishers/biz.neustar.jenkins.plugins.packer.PackerPublisher/params' -v "-var &apos;client_id=$2&apos; -var &apos;client_secret=$3&apos; -var &apos;resource_group=$5&apos; -var &apos;storage_account=${15}&apos; -var &apos;subscription_id=$1&apos; -var &apos;tenant_id=$4&apos;" "@$srcdir/packer-config.xml" | sed "s/amp;//g" > "@$srcdir/packer_config.xml"
 
 fi
 	
