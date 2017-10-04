@@ -22,17 +22,17 @@ then
 	xmlstarlet ed -u '//buildWrappers/org.jenkinsci.plugins.terraform.TerraformBuildWrapper/variables' -v "subscription_id = &quot;$1&quot;
 	client_id = &quot;$2&quot;
 	client_secret = &quot;$3&quot;
-	tenant_id= &quot;$4&quot;
-	ResourceGroup= &quot;$5&quot;
-	Location= &quot;$6&quot;
-	vnetName= &quot;$7&quot;
-	DynamicIP= &quot;$8&quot;
-	subnetName= &quot;$9&quot;
-	storageAccType= &quot;${10}&quot;
-	vmSize= &quot;${11}&quot;
-	vmName= &quot;${12}&quot;
-	userName= &quot;${13}&quot;
-	password= &quot;${14}&quot;" $srcdir/elk-config.xml | sed "s/&amp;quot;/\"/g" > $srcdir/elk-newconfig.xml
+	tenant_id = &quot;$4&quot;
+	ResourceGroup = &quot;$5&quot;
+	Location = &quot;$6&quot;
+	vnetName = &quot;$7&quot;
+	DynamicIP = &quot;$8&quot;
+	subnetName = &quot;$9&quot;
+	storageAccType = &quot;${10}&quot;
+	vmSize = &quot;${11}&quot;
+	vmName = &quot;${12}&quot;
+	userName = &quot;${13}&quot;
+	password = &quot;${14}&quot;" $srcdir/elk-config.xml | sed "s/&amp;quot;/\"/g" > $srcdir/elk-newconfig.xml
 fi
 
 if [ ! -f "packer-config.xml" ]
