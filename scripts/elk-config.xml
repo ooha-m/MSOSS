@@ -36,20 +36,7 @@
       <externalDelete></externalDelete>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <org.jenkinsci.plugins.terraform.TerraformBuildWrapper plugin="terraform@1.0.9">
-      <variables>subscription_id = &quot;086ef973-2199-477b-9b40-c3d05c01a287&quot;
-client_id = &quot;a382813c-e42b-44da-b84e-33acc27554e9&quot;
-client_secret = &quot;022fd881-d0fa-45f1-99eb-e32cbe428b0d&quot;
-tenant_id = &quot;dcf9e4d3-f44a-4c28-be12-8245c0d35668&quot;
-ResourceGroup = &quot;msoss1&quot;
-Location = &quot;west us&quot;
-vnetName = &quot;MyVNET&quot;
-DynamicIP = &quot;dynamic&quot;
-subnetName = &quot;ELK&quot;
-storageAccType = &quot;Standard_LRS&quot;
-vmSize = &quot;Standard_DS1_v2&quot;
-vmName = &quot;ELk_kibanavm&quot;
-userName = &quot;adminuser&quot;
-password = &quot;Password@1234&quot;</variables>
+      <variables> </variables>
       <doDestroy>false</doDestroy>
       <doGetUpdate>true</doGetUpdate>
       <doNotApply>false</doNotApply>
