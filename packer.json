@@ -28,16 +28,9 @@
   "provisioners": [{
     "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
     "inline": [
-     "apt-get update",
-     "sudo apt-get install openjdk-8-jdk -y",
-     "addgroup hab",
-     "sudo useradd -g hab hab",
-     "usermod -aG sudo hab",
-     "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
-     "sudo hab sup load learn/mongodb",
-     "sudo hab sup config learn/mongodb >> mongodb.toml",
-     "hab config apply --peer 127.0.0.1 mongodb.default 1 mongodb.toml",
-     "DEBUG=1 hab sup load learn/national-parks --bind database:mongodb.default",
+      "apt-get update",
+      "sudo apt-get install openjdk-8-jdk -y",
+      "curl https://github.com/sysgain/MSOSS/blob/staging/scripts/run_mongodb.sh",
     
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
