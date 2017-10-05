@@ -14,6 +14,8 @@ curl -X POST -d '<jenkins><install plugin="packer@current" /></jenkins>' --heade
 curl -X POST -d '<jenkins><install plugin="terraform@current" /></jenkins>' --header 'Content-Type: text/xml' -H "$CRUMB" http://$user:$api@$url/pluginManager/installNecessaryPlugins
 #systemctl restart jenkins && sleep 30
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd
+#creating jenkins user
+echo "jenkins.model.Jenkins.instance.securityRealm.createAccount("\'"jenkinsadmin"\'","\'"Password@1234"\'")" | java -jar $srcdir/jenkins-cli.jar -auth admin:`cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080 groovy =
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/packer-config.xml
 apt-get install xmlstarlet
