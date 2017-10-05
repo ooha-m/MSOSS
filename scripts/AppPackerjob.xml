@@ -30,7 +30,7 @@
   <publishers>
     <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.4">
       <name>Packer 1.1.0</name>
-      <jsonTemplate>/var/lib/jenkins/workspace/AppPackerjob/packer.json</jsonTemplate>
+      <jsonTemplate>/var/lib/jenkins/workspace/AppPackerjob/appjob_packer.json</jsonTemplate>
       <jsonTemplateText></jsonTemplateText>
       <params> </params>
       <useDebug>false</useDebug>
