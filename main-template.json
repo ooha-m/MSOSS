@@ -336,6 +336,14 @@
             "type": "string",
             "value": "[reference('Jenkins').outputs.jenkinsDNS.value]"
         },
+        "JenkinsWebUIUsername":{
+            "type": "string",
+            "value": "jenkinsadmin"
+        },
+        "JenkinsWebUIPassword":{
+            "type": "string",
+            "value": "Password4321"
+        },
         "StorageAccountName": {
             "type": "string",
             "value": "[variables('packerStorageAccountName')]"
