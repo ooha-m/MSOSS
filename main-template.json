@@ -332,7 +332,7 @@
             "type": "string",
             "value": "[variables('networkSettings').virtualNetworkName]"
         },
-        "JenkinsDNS": {
+        "JenkinsFQDN": {
             "type": "string",
             "value": "[reference('Jenkins').outputs.jenkinsDNS.value]"
         },
