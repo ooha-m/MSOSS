@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>This will bring up MongoDB Server Environment on Azure</description>
+  <description>This will bring up APP Server Environment on Azure</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
@@ -42,7 +42,7 @@
       <doNotApply>false</doNotApply>
       <config>
         <value>file</value>
-        <fileConfig>/var/lib/jenkins/workspace/MongoDBTerraformjob/ELK</fileConfig>
+        <fileConfig>/var/lib/jenkins/workspace/AppTerraformjob/ELK</fileConfig>
         <mode>FILE</mode>
       </config>
       <terraformInstallation>Terraform 0.9.11</terraformInstallation>
