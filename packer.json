@@ -38,7 +38,7 @@
     "inline": [
       "apt-get update",
       "sudo apt-get install openjdk-8-jdk -y",
-      "curl https://github.com/sysgain/MSOSS/blob/staging/scripts/run_mongodb.sh",
+      "curl https://github.com/sysgain/MSOSS/blob/staging/scripts/run_mongodb.sh --location /root/",
     
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
