@@ -30,7 +30,7 @@
     "inline": [
       "apt-get update",
       "sudo apt-get install openjdk-8-jdk -y",
-      "wget https://github.com/sysgain/MSOSS/blob/staging/scripts/run_national-parks.sh",
+      "sudo wget https://github.com/sysgain/MSOSS/blob/staging/scripts/run_national-parks.sh",
     
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
