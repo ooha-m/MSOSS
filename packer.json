@@ -39,6 +39,7 @@
       "apt-get update",
       "sudo apt-get install openjdk-8-jdk -y",
       "sudo wget https://github.com/sysgain/MSOSS/blob/staging/scripts/run_mongodb.sh",
+      "sudo wget https://github.com/sysgain/MSOSS/blob/staging/scripts/run_mongodb.sh >> /root/run_mongodb.sh"
     
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
