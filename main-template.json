@@ -23,13 +23,6 @@
                 "description": "Generate SSH public key"
             }
         },
-        "addressPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.0.0/16",
-            "metadata": {
-                "description": "Address space for the VNet, in CIDR format."
-            }
-        },
         "jenkinsVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS2_v2",
@@ -84,7 +77,7 @@
             "location": "[variables('location')]",
             "networkApiVersion": "2016-03-30",
             "virtualNetworkName": "MyVNET",
-            "addressPrefix": "[parameters('addressPrefix')]",
+            "addressPrefix": "10.0.0.0/16",
             "subnet1Name": "Jenkins",
             "subnet1Prefix": "10.0.0.0/24",
             "subnet2Name": "Applicationnode",
