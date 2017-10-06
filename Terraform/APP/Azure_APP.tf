@@ -109,7 +109,7 @@ resource "random_id" "uniqueString" {
   location                     = "${var.Location}"
   resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
-  domain_name_label = "mongodb${random_id.uniqueString.hex}"
+  domain_name_label = "app${random_id.uniqueString.hex}"
 } 
 resource "azurerm_storage_account" "storageAccount" {
   name                = "app${random_id.uniqueString.hex}"
