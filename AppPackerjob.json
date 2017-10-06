@@ -41,8 +41,9 @@
       "addgroup hab",
       "sudo useradd -g hab hab",
       "usermod -aG sudo hab",
+      "mkdir /scripts",
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
-      "sudo wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
+      "sudo wget -O /scripts/run_mongodb.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
     
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
