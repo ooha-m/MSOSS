@@ -1,38 +1,38 @@
 variable "subscription_id" {
 description = "existing subscription id"  
-default = "2927c217-b119-4d3b-8a13-82a1c3a16c8f"
+default = ""
 }
 variable "client_id" {
 description = "existing subscription client_id"  
-default = "fc0e45c9-76c0-4e9c-b4bf-381fd2acfbc3"
+default = ""
 }
 variable "client_secret" {
 description = "existing subscription client_secret"  
-default = "0BdttJadN16NvcjO5gp8+xH3Xg33IHghh96jXbktrZE="
+default = ""
 }
 variable "tenant_id" {
 description = "existing subscription tenant_id "  
-default = "ac12acb5-a79a-4ca7-87eb-c5e6ebbbcd38"
+default = ""
 }
 variable "vnetName"{
 description = "Exisiting virtual network name"
-default = "MyVNET"
+default = ""
 }
 variable "subnetName" {
 description = "Exisiting subnet name"
-default = "DB"
+default = ""
 }
 variable "ResourceGroup" {
 description = "name of the resource group which we created the vnet"
-default = "vtesting1"
+default = ""
 }
 variable "Location"{
  description = "where the vnet is create"
- default = "west us"
+ default = ""
  }
 variable "DynamicIP"{
 description =  "public_ip_address_allocation dynamic type"
-default = "dynamic"
+default = ""
 }
 variable "storageAccType"{
 description = "storage account type"
@@ -44,13 +44,13 @@ default = "Standard_DS1_v2"
 }
 variable "vmName" {
 description = "virtual machine name"
-default = "Mogodbvm"
+default = ""
 }
 variable "userName" {
  description = "virtual machine admin user name"
- default = "adminuser"
+ default = ""
 }
 variable "password" {
 description = "virtual machine admin password"
-default = "Password@1234"
+default = ""
 }
