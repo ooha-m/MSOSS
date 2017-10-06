@@ -18,7 +18,7 @@ resource "azurerm_network_security_rule" "SSH" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
 resource "azurerm_network_security_rule" "app" {
   name                        = "app"
@@ -31,7 +31,7 @@ resource "azurerm_network_security_rule" "app" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
 resource "azurerm_network_security_rule" "habsup3" {
   name                        = "habsup3nsg"
@@ -44,7 +44,7 @@ resource "azurerm_network_security_rule" "habsup3" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
 resource "azurerm_network_security_rule" "habsup4" {
   name                        = "habsup4nsg"
@@ -57,7 +57,7 @@ resource "azurerm_network_security_rule" "habsup4" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
 resource "azurerm_network_security_rule" "sshOut" {
   name                        = "SSHOut"
@@ -70,7 +70,7 @@ resource "azurerm_network_security_rule" "sshOut" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
 resource "azurerm_network_security_rule" "elastic" {
   name                        = "Elastic"
@@ -83,7 +83,7 @@ resource "azurerm_network_security_rule" "elastic" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
 resource "azurerm_network_security_rule" "logStash" {
   name                        = "Logstash"
@@ -96,7 +96,7 @@ resource "azurerm_network_security_rule" "logStash" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
 resource "random_id" "uniqueString" {
   keepers = {
