@@ -2,8 +2,8 @@ resource "azurerm_resource_group" "resourceGroup" {
   name     =  "${var.ResourceGroup}"
   location = "${var.Location}"
 }
-resource "azurerm_network_security_group" "Nsg" {
-  name                = "nsg"
+resource "azurerm_network_security_group" "MongodbNsg" {
+  name                = "mongodbnsg"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 }
@@ -20,14 +20,40 @@ resource "azurerm_network_security_rule" "SSH" {
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
 }
-resource "azurerm_network_security_rule" "kibana" {
-  name                        = "kibana"
+resource "azurerm_network_security_rule" "mongodb" {
+  name                        = "mongodb"
   priority                    = 300
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "80"
+  destination_port_range      = "27017"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
+  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+}
+resource "azurerm_network_security_rule" "habsup1" {
+  name                        = "habsup1nsg"
+  priority                    = 600
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9631"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
+  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+}
+resource "azurerm_network_security_rule" "habsup2" {
+  name                        = "habsup1nsg"
+  priority                    = 600
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9638"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
@@ -74,7 +100,7 @@ resource "azurerm_network_security_rule" "logStash" {
 }
 resource "random_id" "uniqueString" {
   keepers = {
-    uniqueid = "domain"
+    uniqueid = "mongodb"
   }
   byte_length = 6
 }
@@ -97,8 +123,8 @@ resource "azurerm_storage_container" "storageContainer" {
   storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
   container_access_type = "private"
 }
-resource "azurerm_network_interface" "networkInterfaceElk" {
-  name                = "NetworkinterfaceELK"
+resource "azurerm_network_interface" "networkInterfaceMongoDB" {
+  name                = "NetworkinterfaceMongoDB"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   ip_configuration {
@@ -109,7 +135,7 @@ resource "azurerm_network_interface" "networkInterfaceElk" {
   }
 }
 resource "azurerm_virtual_machine" "mastervm" {
-  name                  = "ELk_kibanavm"
+  name                  = "MongoDBVM"
   location              = "${var.Location}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
    network_interface_ids = ["${azurerm_network_interface.networkInterfaceElk.id}"]

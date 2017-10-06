@@ -34,6 +34,10 @@ variable "DynamicIP"{
 description =  "public_ip_address_allocation dynamic type"
 default = "dynamic"
 }
+variable "StaticIP" {
+description =  "public_ip_address_allocation static type"
+default = "static"
+}
 variable "storageAccType"{
 description = "storage account type"
 default = "Standard_LRS"
