@@ -19,5 +19,5 @@ then
         echo "hab-sup process killed"
 else
         echo "hab-sup process is not running"
-        nohup hab sup start core/mongodb >> sup-mongodb.log &
+        nohup hab sup start core/mongodb >> sup-mongodb.log 2>1 &
 fi
