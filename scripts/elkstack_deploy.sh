@@ -1,6 +1,9 @@
 #!/bin/bash
 
 sudo add-apt-repository -y ppa:webupd8team/java
+# Enable silent install
+echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
 sudo apt-get update
 sudo apt-get -y install oracle-java8-installer
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
