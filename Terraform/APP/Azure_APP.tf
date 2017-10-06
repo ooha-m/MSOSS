@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "resourceGroup" {
   location = "${var.Location}"
 }
 resource "azurerm_network_security_group" "AppNsg" {
-  name                = "nsg"
+  name                = "appnsg"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 }
@@ -18,10 +18,10 @@ resource "azurerm_network_security_rule" "SSH" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
-resource "azurerm_network_security_rule" "App" {
-  name                        = "App"
+resource "azurerm_network_security_rule" "app" {
+  name                        = "app"
   priority                    = 300
   direction                   = "Inbound"
   access                      = "Allow"
@@ -31,7 +31,33 @@ resource "azurerm_network_security_rule" "App" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+}
+resource "azurerm_network_security_rule" "habsup3" {
+  name                        = "habsup3nsg"
+  priority                    = 600
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9631"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
+}
+resource "azurerm_network_security_rule" "habsup4" {
+  name                        = "habsup4nsg"
+  priority                    = 700
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9638"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "sshOut" {
   name                        = "SSHOut"
@@ -44,7 +70,7 @@ resource "azurerm_network_security_rule" "sshOut" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "elastic" {
   name                        = "Elastic"
@@ -57,7 +83,7 @@ resource "azurerm_network_security_rule" "elastic" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "logStash" {
   name                        = "Logstash"
@@ -70,20 +96,20 @@ resource "azurerm_network_security_rule" "logStash" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "random_id" "uniqueString" {
   keepers = {
-    uniqueid = "domain"
+    uniqueid = "mongodb"
   }
   byte_length = 6
 }
- resource "azurerm_public_ip" "publicIP" {
-  name                         = "publicip"
+ resource "azurerm_public_ip" "apppublicIP" {
+  name                         = "apppublicip"
   location                     = "${var.Location}"
   resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
-  domain_name_label = "dns${random_id.uniqueString.hex}"
+  domain_name_label = "mongodb${random_id.uniqueString.hex}"
 } 
 resource "azurerm_storage_account" "storageAccount" {
   name                = "app${random_id.uniqueString.hex}"
@@ -97,22 +123,22 @@ resource "azurerm_storage_container" "storageContainer" {
   storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
   container_access_type = "private"
 }
-resource "azurerm_network_interface" "networkInterfaceElk" {
-  name                = "NetworkinterfaceELK"
+resource "azurerm_network_interface" "networkInterfaceApp" {
+  name                = "NetworkinterfaceApp"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   ip_configuration {
     name                          = "configuration1"
     subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
     private_ip_address_allocation = "${var.DynamicIP}"
-     public_ip_address_id = "${azurerm_public_ip.publicIP.id}"
+     public_ip_address_id = "${azurerm_public_ip.apppublicIP.id}"
   }
 }
-resource "azurerm_virtual_machine" "app" {
-  name                  = "appnode"
+resource "azurerm_virtual_machine" "mastervm" {
+  name                  = "AppNode"
   location              = "${var.Location}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
-   network_interface_ids = ["${azurerm_network_interface.networkInterfaceElk.id}"]
+  network_interface_ids = ["${azurerm_network_interface.networkInterfaceApp.id}"]
   vm_size               = "${var.vmSize}"
   storage_image_reference {
     publisher = "Canonical"
@@ -135,7 +161,7 @@ resource "azurerm_virtual_machine" "app" {
   }
 
  os_profile {
-    computer_name  = "mastervm"
+    computer_name  = "Appnode"
     admin_username = "${var.userName}"
     admin_password = "${var.password}"
   }
@@ -166,5 +192,5 @@ EOF
     }
 }
 output "DNSName" {
-    value = "${azurerm_public_ip.publicIP.domain_name_label}.westus.cloudapp.azure.com}"
+    value = "${azurerm_public_ip.apppublicIP.domain_name_label}.westus.cloudapp.azure.com}"
 }
