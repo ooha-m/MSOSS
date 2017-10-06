@@ -45,7 +45,7 @@
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
       "wget -O /scripts/run_mongodb.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_mongodb.sh",
       "chmod +x /scripts/run_mongodb.sh",
-      "sed -i -e '13i/scripts/run_mongodb.sh\' /etc/rc.local",
+      "sed -i -e '13i/scripts/run_mongodb.sh\\' /etc/rc.local",
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
     "inline_shebang": "/bin/sh -x",
