@@ -16,11 +16,11 @@ default = ""
 }
 variable "vnetName"{
 description = "Exisiting virtual network name"
-default = "MyVNET"
+default = ""
 }
 variable "subnetName" {
 description = "Exisiting subnet name"
-default = "ELK"
+default = ""
 }
 variable "ResourceGroup" {
 description = "name of the resource group which we created the vnet"
@@ -32,7 +32,7 @@ variable "Location"{
  }
 variable "DynamicIP"{
 description =  "public_ip_address_allocation dynamic type"
-default = "dynamic"
+default = ""
 }
 variable "storageAccType"{
 description = "storage account type"
@@ -44,13 +44,13 @@ default = "Standard_DS1_v2"
 }
 variable "vmName" {
 description = "virtual machine name"
-default = "ELk_kibanavm"
+default = ""
 }
 variable "userName" {
  description = "virtual machine admin user name"
- default = "adminuser"
+ default = ""
 }
 variable "password" {
 description = "virtual machine admin password"
-default = "Password@1234"
+default = ""
 }
