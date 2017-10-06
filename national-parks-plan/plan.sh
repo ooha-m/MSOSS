@@ -1,10 +1,10 @@
 pkg_name=national-parks
 pkg_description="A sample JavaEE Web app deployed in the Tomcat8 package"
-pkg_origin=sysgainoss
-pkg_version=0.1.0
-pkg_maintainer="sysgain"
+pkg_origin=oss
+pkg_version=0.1.1
+pkg_maintainer="oss <ossnoreply@sysgain.com>"
 pkg_license=('Apache-2.0')
-pkg_source=https://github.com/sysgain/national-parks
+pkg_source=https://github.com/sysgain/MSOSS
 pkg_deps=(core/tomcat8 core/jdk8 core/mongo-tools)
 pkg_build_deps=(core/git core/maven)
 pkg_expose=(8080)
@@ -24,7 +24,7 @@ do_download()
 
     mkdir ${pkg_dirname}
     cd ${pkg_dirname}
-    GIT_SSL_NO_VERIFY=true git clone --branch master https://github.com/sysgain/national-parks.git
+    GIT_SSL_NO_VERIFY=true git clone --branch ${pkg_name} https://github.com/sysgain/MSOSS.git
     return 0
 }
 
@@ -63,7 +63,7 @@ do_install()
     local source_dir="${HAB_CACHE_SRC_PATH}/${pkg_dirname}/${pkg_filename}"
     local webapps_dir="$(hab pkg path core/tomcat8)/tc/webapps"
     cp ${source_dir}/target/${pkg_filename}.war ${webapps_dir}/
-
+    cp ${source_dir}/target/${pkg_filename}.war ${PREFIX}/
     # Copy our seed data so that it can be loaded into Mongo using our init hook
     cp -v ${source_dir}/national-parks.json ${PREFIX}/
 }
