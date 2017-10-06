@@ -19,5 +19,5 @@ then
         echo "hab-sup process killed"
 else
         echo "hab-sup process is not running"
-        nohup hab sup start sysgainoss/national-parks >> sup-national-parks.log &
+        nohup hab sup start sysgainoss/national-parks >> sup-national-parks.log 2>1 &
 fi
