@@ -2,8 +2,8 @@
   "variables": {
      "client_id": "d4962dd2-e97e-4f3e-aa00-45e202305782",
     "client_secret": "+u9VpFP/ZeqpBKuKoLcAUV8vQmB9xwOhi+RZT7Am/Ys=",
-    "resource_group": "ooha",
-    "storage_account": "oohasa1",
+    "resource_group": "ooha-app",
+    "storage_account": "oohasa",
     "subscription_id": "7eab3893-bd71-4690-84a5-47624df0b0e5",
     "tenant_id": "dcf9e4d3-f44a-4c28-be12-8245c0d35668"
   },
