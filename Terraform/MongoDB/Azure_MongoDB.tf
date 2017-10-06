@@ -18,7 +18,7 @@ resource "azurerm_network_security_rule" "SSH" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "mongodb" {
   name                        = "mongodb"
@@ -31,7 +31,7 @@ resource "azurerm_network_security_rule" "mongodb" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "habsup1" {
   name                        = "habsup1nsg"
@@ -44,11 +44,11 @@ resource "azurerm_network_security_rule" "habsup1" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "habsup2" {
   name                        = "habsup1nsg"
-  priority                    = 600
+  priority                    = 700
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
@@ -57,7 +57,7 @@ resource "azurerm_network_security_rule" "habsup2" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "sshOut" {
   name                        = "SSHOut"
@@ -70,7 +70,7 @@ resource "azurerm_network_security_rule" "sshOut" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "elastic" {
   name                        = "Elastic"
@@ -83,7 +83,7 @@ resource "azurerm_network_security_rule" "elastic" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "azurerm_network_security_rule" "logStash" {
   name                        = "Logstash"
@@ -96,7 +96,7 @@ resource "azurerm_network_security_rule" "logStash" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
-  network_security_group_name = "${azurerm_network_security_group.Nsg.name}"
+  network_security_group_name = "${azurerm_network_security_group.MongodbNsg.name}"
 }
 resource "random_id" "uniqueString" {
   keepers = {
@@ -104,15 +104,15 @@ resource "random_id" "uniqueString" {
   }
   byte_length = 6
 }
- resource "azurerm_public_ip" "publicIP" {
-  name                         = "publicip"
+ resource "azurerm_public_ip" "mongodbpublicIP" {
+  name                         = "mongodbpublicip"
   location                     = "${var.Location}"
   resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
-  domain_name_label = "dns${random_id.uniqueString.hex}"
+  domain_name_label = "mongodb${random_id.uniqueString.hex}"
 } 
 resource "azurerm_storage_account" "storageAccount" {
-  name                = "elk${random_id.uniqueString.hex}"
+  name                = "mongodb${random_id.uniqueString.hex}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   location     = "${var.Location}"
   account_type = "${var.storageAccType}"
@@ -131,14 +131,14 @@ resource "azurerm_network_interface" "networkInterfaceMongoDB" {
     name                          = "configuration1"
     subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
     private_ip_address_allocation = "${var.DynamicIP}"
-     public_ip_address_id = "${azurerm_public_ip.publicIP.id}"
+     public_ip_address_id = "${azurerm_public_ip.mongodbpublicIP.id}"
   }
 }
 resource "azurerm_virtual_machine" "mastervm" {
   name                  = "MongoDBVM"
   location              = "${var.Location}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
-   network_interface_ids = ["${azurerm_network_interface.networkInterfaceElk.id}"]
+  network_interface_ids = ["${azurerm_network_interface.networkInterfaceMongoDB.id}"]
   vm_size               = "${var.vmSize}"
   storage_image_reference {
     publisher = "Canonical"
@@ -192,5 +192,5 @@ EOF
     }
 }
 output "DNSName" {
-    value = "${azurerm_public_ip.publicIP.domain_name_label}.westus.cloudapp.azure.com}"
+    value = "${azurerm_public_ip.mongodbpublicIP.domain_name_label}.westus.cloudapp.azure.com}"
 }
