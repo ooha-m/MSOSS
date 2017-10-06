@@ -42,7 +42,7 @@
       <doNotApply>false</doNotApply>
       <config>
         <value>file</value>
-        <fileConfig>/var/lib/jenkins/workspace/AppTerraformjob/ELK</fileConfig>
+        <fileConfig>/var/lib/jenkins/workspace/AppTerraformjob/Terraform/APP</fileConfig>
         <mode>FILE</mode>
       </config>
       <terraformInstallation>Terraform 0.9.11</terraformInstallation>
