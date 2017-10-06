@@ -30,7 +30,7 @@
   <publishers>
     <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.4">
       <name>Packer 1.1.0</name>
-      <jsonTemplate>/var/lib/jenkins/workspace/MongoDBPackerjob/MongoDBPackerjob.json</jsonTemplate>
+      <jsonTemplate>/var/lib/jenkins/workspace/MongoDBPackerjob/Packer/MongoDBPackerjob.json</jsonTemplate>
       <jsonTemplateText></jsonTemplateText>
       <params> </params>
       <useDebug>false</useDebug>
