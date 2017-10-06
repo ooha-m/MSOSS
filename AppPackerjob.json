@@ -44,7 +44,8 @@
       "mkdir /scripts",
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
       "sudo wget -O /scripts/run_national-parks.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
-    
+      "chmod +x /scripts/run_national-parks.sh",
+      "sed -i -e '13i/scripts/run_national-parks.sh\\' /etc/rc.local",
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
     "inline_shebang": "/bin/sh -x",
