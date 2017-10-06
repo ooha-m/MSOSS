@@ -27,8 +27,7 @@ sudo apt-get -y install nginx
 sudo -v
 #echo "kibanaadmin:`openssl passwd -apr1`" | sudo tee -a /etc/nginx/htpasswd.users  # need to pass the password and confirm password
 echo "admin:`openssl passwd -apr1 'Password4321'`" | sudo tee -a /etc/nginx/htpasswd.users
-echo "" > default
-#sed -i 's/example.com/ELk_kibanavm.com/g' /etc/nginx/sites-available/default
+cat /dev/null > /etc/nginx/sites-available/default
 wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/default -O /etc/nginx/sites-available/default
 
 sudo nginx -t
