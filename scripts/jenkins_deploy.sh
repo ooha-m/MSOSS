@@ -15,8 +15,7 @@ curl -X POST -d '<jenkins><install plugin="terraform@current" /></jenkins>' --he
 #systemctl restart jenkins && sleep 30
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd
 #creating jenkins user
-#cd $srcdir
-echo "jenkins.model.Jenkins.instance.securityRealm.createAccount("\'"jenkinsadmin"\'","\'"Password@1234"\'")" | java -jar $srcdir/jenkins-cli.jar -auth admin:`cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080 groovy =
+echo "jenkins.model.Jenkins.instance.securityRealm.createAccount("\'"jenkinsadmin"\'","\'"Password4321"\'")" | java -jar $srcdir/jenkins-cli.jar -auth admin:`cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080 groovy =
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/MongoDBTerraformjob.xml
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/AppTerraformjob.xml
