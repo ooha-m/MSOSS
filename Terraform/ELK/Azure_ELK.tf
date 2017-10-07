@@ -74,7 +74,7 @@ resource "azurerm_network_security_rule" "logStash" {
 }
 resource "random_id" "uniqueString" {
   keepers = {
-    uniqueid = "domain"
+    uniqueid = "kibana"
   }
   byte_length = 6
 }
@@ -83,7 +83,7 @@ resource "random_id" "uniqueString" {
   location                     = "${var.Location}"
   resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
-  domain_name_label = "dns${random_id.uniqueString.hex}"
+  domain_name_label = "elk${random_id.uniqueString.hex}"
 } 
 resource "azurerm_storage_account" "storageAccount" {
   name                = "elk${random_id.uniqueString.hex}"
@@ -109,7 +109,7 @@ resource "azurerm_network_interface" "networkInterfaceElk" {
   }
 }
 resource "azurerm_virtual_machine" "mastervm" {
-  name                  = "ELk_kibanavm"
+  name                  = "ELK_KibanaVM"
   location              = "${var.Location}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
    network_interface_ids = ["${azurerm_network_interface.networkInterfaceElk.id}"]
@@ -135,7 +135,7 @@ resource "azurerm_virtual_machine" "mastervm" {
   }
 
  os_profile {
-    computer_name  = "mastervm"
+    computer_name  = "elk-kibana"
     admin_username = "${var.userName}"
     admin_password = "${var.password}"
   }
