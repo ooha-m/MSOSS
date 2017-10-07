@@ -1,72 +1,84 @@
 #!/bin/bash
+#Date - 06102017
+#Developer - Sysgain
 
-sudo add-apt-repository -y ppa:webupd8team/java
-sudo apt-get update
-# Enable silent install
+DATE=`date +%Y%m%d%T`
+LOG=/tmp/elkstack_deploy.log.$DATE
+HOSTIP=`hostname -i`
+
+# Configure Repos for Java, Elasticsearch, Kibana Packages
+echo "---Configure Repos for Java, Elasticsearch, Kibana Packages---"	>> $LOG
+sudo add-apt-repository -y ppa:webupd8team/java >> $LOG
+wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - >> $LOG
+echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list >> $LOG
+echo "deb http://packages.elastic.co/kibana/4.5/debian stable main" | sudo tee -a /etc/apt/sources.list >> $LOG
+echo "deb http://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list >> $LOG
+
+# Enable silent installation
+echo "---Enable silent installation---"	>> $LOG
 echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-sudo apt-get -y install oracle-java8-installer
-wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+
+# Repository Updates 
+echo "---Repository Updates---"	>> $LOG
 sudo apt-get update
-sudo apt-get -y install elasticsearch
-sed -i 's/#network.host: 192.168.0.1/network.host: localhost/g' /etc/elasticsearch/elasticsearch.yml
-sudo systemctl restart elasticsearch
-sudo systemctl daemon-reload
-sudo systemctl enable elasticsearch
 
-#install kibana
-echo "deb http://packages.elastic.co/kibana/4.5/debian stable main" | sudo tee -a /etc/apt/sources.list
-sudo apt-get update
-sudo apt-get -y install kibana
-sed -i 's/# server.host: "0.0.0.0"/ server.host: "localhost"/g' /opt/kibana/config/kibana.yml
-#enable the Kibana service
-sudo systemctl daemon-reload
-sudo systemctl enable kibana
-sudo systemctl start kibana
+#Installing Packages for ELK Stack
+echo "---Installing Packages for ELK Stack---"	>> $LOG
+sudo apt-get -y install oracle-java8-installer elasticsearch kibana nginx logstash unzip >> $LOG
 
-#Install Nginx
-sudo apt-get -y install nginx
-sudo -v
-#echo "kibanaadmin:`openssl passwd -apr1`" | sudo tee -a /etc/nginx/htpasswd.users  # need to pass the password and confirm password
-echo "admin:`openssl passwd -apr1 'Password4321'`" | sudo tee -a /etc/nginx/htpasswd.users
-cat /dev/null > /etc/nginx/sites-available/default
-wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/default -O /etc/nginx/sites-available/default
+#Configuring Elasticsearch
+echo "---Configuring Elasticsearch---" >> $LOG
+sed -i 's/#network.host: 192.168.0.1/network.host: localhost/g' /etc/elasticsearch/elasticsearch.yml >> $LOG
+sudo systemctl restart elasticsearch >> $LOG
+sudo systemctl daemon-reload >> $LOG
+sudo systemctl enable elasticsearch >> $LOG 
 
-sudo nginx -t
-sudo systemctl restart nginx
-sudo ufw allow 'Nginx Full'
+#Configuring Kibana
+echo "---Configuring Kibana---" >> $LOG
+sed -i 's/# server.host: "0.0.0.0"/ server.host: "localhost"/g' /opt/kibana/config/kibana.yml >> $LOG
+sudo systemctl daemon-reload >> $LOG
+sudo systemctl enable kibana >> $LOG
+sudo systemctl start kibana >> $LOG
 
-#Install Logstash
-echo "deb http://packages.elastic.co/logstash/2.3/debian stable main" | sudo tee -a /etc/apt/sources.list
-sudo apt-get update
-sudo apt-get install logstash
+#Configuring Nginx
+echo "---Configuring Nginx---" >> $LOG
+sudo -v >> $LOG
+echo "admin:`openssl passwd -apr1 'Password4321'`" | sudo tee -a /etc/nginx/htpasswd.users >> $LOG
+cat /dev/null > /etc/nginx/sites-available/default >> $LOG
+wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/default -O /etc/nginx/sites-available/default >> $LOG
+sudo nginx -t >> $LOG
+sudo systemctl restart nginx >> $LOG
+sudo ufw allow 'Nginx Full' >> $LOG
 
 #Generate SSL Certificates
-sudo mkdir -p /etc/pki/tls/certs
-sudo mkdir /etc/pki/tls/private
-sed -i '/\[ v3_ca \]/a subjectAltName = IP: 10.0.2.4' /etc/ssl/openssl.cnf
-cd /etc/pki/tls
-sudo openssl req -config /etc/ssl/openssl.cnf -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+echo "---Generate SSL Certificates---" >> $LOG
+sudo mkdir -p /etc/pki/tls/certs >> $LOG
+sudo mkdir /etc/pki/tls/private >> $LOG
+sed -i "/\[ v3_ca \]/a subjectAltName = IP: $HOSTIP" /etc/ssl/openssl.cnf >> $LOG
+cd /etc/pki/tls >> $LOG
+sudo openssl req -config /etc/ssl/openssl.cnf -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt >> $LOG
 
-#Configure Logstash
-wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/02-beats-input.conf -O /etc/logstash/conf.d/02-beats-input.conf
-sudo ufw allow 5044
-wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/10-syslog-filter.conf -O /etc/logstash/conf.d/10-syslog-filter.conf
-wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/30-elasticsearch-output.conf -O /etc/logstash/conf.d/30-elasticsearch-output.conf
-sudo /opt/logstash/bin/logstash --configtest -f /etc/logstash/conf.d/
-sudo systemctl restart logstash
-sudo systemctl enable logstash
+#Configuring Logstash
+echo "---Configuring Logstash---" >> $LOG
+wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/02-beats-input.conf -O /etc/logstash/conf.d/02-beats-input.conf >> $LOG
+sudo ufw allow 5044 >> $LOG
+wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/10-syslog-filter.conf -O /etc/logstash/conf.d/10-syslog-filter.conf >> $LOG
+wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/30-elasticsearch-output.conf -O /etc/logstash/conf.d/30-elasticsearch-output.conf >> $LOG
+sudo /opt/logstash/bin/logstash --configtest -f /etc/logstash/conf.d/ >> $LOG
+sudo systemctl restart logstash >> $LOG
+sudo systemctl enable logstash >> $LOG
 
-#Load Kibana Dashboards
+#Configuring Kibana Dashboards
+echo "---Configuring Kibana Dashboards---" >> $LOG
 cd ~
-curl -L -O https://download.elastic.co/beats/dashboards/beats-dashboards-1.2.2.zip
-sudo apt-get -y install unzip
-unzip beats-dashboards-*.zip
-cd beats-dashboards-*
-./load.sh
+curl -L -O https://download.elastic.co/beats/dashboards/beats-dashboards-1.2.2.zip >> $LOG
+unzip beats-dashboards-*.zip >> $LOG
+cd beats-dashboards-* >> $LOG
+./load.sh >> $LOG
 
 #Load Filebeat Index Template in Elasticsearch
-cd ~
-curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/d8c479e2a1adcea8b1fe86570e42abab0f10f364/filebeat-index-template.json
-curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json
+echo "---Load Filebeat Index Template in Elasticsearch---" >> $LOG
+cd ~ 
+curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/d8c479e2a1adcea8b1fe86570e42abab0f10f364/filebeat-index-template.json >> $LOG
+curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json >> $LOG
