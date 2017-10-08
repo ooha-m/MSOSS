@@ -111,18 +111,6 @@ resource "random_id" "uniqueString" {
   public_ip_address_allocation = "${var.DynamicIP}"
   domain_name_label = "mongodb${random_id.uniqueString.hex}"
 } 
-resource "azurerm_storage_account" "storageAccount" {
-  name                = "mongodb${random_id.uniqueString.hex}"
-  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
-  location     = "${var.Location}"
-  account_type = "${var.storageAccType}"
-}
-resource "azurerm_storage_container" "storageContainer" {
-  name                  = "container1"
-  resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
-  storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
-  container_access_type = "private"
-}
 resource "azurerm_network_interface" "networkInterfaceMongoDB" {
   name                = "NetworkinterfaceMongoDB"
   location            = "${var.Location}"
@@ -148,20 +136,13 @@ resource "azurerm_virtual_machine" "mastervm" {
   }
   storage_os_disk {
     name          = "osdisk${random_id.uniqueString.hex}"
-    vhd_uri       = "${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}/osdisk1.vhd"
+    vhd_uri       = "https://packerstrg63efu.blob.core.windows.net/system/Microsoft.Compute/Images/images/MongoDB-osDisk.3bf449c4-1af3-4b84-aea9-dd9f1654b625.vhd"
     caching       = "ReadWrite"
     create_option = "FromImage"
   }
-  storage_data_disk {
-    name          = "datadisk${random_id.uniqueString.hex}"
-    vhd_uri       = "${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}/datadisk0.vhd"
-    disk_size_gb  = "50"
-    create_option = "Empty"
-    lun           = 0
-  }
 
  os_profile {
-    computer_name  = "mastervm"
+    computer_name  = "mongodbvm"
     admin_username = "${var.userName}"
     admin_password = "${var.password}"
   }
@@ -172,25 +153,7 @@ resource "azurerm_virtual_machine" "mastervm" {
     environment = "staging"
   }
 }
-resource "azurerm_virtual_machine_extension" "elasticSearch" {
-    name = "elastic"
-    location = "${var.Location}"
-    resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
-    virtual_machine_name = "${azurerm_virtual_machine.mastervm.name}"
-     depends_on            = ["azurerm_virtual_machine.mastervm"]
-    publisher = "Microsoft.OSTCExtensions"
-    type = "CustomScriptForLinux"
-    type_handler_version = "1.2"
-     settings = <<EOF
-    {
-        "fileUris": ["https://raw.githubusercontent.com/sysgain/MSOSS/master/scripts/elkstack_deploy.sh"],
-        "commandToExecute":"sh elkstack_deploy.sh"
-    }
-EOF
-    tags {                                                                                                                             
-        environment = "dev"
-    }
-}
+
 output "DNSName" {
     value = "${azurerm_public_ip.mongodbpublicIP.domain_name_label}.westus.cloudapp.azure.com}"
 }
