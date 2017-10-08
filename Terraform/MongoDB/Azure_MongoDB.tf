@@ -123,13 +123,13 @@ resource "azurerm_network_interface" "networkInterfaceMongoDB" {
   }
 }
 resource "azurerm_storage_account" "storageAccount" {
- name                = "mongodb${random_id.uniqueString.hex}"
+ name                = "packerstrg63efu"
  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
  location     = "${var.Location}"
  account_type = "${var.storageAccType}"
  }
 resource "azurerm_storage_container" "storageContainer" {
- name                  = "container1"
+ name                  = "mongodb"
  resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
  storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
  container_access_type = "private"
