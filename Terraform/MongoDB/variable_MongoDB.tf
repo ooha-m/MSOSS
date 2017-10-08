@@ -54,6 +54,10 @@ variable "password" {
 description = "virtual machine admin password"
 default = ""
 }
+variable "sharedStorage" {
+ description = "Shared Storage Account Name, where custom images and vhd's of spinned up new VMs are stored"
+ default = ""
+ }
 variable "imageUri" {
  description = "Full URIs of custom images (VHDs) to spin up new VMs from them"
  default = ""
