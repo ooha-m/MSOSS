@@ -30,8 +30,8 @@ variable "Location"{
  description = "where the vnet is create"
  default = ""
  }
-variable "DynamicIP"{
-description =  "public_ip_address_allocation dynamic type"
+variable "StaticIP"{
+description =  "private_ip_address_allocation static type"
 default = ""
 }
 variable "storageAccType"{
