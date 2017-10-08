@@ -129,13 +129,13 @@ resource "azurerm_storage_account" "storageAccount" {
  account_type = "${var.storageAccType}"
  }
 resource "azurerm_storage_container" "storageContainer" {
- name                  = "mongodb"
+ name                  = "mongodb${random_id.uniqueString.hex}"
  resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
  storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
  container_access_type = "private"
  }
 resource "azurerm_virtual_machine" "mastervm" {
-  name                  = "MongoDBVM"
+  name                  = "mongodbvm${random_id.uniqueString.hex}"
   location              = "${var.Location}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
   network_interface_ids = ["${azurerm_network_interface.networkInterfaceMongoDB.id}"]
@@ -150,7 +150,7 @@ caching       = "ReadWrite"
 create_option = "FromImage"
 }
 os_profile {
-    computer_name  = "mongodbvm"
+    computer_name  = "mongodbvm${random_id.uniqueString.hex}"
     admin_username = "${var.userName}"
     admin_password = "${var.password}"
   }
