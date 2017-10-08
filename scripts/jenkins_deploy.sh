@@ -79,7 +79,8 @@ vmSize = &quot;${11}&quot;
 vmName = &quot;${17}&quot;
 userName = &quot;${13}&quot;
 password = &quot;${14}&quot; 
-sharedStorage = &quot;${15};" $srcdir/MongoDBTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/MongoDBTerraformjob-newconfig.xml
+sharedStorage = &quot;${15}&quot;
+imageUri = &quot;${16}&quot;" $srcdir/MongoDBTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/MongoDBTerraformjob-newconfig.xml
 fi
 
 if [ ! -f "AppTerraformjob.xml" ]
@@ -98,7 +99,8 @@ vmSize = &quot;${11}&quot;
 vmName = &quot;${12}&quot;
 userName = &quot;${13}&quot;
 password = &quot;${14}&quot;
-sharedStorage = &quot;${15};" $srcdir/AppTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/AppTerraformjob.xml-newconfig.xml
+sharedStorage = &quot;${15}&quot;
+imageUri = &quot;${16}&quot;" $srcdir/AppTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/AppTerraformjob.xml-newconfig.xml
 fi
 
 if [ ! -f "MongoDBPackerjob.xml" ]
