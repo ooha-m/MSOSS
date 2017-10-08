@@ -136,7 +136,7 @@ resource "azurerm_virtual_machine" "mastervm" {
   }
   storage_os_disk {
     name          = "osdisk${random_id.uniqueString.hex}"
-    vhd_uri       = "https://packerstrg63efu.blob.core.windows.net/system/Microsoft.Compute/Images/images/MongoDB-osDisk.3bf449c4-1af3-4b84-aea9-dd9f1654b625.vhd"
+    vhd_uri       = "https://packerstrg63efu.blob.core.windows.net/vmcontainerc3df5429-6a2d-4f8c-a1da-6603d143ff2a/osDisk.c3df5429-6a2d-4f8c-a1da-6603d143ff2a.vhd"
     caching       = "ReadWrite"
     create_option = "FromImage"
   }
