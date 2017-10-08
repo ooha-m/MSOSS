@@ -103,13 +103,6 @@ resource "random_id" "uniqueString" {
     uniqueid = "mongodb"
   }
   byte_length = 6
-}
- resource "azurerm_public_ip" "mongodbpublicIP" {
-  name                         = "mongodbpublicip"
-  location                     = "${var.Location}"
-  resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
-  public_ip_address_allocation = "${var.DynamicIP}"
-  domain_name_label = "mongodb${random_id.uniqueString.hex}"
 } 
 resource "azurerm_network_interface" "networkInterfaceMongoDB" {
   name                = "NetworkinterfaceMongoDB"
@@ -118,8 +111,8 @@ resource "azurerm_network_interface" "networkInterfaceMongoDB" {
   ip_configuration {
     name                          = "configuration1"
     subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
-    private_ip_address_allocation = "${var.DynamicIP}"
-     public_ip_address_id = "${azurerm_public_ip.mongodbpublicIP.id}"
+    private_ip_address_allocation = "${var.StaticIP}"
+    private_ip_address = "${var.PriavteIP}"
   }
 }
 resource "azurerm_storage_account" "storageAccount" {
@@ -158,10 +151,6 @@ os_profile {
     disable_password_authentication = false
   }
   tags {
-    environment = "staging"
+    environment = "prod"
   }
-}
-
-output "DNSName" {
-    value = "${azurerm_public_ip.mongodbpublicIP.domain_name_label}.westus.cloudapp.azure.com}"
 }
