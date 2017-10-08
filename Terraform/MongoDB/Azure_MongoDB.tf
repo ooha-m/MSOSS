@@ -151,6 +151,6 @@ os_profile {
     disable_password_authentication = false
   }
   tags {
-    environment = "prod"
+    environment = "staging"
   }
 }
