@@ -34,6 +34,10 @@ variable "StaticIP"{
 description =  "private_ip_address_allocation static type"
 default = ""
 }
+variable "PriavteIP"{
+description =  "Static Private IP Address"
+default = ""
+}
 variable "storageAccType"{
 description = "storage account type"
 default = "Standard_LRS"
