@@ -140,12 +140,7 @@ resource "azurerm_virtual_machine" "mastervm" {
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
   network_interface_ids = ["${azurerm_network_interface.networkInterfaceMongoDB.id}"]
   vm_size               = "${var.vmSize}"
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
+
 storage_os_disk {
 name          = "osdisk${random_id.uniqueString.hex}"
 image_uri 	  = "https://packerstrg63efu.blob.core.windows.net/system/Microsoft.Compute/Images/images/MongoDB-osDisk.3bf449c4-1af3-4b84-aea9-dd9f1654b625.vhd"
