@@ -122,6 +122,18 @@ resource "azurerm_network_interface" "networkInterfaceMongoDB" {
      public_ip_address_id = "${azurerm_public_ip.mongodbpublicIP.id}"
   }
 }
+resource "azurerm_storage_account" "storageAccount" {
+ name                = "mongodb${random_id.uniqueString.hex}"
+ resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
+ location     = "${var.Location}"
+ account_type = "${var.storageAccType}"
+ }
+resource "azurerm_storage_container" "storageContainer" {
+ name                  = "container1"
+ resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
+ storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
+ container_access_type = "private"
+ }
 resource "azurerm_virtual_machine" "mastervm" {
   name                  = "MongoDBVM"
   location              = "${var.Location}"
@@ -134,14 +146,14 @@ resource "azurerm_virtual_machine" "mastervm" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
-  storage_os_disk {
-    name          = "osdisk${random_id.uniqueString.hex}"
-    vhd_uri       = "https://packerstrg63efu.blob.core.windows.net/vmcontainerc3df5429-6a2d-4f8c-a1da-6603d143ff2a/osDisk.c3df5429-6a2d-4f8c-a1da-6603d143ff2a.vhd"
-    caching       = "ReadWrite"
-    create_option = "FromImage"
-  }
-
- os_profile {
+storage_os_disk {
+name          = "osdisk${random_id.uniqueString.hex}"
+image_uri 	  = "https://packerstrg63efu.blob.core.windows.net/system/Microsoft.Compute/Images/images/MongoDB-osDisk.3bf449c4-1af3-4b84-aea9-dd9f1654b625.vhd"
+vhd_uri       = ""${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}/osdisk1.vhd""
+caching       = "ReadWrite"
+create_option = "FromImage"
+}
+os_profile {
     computer_name  = "mongodbvm"
     admin_username = "${var.userName}"
     admin_password = "${var.password}"
