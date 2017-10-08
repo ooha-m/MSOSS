@@ -1,9 +1,38 @@
+#!/bin/bash
+#Date - 06102017
+#Developer - Sysgain
+
+DATE=`date +%Y%m%d%T`
+LOG=/tmp/jenkins_deploy.log.$DATE
 srcdir="/usr/share/jenkins"
 jenkinsdir="/var/lib/jenkins"
 user="admin"
 passwd=`cat /var/lib/jenkins/secrets/initialAdminPassword`
 url="localhost:8080"
-apt-get install html-xml-utils
+
+# Configure Repos for Azure Cli 2.0
+echo "---Configure Repos for Azure Cli 2.0---" >> $LOG
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list >> $LOG
+sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893 >> $LOG
+
+# Repository Updates 
+echo "---Repository Updates---"	>> $LOG
+sudo apt-get update
+
+#Installing Packages
+echo "---Installing Packages---"	>> $LOG
+sudo apt-get -y install apt-transport-https azure-cli html-xml-utils xmlstarlet >> $LOG
+
+#Download the Required Jenkins Files
+echo "---Download the Required Jenkins Files---" >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/MongoDBTerraformjob.xml >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/AppTerraformjob.xml >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/MongoDBPackerjob.xml >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/AppPackerjob.xml >> $LOG
+
+#Configuring Jenkins
+echo "---Configuring Jenkins---"
 wget -P $srcdir http://$url/jnlpJars/jenkins-cli.jar
 java -jar $srcdir/jenkins-cli.jar -s http://$url who-am-i --username $user --password $passwd
 api=`curl --silent --basic http://$user:$passwd@$url/user/admin/configure | hxselect '#apiToken' | sed 's/.*value="\([^"]*\)".*/\1\n/g'`
@@ -16,12 +45,6 @@ curl -X POST -d '<jenkins><install plugin="terraform@current" /></jenkins>' --he
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd
 #creating jenkins user
 echo "jenkins.model.Jenkins.instance.securityRealm.createAccount("\'"jenkinsadmin"\'","\'"Password4321"\'")" | java -jar $srcdir/jenkins-cli.jar -auth admin:`cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080 groovy =
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/MongoDBTerraformjob.xml
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/AppTerraformjob.xml
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/MongoDBPackerjob.xml
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/AppPackerjob.xml
-apt-get install xmlstarlet
 if [ ! -f "elk-config.xml" ]
 then
     xmlstarlet ed -u '//buildWrappers/org.jenkinsci.plugins.terraform.TerraformBuildWrapper/variables' -v "subscription_id = &quot;$1&quot;
