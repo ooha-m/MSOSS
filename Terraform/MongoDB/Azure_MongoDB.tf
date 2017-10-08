@@ -145,6 +145,7 @@ storage_os_disk {
 name          = "osdisk${random_id.uniqueString.hex}"
 image_uri 	  = "https://packerstrg63efu.blob.core.windows.net/system/Microsoft.Compute/Images/images/MongoDB-osDisk.3bf449c4-1af3-4b84-aea9-dd9f1654b625.vhd"
 vhd_uri       = "${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}/osdisk1.vhd"
+os_type       = "linux"
 caching       = "ReadWrite"
 create_option = "FromImage"
 }
