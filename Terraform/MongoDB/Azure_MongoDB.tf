@@ -123,7 +123,7 @@ resource "azurerm_network_interface" "networkInterfaceMongoDB" {
   }
 }
 resource "azurerm_storage_account" "storageAccount" {
- name                = "${var.sharedStorageaccount}"
+ name                = "${var.sharedStorage}"
  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
  location     = "${var.Location}"
  account_type = "${var.storageAccType}"
