@@ -52,7 +52,7 @@
       "echo \"HARTFILE=$Hartfile\" >> /scripts/uploadhart.sh",
       "echo \"storageAccount=$storage_account\" >> /scripts/uploadhart.sh",
       "echo \"export AZURE_STORAGE_ACCOUNT=$storageAccount\" >> /scripts/uploadhart.sh",
-      "echo \"az login --service-principal -u $client_id --password $client_secret --tenant $tenant_id > /dev/null\" >> /scripts/uploadhart.sh
+      "echo \"az login --service-principal -u $client_id --password $client_secret --tenant $tenant_id > /dev/null\" >> /scripts/uploadhart.sh",
       "echo \"cd /scripts/\" >> /scripts/uploadhart.sh",
       "echo \"az storage blob download --container-name AppHart --name $storage_account --file $HARTFILE --output table\" >> /scripts/uploadhart.sh",
       "sudo wget -O /scripts/run_national-parks.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
