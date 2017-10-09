@@ -102,7 +102,8 @@ vmName = &quot;${12}&quot;
 userName = &quot;${13}&quot;
 password = &quot;${14}&quot;
 sharedStorage = &quot;${15}&quot;
-imageUri = &quot;${16}&quot;" $srcdir/AppTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/AppTerraformjob.xml-newconfig.xml
+Hartfile = &quot;UpdateHartFile&quot;
+imageUri = &quot;UpdateUrl&quot;" $srcdir/AppTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/AppTerraformjob.xml-newconfig.xml
 fi
 
 if [ ! -f "MongoDBPackerjob.xml" ]
