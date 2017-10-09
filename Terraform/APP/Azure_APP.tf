@@ -163,7 +163,7 @@ resource "azurerm_virtual_machine" "mastervm" {
   }
   }
 output "VMName" {
-    value = "${azurerm_virtual_machine.mastervm.computer_name}"
+    value = "${azurerm_virtual_machine.mastervm.name}"
 }
 output "UserName" {
     value = "${var.userName}"
