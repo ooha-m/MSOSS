@@ -113,7 +113,7 @@ fi
 if [ ! -f "MongoDBPackerjob.xml" ]
 then
     xmlstarlet ed -u '//publishers/biz.neustar.jenkins.plugins.packer.PackerPublisher/params' -v "-var &apos;client_id=$2&apos; -var &apos;client_secret=$3&apos; -var &apos;resource_group=$5&apos; -var &apos;storage_account=${15}&apos; -var &apos;subscription_id=$1&apos; -var &apos;tenant_id=$4&apos;" $srcdir/MongoDBPackerjob.xml | sed "s/amp;//g" > $srcdir/MongoDBPackerjob-newconfig.xml
-    xmlstarlet ed -u '//publishers/hudson.plugins.postbuildtask.PostbuildTask/tasks/hudson.plugins.postbuildtask.TaskProperties/script' -v wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/mongodbvhdurl.sh&#xd;chmod +x mongodbvhdurl.sh&#xd;sh mongodbvhdurl.sh $2 $3 $4 $10; $srcdir/MongoDBPackerjob.xml | >> $srcdir/MongoDBPackerjob-newconfig.xml
+    xmlstarlet ed -u '//publishers/hudson.plugins.postbuildtask.PostbuildTask/tasks/hudson.plugins.postbuildtask.TaskProperties/script' -v "wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/mongodbvhdurl.sh&#xd;chmod +x mongodbvhdurl.sh&#xd;sh mongodbvhdurl.sh $2 $3 $4 $15;" $srcdir/MongoDBPackerjob.xml | >> $srcdir/MongoDBPackerjob-newconfig.xml
 fi
 
 if [ ! -f "AppPackerjob.xml" ]
