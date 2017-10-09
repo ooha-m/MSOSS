@@ -10,3 +10,5 @@ az storage blob list -c system --account-name $storageAcc > vhd
 vhdurl=`cat vhd | jq '.[] | .name' | sed 's/"//' | sed 's/"//' | grep vhd | head -n 1`
 newvhdurl="https://$storageAcc.blob.core.windows.net/system/$vhdurl"
 echo $newvhdurl
+cp /var/lib/jenkins/jobs/MongoDBTerraformjob/config.xml /tmp/updateurlconfig.xml
+sed "s,UpdateUrl,$newvhdurl,g" /tmp/updateurlconfig.xml > /var/lib/jenkins/jobs/MongoDBTerraformjob/config.xml
