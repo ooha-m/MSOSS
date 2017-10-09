@@ -48,7 +48,7 @@
       "usermod -aG sudo hab",
       "mkdir /scripts",
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
-      "echo "#!/bin/sh" >> /scripts/uploadhart.sh"
+      "echo \"#!/bin/sh\" >> /scripts/uploadhart.sh"
       "echo \"HARTFILE={{user `Hartfile`}}\" >> /scripts/uploadhart.sh"
       "sudo wget -O /scripts/run_national-parks.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
       "chmod +x /scripts/run_national-parks.sh",
