@@ -8,4 +8,5 @@ storageAcc=$4
 az login --service-principal -u $appid --password $clientsecret --tenant $tentantid
 az storage blob list -c system --account-name $storageAcc > vhd
 vhdurl=`cat vhd | jq '.[] | .name' | sed 's/"//' | sed 's/"//'`
-echo $vhdurl
+newvhdurl="https://$4.blob.core.windows.net/system/$vhdurl"
+echo $newvhdurl
