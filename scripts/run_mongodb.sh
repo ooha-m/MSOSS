@@ -22,7 +22,7 @@ else
         echo "Downloding the MongoDB HART File..."
         mkdir /scripts/MongoDBHart
         wget -P /scripts/MongoDBHart/ https://github.com/sysgain/MSOSS/raw/habcode/Mongodb.tar.gz
-        tar -xzvf /scripts/MongoDBHart/Mongodb.tar.gz
+        tar -xzvf /scripts/MongoDBHart/Mongodb.tar.gz -C /scripts/MongoDBHart
         cp -vrf /scripts/MongoDBHart/root-20171009044452.pub /hab/cache/keys
         nohup hab sup start /scripts/MongoDBHart/root-mongodb-3.2.9-20171009054024-x86_64-linux.hart >> /scripts/sup-mongodb.log 2>1 &
 fi
