@@ -161,8 +161,17 @@ resource "azurerm_virtual_machine" "mastervm" {
   tags {
     environment = "staging"
   }
+output "VMName" {
+    value = "${azurerm_virtual_machine.mastervm.computer_name}"
 }
-
+output "UserName" {
+    value = "${var.userName}"
+}
+output "Password" {
+    value = "${var.password}"
+}
 output "DNSName" {
     value = "${azurerm_public_ip.apppublicIP.domain_name_label}.westus.cloudapp.azure.com}"
-}
+}}
+
+
