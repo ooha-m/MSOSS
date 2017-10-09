@@ -5,7 +5,7 @@
     "resource_group": "",
     "storage_account": "",
     "subscription_id": "",
-    "tenant_id": ""
+    "tenant_id": "",
     "Hartfile" : ""
   },
   "builders": [{
@@ -17,6 +17,7 @@
     "storage_account": "{{user `storage_account`}}",
     "subscription_id": "{{user `subscription_id`}}",
      "tenant_id": "{{user `tenant_id`}}",
+     "Hartfile" : "{{user `Hartfile`}}"
 
     "capture_container_name": "images",
     "capture_name_prefix": "App",
