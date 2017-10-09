@@ -53,6 +53,7 @@
       "sleep 30",
       "mkdir /scripts",
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
+      "echo $1:$2:$3:$4 > /scripts/azureaccess"
       "wget -O /scripts/run_mongodb.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_mongodb.sh",
       "chmod +x /scripts/run_mongodb.sh",
       "sed -i -e '13i/scripts/run_mongodb.sh\\' /etc/rc.local",
