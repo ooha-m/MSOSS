@@ -59,7 +59,9 @@
           </logTexts>
           <EscalateStatus>true</EscalateStatus>
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
-          <script></script>
+          <script>wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/mongodbvhdurl.sh&#xd;
+		  chmod +x mongodbvhdurl.sh&#xd;
+		  sh mongodbvhdurl;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
