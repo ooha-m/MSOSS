@@ -19,4 +19,3 @@ mkdir /scripts
 echo "#!/bin/sh" >> /scripts/uploadhart.sh
 echo "HARTFILE=\$1'" >> /scripts/uploadhart.sh
 echo "az login --service-principal -u '$appID' --password '$password' --tenant '$tenantID'" >> /scripts/uploadhart.sh
-
