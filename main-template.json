@@ -122,7 +122,8 @@
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "buildInstanceVmSize": "[parameters('buildInstanceVmSize')]",
-            "ubuntuSku": "16.04-LTS"
+            "ubuntuSku": "16.04-LTS",
+            "buildScriptUrl":"[concat(variables('baseUrl'),'scripts/build.sh')]"
         },
         "resourceGroupName": "[resourceGroup().name]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",

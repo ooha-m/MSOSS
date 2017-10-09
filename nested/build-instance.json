@@ -165,6 +165,29 @@
                     }
                 }
             }
+        },
+        {
+            "name": "[concat(parameters('buildInstanceSettings').buildInstanceVmName, '/buildscript')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "[parameters('apiVersions').computeApiVersion]",
+            "location": "[parameters('buildInstanceSettings').location]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('buildInstanceSettings').buildInstanceVmName)]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[concat(parameters('buildInstanceSettings').buildScriptUrl)]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "sh build.sh"
+                }
+            }
         }
     ]
 }
