@@ -9,7 +9,7 @@ jenkinsdir="/var/lib/jenkins"
 user="admin"
 passwd=`cat /var/lib/jenkins/secrets/initialAdminPassword`
 url="localhost:8080"
-echo "appid=$2, clientsecret=$3, tentantid=$4, storageAcc=${15}" >> $srcdir/mongodbvhdurl.secrets
+echo "$2,$3,$4,${15}" >> $srcdir/mongodbvhdurl.secrets
 
 # Configure Repos for Azure Cli 2.0
 echo "---Configure Repos for Azure Cli 2.0---" >> $LOG
