@@ -118,7 +118,7 @@ resource "azurerm_storage_account" "storageAccount" {
   account_type = "${var.storageAccType}"
 }
 resource "azurerm_storage_container" "storageContainer" {
-  name                  = "App${random_id.uniqueString.hex}"
+  name                  = "app${random_id.uniqueString.hex}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
   storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
   container_access_type = "private"
