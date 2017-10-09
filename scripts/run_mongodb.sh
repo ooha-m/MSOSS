@@ -19,8 +19,8 @@ then
         echo "hab-sup process killed"
 else
         echo "hab-sup process is not running"
+        echo "Downloding the MongoDB HART File..."
+        mkdir /scripts/HART
+        wget -P https://github.com/sysgain/MSOSS/raw/habcode/Mongodb.tar.gz /hab/
         nohup hab sup start core/mongodb >> /scripts/sup-mongodb.log 2>1 &
-        sleep 60
-        wget -P /scripts https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/default.toml
-        hab config apply --peer `hostname -i` mongodb.default 1 /scripts/default.toml
 fi
