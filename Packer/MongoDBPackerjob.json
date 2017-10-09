@@ -39,7 +39,7 @@
       "appID=$1",
       "password=$2",
       "tenantID=$3",
-      "storageAcc=$4"
+      "storageAcc=$4",
       "apt-get update",
       "sudo apt-get install openjdk-8-jdk -y",
       "echo '---Configure Repos for Azure Cli 2.0---' ",
