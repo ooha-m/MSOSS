@@ -49,7 +49,7 @@
       "mkdir /scripts",
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
       "echo \"#!/bin/sh\" >> /scripts/uploadhart.sh",
-      "echo \"HARTFILE=\$Hartfile\" >> /scripts/uploadhart.sh",
+      "echo \"HARTFILE='$Hartfile'\" >> /scripts/uploadhart.sh",
       "echo \"storageAccount=$storage_account\" >> /scripts/uploadhart.sh",
       "echo \"export AZURE_STORAGE_ACCOUNT=$storageAccount\" >> /scripts/uploadhart.sh",
       "echo \"az login --service-principal -u $client_id --password $client_secret --tenant $tenant_id > /dev/null\" >> /scripts/uploadhart.sh",
