@@ -21,7 +21,7 @@ sudo apt-get update
 
 #Installing Packages
 echo "---Installing Packages---"	>> $LOG
-sudo apt-get -y install apt-transport-https azure-cli html-xml-utils xmlstarlet >> $LOG
+sudo apt-get -y install apt-transport-https azure-cli html-xml-utils xmlstarlet jq >> $LOG
 
 #Download the Required Jenkins Files
 echo "---Download the Required Jenkins Files---" >> $LOG
