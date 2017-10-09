@@ -58,7 +58,7 @@
       "echo "storageAccount='$storageAcc'",
       "echo "export AZURE_STORAGE_ACCOUNT=$storageAccount"",
       "echo "az login --service-principal -u '$appID' --password '$password' --tenant '$tenantID' > /dev/null" >> /scripts/uploadhart.sh",
-      "az storage blob download --container-name AppHart --name $HARTFILE --file /scripts/$HARTFILE --output table"
+      "az storage blob download --container-name AppHart --name $HARTFILE --file /scripts/$HARTFILE --output table",
       "wget -O /scripts/run_mongodb.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_mongodb.sh",
       "chmod +x /scripts/run_mongodb.sh",
       "sed -i -e '13i/scripts/run_mongodb.sh\\' /etc/rc.local",
