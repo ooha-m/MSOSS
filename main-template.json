@@ -319,6 +319,18 @@
                     },
                     "networkSettings": {
                         "value": "[variables('networkSettings')]"
+                    },
+                    "AzureApplicationId": {
+                        "value": "[parameters('AzureApplicationId')]"
+                    },
+                    "AzureClientSecret": {
+                        "value": "[parameters('AzureClientSecret')]"
+                    },
+                    "AzureTenantId": {
+                        "value": "[parameters('AzureTenantId')]"
+                    },
+                    "packerStorageAccName":{
+                        "value": "[variables('packerStorageAccountName')]"
                     }
                 }
             }

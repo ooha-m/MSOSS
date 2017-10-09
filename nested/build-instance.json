@@ -10,6 +10,18 @@
         },
         "networkSettings": {
             "type": "object"
+        },
+        "AzureApplicationId": {
+            "type": "string"
+        },
+        "AzureClientSecret": {
+            "type": "string"
+        },
+        "AzureTenantId": {
+            "type": "string"
+        },
+        "packerStorageAccName":{
+            "type": "string"
         }
     },
     "variables": {
@@ -185,7 +197,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "sh build.sh"
+                    "commandToExecute": "[concat('sh build.sh',' ',parameters('AzureApplicationId'),' ',parameters('AzureClientSecret'),' ',parameters('AzureTenantId'),' ',parameters('packerStorageAccName'))]"
                 }
             }
         }
