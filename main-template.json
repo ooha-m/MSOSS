@@ -123,7 +123,7 @@
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "buildInstanceVmSize": "[parameters('buildInstanceVmSize')]",
             "ubuntuSku": "16.04-LTS",
-            "buildScriptUrl":"[concat(variables('baseUrl'),'scripts/build.sh')]"
+            "buildScriptUrl": "[concat(variables('baseUrl'),'scripts/build.sh')]"
         },
         "resourceGroupName": "[resourceGroup().name]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
@@ -337,17 +337,29 @@
             "type": "string",
             "value": "[reference('Jenkins').outputs.jenkinsDNS.value]"
         },
-        "JenkinsWebUIUsername":{
+        "JenkinsWebUIURL": {
+            "type": "string",
+            "value": "[concat(reference('Jenkins').outputs.jenkinsDNS.value,':8080')]"
+        },
+        "JenkinsWebUIUsername": {
             "type": "string",
             "value": "jenkinsadmin"
         },
-        "JenkinsWebUIPassword":{
+        "JenkinsWebUIPassword": {
             "type": "string",
             "value": "Password4321"
         },
         "StorageAccountName": {
             "type": "string",
             "value": "[variables('packerStorageAccountName')]"
+        },
+        "BuildinstanceFQDN": {
+            "type": "string",
+            "value": "[reference('BuildInstance').outputs.buildInstanceDNS.value]"
+        },
+        "buildInstanceUsername": {
+            "type": "string",
+            "value": "[variables('buildInstanceSettings').adminUsername]"
         }
     }
 }

@@ -189,5 +189,11 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "buildInstanceDNS": {
+            "type": "string",
+            "value": "[reference(parameters('buildInstanceSettings').buildInstancePipName).dnsSettings.fqdn]"
+        }
+    }
 }
