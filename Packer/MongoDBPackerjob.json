@@ -54,7 +54,7 @@
       "mkdir /scripts",
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
       "echo '#!/bin/sh' >> /scripts/downloadhart.sh",
-      "echo 'HARTFILE=\$1' >> /scripts/downloadhart.sh",
+      "echo 'HARTFILE=$1' >> /scripts/downloadhart.sh",
       "echo 'storageAccount='$storageAcc''",
       "echo 'export AZURE_STORAGE_ACCOUNT=$storageAccount'",
       "echo 'az login --service-principal -u '$appID' --password '$password' --tenant '$tenantID' > /dev/null' >> /scripts/downloadhart.sh",
