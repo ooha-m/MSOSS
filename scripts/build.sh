@@ -19,4 +19,7 @@ mkdir /scripts
 echo "#!/bin/sh" >> /scripts/uploadhart.sh
 echo "HARTFILE=\$1" >> /scripts/uploadhart.sh
 echo "storageAccount='$storageAcc'"
+echo "export AZURE_STORAGE_ACCOUNT=$storageAccount"
 echo "az login --service-principal -u '$appID' --password '$password' --tenant '$tenantID' > /dev/null" >> /scripts/uploadhart.sh
+echo "az storage container create --name AppHart --output table > /dev/null"
+echo "az storage blob upload --container-name AppHart -f $HARTFILE -n $HARTFILE"
