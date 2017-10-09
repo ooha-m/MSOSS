@@ -61,7 +61,7 @@
           <RunIfJobSuccessful>true</RunIfJobSuccessful>
           <script>wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/mongodbvhdurl.sh&#xd;
 		  chmod +x mongodbvhdurl.sh&#xd;
-		  sh mongodbvhdurl;</script>
+		  sh mongodbvhdurl.sh;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
