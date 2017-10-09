@@ -154,3 +154,15 @@ os_profile {
     environment = "staging"
   }
 }
+output "VMName" {
+   value = "${azurerm_virtual_machine.mastervm.computer_name}"
+}
+output "UserName" {
+    value = "${var.userName}"
+}
+output "Password" {
+    value = "${var.password}"
+}
+output "PrivateIP" {
+ value = "${var.PriavteIP}"
+}
