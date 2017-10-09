@@ -112,13 +112,13 @@ resource "random_id" "uniqueString" {
   domain_name_label = "app${random_id.uniqueString.hex}"
 } 
 resource "azurerm_storage_account" "storageAccount" {
-  name                = "app${random_id.uniqueString.hex}"
+  name                = "${var.sharedStorage}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   location     = "${var.Location}"
   account_type = "${var.storageAccType}"
 }
 resource "azurerm_storage_container" "storageContainer" {
-  name                  = "${var.sharedStorage}"
+  name                  = "App${random_id.uniqueString.hex}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
   storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
   container_access_type = "private"
