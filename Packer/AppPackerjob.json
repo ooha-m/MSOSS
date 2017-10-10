@@ -62,6 +62,7 @@
       "sudo wget -O /scripts/run_national-parks.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
       "chmod +x /scripts/run_national-parks.sh",
       "chmod +x /scripts/downloadhart.sh",
+      "sed -i -e '12i/scripts/downloadhart.sh\\' /etc/rc.local",
       "sed -i -e '13i/scripts/run_national-parks.sh\\' /etc/rc.local",
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
