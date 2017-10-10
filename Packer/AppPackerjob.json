@@ -16,10 +16,11 @@
     "resource_group_name": "{{user `resource_group`}}",
     "storage_account": "{{user `storage_account`}}",
     "subscription_id": "{{user `subscription_id`}}",
-     "tenant_id": "{{user `tenant_id`}}",
+    "tenant_id": "{{user `tenant_id`}}",
+    "Hartfile" : "{{user `Hartfile`}}"
      
 
-    "capture_container_name": "images",
+    "capture_container_name": "appimages",
     "capture_name_prefix": "App",
 
     "os_type": "Linux",
