@@ -58,7 +58,7 @@
       "echo \"az storage blob download --container-name apphart --name \"{{user `Hartfile`}}\" --file \"{{user `Hartfile`}}\" --output table\" >> /scripts/downloadhart.sh",
       "echo tar -xvf \"{{user `Hartfile`}}\" >> /scripts/downloadhart.sh",
       "echo DIR=`echo \"{{user `Hartfile`}}\" | sed 's/.tar.gz//g'` >> /scripts/downloadhart.sh",
-      "echo cp -vrf \$DIR\/*.pub /hab/cache/keys >> /scripts/downloadhart.sh",
+      "echo cp -vrf '$DIR'\/*.pub /hab/cache/keys >> /scripts/downloadhart.sh",
       "sudo wget -O /scripts/run_national-parks.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
       "chmod +x /scripts/run_national-parks.sh",
       "chmod +x /scripts/downloadhart.sh",
