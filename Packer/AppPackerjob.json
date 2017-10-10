@@ -49,7 +49,7 @@
       "usermod -aG sudo hab",
       "mkdir /scripts",
       "curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash",
-      "echo \"#!/bin/sh\" >> /scripts/uploadhart.sh",
+      "echo \"#!/bin/sh\" >> /scripts/downloadhart.sh",
       "echo \"HARTFILE=\"{{user `Hartfile`}}\"\" >> /scripts/downloadhart.sh",
       "echo \"storageAccount=\"{{user `storage_account`}}\"\" >> /scripts/downloadhart.sh",
       "echo \"export AZURE_STORAGE_ACCOUNT=\"{{user `storage_account`}}\"\" >> /scripts/downloadhart.sh",
