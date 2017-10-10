@@ -173,7 +173,7 @@ output "Password" {
     value = "${var.password}"
 }
 output "DNSName" {
-    value = "${azurerm_public_ip.apppublicIP.domain_name_label}.westus.cloudapp.azure.com}"
+    value = "${azurerm_public_ip.apppublicIP.domain_name_label}.${var.Location}.cloudapp.azure.com}"
 }
 
 
