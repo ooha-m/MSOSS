@@ -17,7 +17,7 @@
     "storage_account": "{{user `storage_account`}}",
     "subscription_id": "{{user `subscription_id`}}",
     "tenant_id": "{{user `tenant_id`}}",
-    "Hartfile" : "{{user `Hartfile`}}",
+    
      
 
     "capture_container_name": "appimages",
