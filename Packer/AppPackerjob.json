@@ -57,9 +57,11 @@
       "echo \"cd /scripts/\" >> /scripts/downloadhart.sh",
       "echo \"az storage blob download --container-name apphart --name \"{{user `Hartfile`}}\" --file \"{{user `Hartfile`}}\" --output table\" >> /scripts/downloadhart.sh",
       "echo tar -xvf \"{{user `Hartfile`}}\" >> /scripts/downloadhart.sh",
-      "echo hartfolder={\"{{user `Hartfile`}}\"%.tar.gz} >> /scripts/downloadhart.sh",
+      "echo DIR=`echo \"{{user `Hartfile`}}\" | sed 's/.tar.gz//g'` >> /scripts/downloadhart.sh",
+      "echo cp -vrf DIR\*.pub /hab/cache/keys >> /scripts/downloadhart.sh"
       "sudo wget -O /scripts/run_national-parks.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
       "chmod +x /scripts/run_national-parks.sh",
+      "chmod +x /scripts/download.sh",
       "sed -i -e '13i/scripts/run_national-parks.sh\\' /etc/rc.local",
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ],
