@@ -329,7 +329,7 @@
                     "AzureTenantId": {
                         "value": "[parameters('AzureTenantId')]"
                     },
-                    "packerStorageAccName":{
+                    "packerStorageAccName": {
                         "value": "[variables('packerStorageAccountName')]"
                     }
                 }
