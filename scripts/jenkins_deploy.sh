@@ -102,6 +102,7 @@ vmName = &quot;${21}&quot;
 userName = &quot;${13}&quot;
 password = &quot;${14}&quot;
 sharedStorage = &quot;${15}&quot;
+hartFile = &quot;UpdateFile&quot;
 imageUri = &quot;UpdateUrl&quot;" $srcdir/AppTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/AppTerraformjob.xml-newconfig.xml
 fi
 
