@@ -353,11 +353,11 @@
             "type": "string",
             "value": "[concat(reference('Jenkins').outputs.jenkinsDNS.value,':8080')]"
         },
-        "JenkinsWebUIUsername": {
+        "kibanaWebUIUsername": {
             "type": "string",
-            "value": "jenkinsadmin"
+            "value": "admin"
         },
-        "JenkinsWebUIPassword": {
+        "KibanaWebUIPassword": {
             "type": "string",
             "value": "Password4321"
         },
