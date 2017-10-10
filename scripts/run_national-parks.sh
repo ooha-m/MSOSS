@@ -1,6 +1,10 @@
 #!/bin/bash
 exec 2>&1
 
+SRC_DIR="/scripts/nationalparks"
+FILEEXT="hart"
+HART=`ls -tr1d "${SRC_DIR}/"*.${FILEEXT} 2>/dev/null | tail -1`
+
 if pgrep -x "java" > /dev/null
 then
         echo "java process is Running"
@@ -19,5 +23,5 @@ then
         echo "hab-sup process killed"
 else
         echo "hab-sup process is not running"
-        nohup hab sup start sysgainoss/national-parks >> /scripts/sup-national-parks.log 2>1 &
+        nohup hab sup start $HART >> /scripts/sup-national-parks.log 2>1 &
 fi
