@@ -108,7 +108,9 @@ resource "azurerm_network_interface" "networkInterfaceMongoDB" {
   name                = "NetworkinterfaceMongoDB"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
+   depends_on         = ["azurerm_network_security_group.MongodbNsg"]
   network_security_group_id = "${azurerm_network_security_group.MongodbNsg.id}"
+  
   ip_configuration {
     name                          = "configuration1"
     subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
