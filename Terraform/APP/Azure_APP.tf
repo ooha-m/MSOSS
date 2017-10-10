@@ -124,7 +124,7 @@ resource "azurerm_storage_container" "storageContainer" {
   container_access_type = "private"
 }
 resource "azurerm_network_interface" "networkInterfaceApp" {
-  name                = "NetworkinterfaceApp"
+  name                = "NetworkinterfaceAppp${random_id.uniqueString.hex}"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_id = "${azurerm_network_security_group.AppNsg.id}"
