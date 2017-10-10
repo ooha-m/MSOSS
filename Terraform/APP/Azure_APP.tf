@@ -2,8 +2,14 @@ resource "azurerm_resource_group" "resourceGroup" {
   name     =  "${var.ResourceGroup}"
   location = "${var.Location}"
 }
+resource "random_id" "uniqueString" {
+  keepers = {
+    uniqueid = "mongodb"
+  }
+  byte_length = 6
+}
 resource "azurerm_network_security_group" "AppNsg" {
-  name                = "appnsg"
+  name                = "appnsg${random_id.uniqueString.hex}"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 }
@@ -98,14 +104,8 @@ resource "azurerm_network_security_rule" "logStash" {
   resource_group_name         = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_name = "${azurerm_network_security_group.AppNsg.name}"
 }
-resource "random_id" "uniqueString" {
-  keepers = {
-    uniqueid = "mongodb"
-  }
-  byte_length = 6
-}
  resource "azurerm_public_ip" "apppublicIP" {
-  name                         = "apppublicip"
+  name                         = "apppublicip${random_id.uniqueString.hex}"
   location                     = "${var.Location}"
   resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
