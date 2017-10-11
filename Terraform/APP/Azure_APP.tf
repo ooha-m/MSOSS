@@ -9,7 +9,7 @@ resource "random_id" "uniqueString" {
   byte_length = 6
 }
 resource "azurerm_network_security_group" "AppNsg" {
-  name                = "appnsg${random_id.uniqueString.hex}"
+  name                = "appnsg"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 }
@@ -124,7 +124,7 @@ resource "azurerm_storage_container" "storageContainer" {
   container_access_type = "private"
 }
 resource "azurerm_network_interface" "networkInterfaceApp" {
-  name                = "NetworkinterfaceAppp${random_id.uniqueString.hex}"
+  name                = "NetworkinterfaceAppp"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_id = "${azurerm_network_security_group.AppNsg.id}"
