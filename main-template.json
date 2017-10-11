@@ -80,12 +80,10 @@
             "addressPrefix": "10.0.0.0/16",
             "subnet1Name": "Jenkins",
             "subnet1Prefix": "10.0.0.0/24",
-            "subnet2Name": "Applicationnode",
+            "subnet2Name": "kubernetes",
             "subnet2Prefix": "10.0.1.0/24",
             "subnet3Name": "ELK",
-            "subnet3Prefix": "10.0.2.0/24",
-            "subnet4Name": "DB",
-            "subnet4Prefix": "10.0.3.0/24"
+            "subnet3Prefix": "10.0.2.0/24"
         },
         "jenkinsSettings": {
             "location": "[variables('location')]",
@@ -232,12 +230,6 @@
                         "name": "[variables('networkSettings').subnet3Name]",
                         "properties": {
                             "addressPrefix": "[variables('networkSettings').subnet3Prefix]"
-                        }
-                    },
-                    {
-                        "name": "[variables('networkSettings').subnet4Name]",
-                        "properties": {
-                            "addressPrefix": "[variables('networkSettings').subnet4Prefix]"
                         }
                     }
                 ]
