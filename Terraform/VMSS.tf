@@ -2,7 +2,6 @@ resource "azurerm_resource_group" "resourceGroup" {
   name     =  "${var.ResourceGroup}"
   location = "${var.Location}"
 }
-
 resource "random_id" "app" {
   keepers = {
     dnsid = "${var.DynamicDNS}"
