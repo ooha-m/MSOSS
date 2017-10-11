@@ -61,7 +61,7 @@ resource "azurerm_storage_container" "storageContainer" {
   container_access_type = "private"
 }
 resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
-  name                = "${var.scalesetVmname}"
+  name                = "testvmss"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   upgrade_policy_mode = "Manual"
