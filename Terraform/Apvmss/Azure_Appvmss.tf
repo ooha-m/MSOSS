@@ -118,6 +118,6 @@ output "UserName" {
 output "Password" {
     value = "${var.password}"
 }
-output "Vm_Scale_Set fqdn" {
+output "Vm_Scale_Setfqdn" {
     value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}"
 }
