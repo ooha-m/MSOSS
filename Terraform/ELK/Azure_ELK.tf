@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "resourceGroup" {
   location = "${var.Location}"
 }
 resource "azurerm_network_security_group" "Nsg" {
-  name                = "nsg"
+  name                = "elknsg"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 }
@@ -144,7 +144,7 @@ resource "azurerm_virtual_machine" "mastervm" {
     disable_password_authentication = false
   }
   tags {
-    environment = "staging"
+    environment = "prod"
   }
 }
 resource "azurerm_virtual_machine_extension" "elasticSearch" {
@@ -163,7 +163,7 @@ resource "azurerm_virtual_machine_extension" "elasticSearch" {
     }
 EOF
     tags {                                                                                                                             
-        environment = "dev"
+        environment = "prod"
     }
 }
 output "VMName" {
@@ -175,6 +175,6 @@ output "UserName" {
 output "Password" {
     value = "${var.password}"
 }
-output "DNSName" {
+output "fqdn" {
     value = "${azurerm_public_ip.publicIP.domain_name_label}.${var.Location}.cloudapp.azure.com}"
 }
