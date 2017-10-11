@@ -87,7 +87,7 @@ resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
   }
 
   os_profile {
-    computer_name_prefix = "vmss"
+    computer_name_prefix = "vmss${random_id.app.hex}"
     admin_username = "${var.userName}"
     admin_password = "${var.password}"
   }
@@ -101,7 +101,7 @@ resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
     primary = true
 
     ip_configuration {
-      name                                   = "vmipconfig"
+      name                                   = "ipconfig${random_id.app.hex}"
       subnet_id                              = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
       load_balancer_backend_address_pool_ids = ["${azurerm_lb_backend_address_pool.backendpool.id}"]
       load_balancer_inbound_nat_rules_ids    = ["${element(azurerm_lb_nat_pool.lbNat.*.id, count.index)}"]
