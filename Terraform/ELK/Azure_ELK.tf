@@ -176,5 +176,5 @@ output "Password" {
     value = "${var.password}"
 }
 output "fqdn" {
-    value = "${azurerm_public_ip.publicIP.domain_name_label}.${var.Location}.cloudapp.azure.com}"
+    value = "${azurerm_public_ip.publicIP.domain_name_label}.${var.Location}.cloudapp.azure.com"
 }
