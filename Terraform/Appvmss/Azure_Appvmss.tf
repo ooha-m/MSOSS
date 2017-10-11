@@ -24,7 +24,7 @@ resource "azurerm_lb" "applb" {
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 
   frontend_ip_configuration {
-    name                 = "app${random_id.app.hex}"
+    name                 = "ipconfig"
     public_ip_address_id = "${azurerm_public_ip.vmsspublicip.id}"
   }
 }
@@ -48,7 +48,7 @@ resource "azurerm_lb_rule" "rule1" {
   protocol                       = "Tcp"
   frontend_port                  = 8080
   backend_port                   = 8080
-  frontend_ip_configuration_name = "app${random_id.app.hex}"
+  frontend_ip_configuration_name = "ipconfig"
   enable_floating_ip             = false
   backend_address_pool_id        = "${azurerm_lb_backend_address_pool.backendpool.id}"
  idle_timeout_in_minutes        = 5
