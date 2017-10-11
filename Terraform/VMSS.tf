@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "resourceGroup" {
   location = "${var.Location}"
 }
 
-resource "random_id" "dns" {
+resource "random_id" "app" {
   keepers = {
     dnsid = "${var.DynamicDNS}"
   }
@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "vmsspublicip" {
   location                     = "${var.Location}"
   resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
-  domain_name_label            = "saf${random_id.dns.hex}"
+  domain_name_label            = "app${random_id.app.hex}"
   tags {
     environment = "staging"
   }
@@ -38,7 +38,7 @@ resource "azurerm_lb_backend_address_pool" "backendpool" {
 }
 
 resource "azurerm_lb_nat_pool" "lbNat" {
-count                           = 4
+  count                          = 4
   resource_group_name            = "${azurerm_resource_group.resourceGroup.name}"
   name                           = "ssh"
   loadbalancer_id                = "${azurerm_lb.vmsslb.id}"
@@ -48,7 +48,18 @@ count                           = 4
   backend_port                   = 22
   frontend_ip_configuration_name = "${var.frontEndip}"
 }
-
+resource "azurerm_storage_account" "storageAccount" {
+  name                = "${var.sharedStorage}"
+  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
+  location     = "${var.Location}"
+  account_type = "${var.storageAccType}"
+}
+resource "azurerm_storage_container" "storageContainer" {
+  name                  = "app${random_id.app.hex}"
+  resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
+  storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
+  container_access_type = "private"
+}
 resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
   name                = "${var.scalesetVmname}"
   location            = "${var.Location}"
