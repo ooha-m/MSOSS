@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rgvmss" {
-    name = "komali-vmss"
+    name = "${var.ResourceGroup}"
     location = "${var.Location}"
 }
 resource "azurerm_virtual_network" "vmssvnet" {
