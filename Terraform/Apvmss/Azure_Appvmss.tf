@@ -33,10 +33,10 @@ resource "azurerm_lb_backend_address_pool" "backendpool" {
   loadbalancer_id     = "${azurerm_lb.applb.id}"
   name                = "BackEndPool"
 }
-resource "azurerm_lb_probe" "probe" {
+resource "azurerm_lb_probe" "Appport" {
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   loadbalancer_id     = "${azurerm_lb.applb.id}"
-  name                = "runningprobe"
+  name                = "Appport"
   port                = 8080
    interval_in_seconds = 30
 number_of_probes    = 3
@@ -121,7 +121,7 @@ resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
   }
 
   tags {
-    environment = "staging"
+    environment = "prod"
   }
 }
 output "UserName" {
