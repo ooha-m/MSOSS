@@ -42,10 +42,6 @@ variable "vmSize" {
 description = "virtual machine size"
 default = "Standard_DS1_v2"
 }
-variable "vmName" {
-description = "virtual machine name"
-default = ""
-}
 variable "userName" {
  description = "virtual machine admin user name"
  default = ""
@@ -61,8 +57,4 @@ variable "sharedStorage" {
 variable "imageUri" {
  description = "Full URIs of custom images (VHDs) to spin up new VMs"
  default = ""
- }
-variable "frontEndip" {
- description = "frontEndip"
- default = "komali"
  }
