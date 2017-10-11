@@ -66,18 +66,6 @@ resource "azurerm_lb_nat_pool" "lbNat" {
   backend_port                   = 22
   frontend_ip_configuration_name = "app${random_id.app.hex}"
 }
-resource "azurerm_storage_account" "storageAccount" {
-  name                = "${var.sharedStorage}"
-  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
-  location     = "${var.Location}"
-  account_type = "${var.storageAccType}"
-}
-resource "azurerm_storage_container" "storageContainer" {
-  name                  = "app${random_id.app.hex}"
-  resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
-  storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
-  container_access_type = "private"
-}
 resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
   name                = "appvmss"
   location            = "${var.Location}"
