@@ -64,5 +64,5 @@ variable "imageUri" {
  }
 variable "frontEndip" {
  description = "frontEndip"
- default = ""
+ default = "komali"
  }
