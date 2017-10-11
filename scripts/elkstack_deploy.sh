@@ -30,7 +30,7 @@ sudo apt-get update
 
 #Installing Packages for ELK Stack
 echo "---Installing Packages for ELK Stack---"	>> $LOG
-sudo apt-get -y install oracle-java8-installer elasticsearch kibana nginx logstash unzip >> $LOG
+sudo apt-get -y install oracle-java8-installer elasticsearch kibana nginx logstash unzip apt-transport-https azure-cli >> $LOG
 
 #Configuring Elasticsearch
 echo "---Configuring Elasticsearch---" >> $LOG
@@ -91,4 +91,3 @@ cd /etc/pki/tls/certs/
 az login --service-principal -u $2 --password $3 --tenant $4 >> $LOG
 az storage container create --name kibanaclientkey --output table >> $LOG
 az storage blob upload --container-name kibanaclientkey -f logstash-forwarder.crt -n logstash-forwarder.crt > /dev/null
-
