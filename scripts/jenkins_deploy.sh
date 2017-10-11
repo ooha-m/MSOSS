@@ -85,7 +85,7 @@ sharedStorage = &quot;${15}&quot;
 imageUri = &quot;UpdateUrl&quot;" $srcdir/MongoDBTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/MongoDBTerraformjob-newconfig.xml
 fi
 
-if [ ! -f "AppTerraformjob.xml" ]
+if [ ! -f "VMSSjob.xml" ]
 then
     xmlstarlet ed -u '//buildWrappers/org.jenkinsci.plugins.terraform.TerraformBuildWrapper/variables' -v "subscription_id = &quot;$1&quot;
 client_id = &quot;$2&quot;
@@ -96,13 +96,10 @@ Location = &quot;$6&quot;
 vnetName = &quot;$7&quot;
 DynamicIP = &quot;$8&quot;
 subnetName = &quot;${20}&quot;
-storageAccType = &quot;${10}&quot;
 vmSize = &quot;${11}&quot;
-vmName = &quot;${21}&quot;
 userName = &quot;${13}&quot;
 password = &quot;${14}&quot;
-sharedStorage = &quot;${15}&quot;
-imageUri = &quot;UpdateUrl&quot;" $srcdir/AppTerraformjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/AppTerraformjob.xml-newconfig.xml
+imageUri = &quot;UpdateUrl&quot;" $srcdir/VMSSjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/VMSSjob.xml-newconfig.xml
 fi
 
 if [ ! -f "MongoDBPackerjob.xml" ]
@@ -123,6 +120,5 @@ sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username
 curl -X POST "http://$user:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=AppPackerjob" --data-binary "@$srcdir/AppPackerjob-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=MongoDBPackerjob" --data-binary "@$srcdir/MongoDBPackerjob-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
-curl -X POST "http://$user:$api@$url/createItem?name=AppTerraformjob" --data-binary "@$srcdir/AppTerraformjob.xml-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=MongoDBTerraformjob" --data-binary "@$srcdir/MongoDBTerraformjob-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
-curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
+curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/VMSSjob.xml-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
