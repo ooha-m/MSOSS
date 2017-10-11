@@ -19,7 +19,7 @@ resource "azurerm_public_ip" "vmsspublicip" {
   }
 }
 resource "azurerm_lb" "applb" {
-  name                = "scaleset-lb${random_id.app.hex}"
+  name                = "scaleset-lb"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 
@@ -38,8 +38,8 @@ resource "azurerm_lb_probe" "Appport" {
   loadbalancer_id     = "${azurerm_lb.applb.id}"
   name                = "Appport"
   port                = 8080
-   interval_in_seconds = 30
-number_of_probes    = 3
+  interval_in_seconds = 30
+  number_of_probes    = 3
 }
 resource "azurerm_lb_rule" "rule1" {
   resource_group_name            = "${azurerm_resource_group.resourceGroup.name}"
