@@ -77,7 +77,7 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
     caching        = "ReadWrite"
     os_type        = "linux"
     create_option  = "FromImage"
-    image_uri 	   = "${var.imageUri}"
+    image 	   = "${var.imageUri}"
     vhd_containers = ["${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}"]
   }
 
