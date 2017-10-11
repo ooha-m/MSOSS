@@ -122,7 +122,7 @@ output "Vm_Scale_Set_fqdn" {
     value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}"
 }
 output "Application_URL" {
-    value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}:8080/national_parks"
+    value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}:8080/national-parks"
 }
 output "SSH_access_to_instace1" {
     value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}:5000"
