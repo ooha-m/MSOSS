@@ -80,13 +80,6 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
   }
 
   storage_profile_os_disk {
-    name              = ""
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-
-  storage_profile_data_disk {
     name = "osDiskProfile"
     caching        = "ReadWrite"
     create_option  = "FromImage"
