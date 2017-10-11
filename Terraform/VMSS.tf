@@ -2,19 +2,7 @@ resource "azurerm_resource_group" "resourceGroup" {
   name     =  "${var.ResourceGroup}"
   location = "${var.Location}"
 }
-#resource "azurerm_virtual_network" "vmssvnet" {
-#  name                = "scaleset-vnet"
-#  address_space       =  ["${var.Vnet_AddressPrefix}"]
-#  location            = "${var.Location}"
-#  resource_group_name = "${azurerm_resource_group.rgvmss.name}"
-#}
 
-#resource "azurerm_subnet" "vmsssnet" {
-#  name                 = "scaleset.snet"
-#  resource_group_name  = "${azurerm_resource_group.rgvmss.name}"
-#  virtual_network_name = "${azurerm_virtual_network.vmssvnet.name}"
-#  address_prefix       =  "${var.Subnet2}"
-#}
 resource "random_id" "dns" {
   keepers = {
     dnsid = "${var.DynamicDNS}"
@@ -110,7 +98,7 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
 
     ip_configuration {
       name                                   = "vmipconfig"
-      subnet_id                              = "${azurerm_subnet.vmsssnet.id}"
+      subnet_id                              = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
       load_balancer_backend_address_pool_ids = ["${azurerm_lb_backend_address_pool.backendpool.id}"]
       load_balancer_inbound_nat_rules_ids    = ["${element(azurerm_lb_nat_pool.lbNat.*.id, count.index)}"]
     }
