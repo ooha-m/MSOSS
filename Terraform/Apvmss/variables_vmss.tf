@@ -62,3 +62,7 @@ variable "imageUri" {
  description = "Full URIs of custom images (VHDs) to spin up new VMs"
  default = ""
  }
+variable "frontEndip" {
+ description = "frontEndip"
+ default = ""
+ }
