@@ -110,7 +110,7 @@ resource "azurerm_network_interface" "networkInterfaceElk" {
   }
 }
 resource "azurerm_virtual_machine" "mastervm" {
-  name                  = "ELK_KibanaVM"
+  name                  = "ELK_KibanaVM${random_id.uniqueString.hex}"
   location              = "${var.Location}"
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
    network_interface_ids = ["${azurerm_network_interface.networkInterfaceElk.id}"]
