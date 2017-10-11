@@ -19,7 +19,7 @@ resource "azurerm_public_ip" "vmsspublicip" {
   }
 }
 resource "azurerm_lb" "applb" {
-  name                = "scaleset-lb"
+  name                = "scaleset-lb${random_id.app.hex}"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 
@@ -67,7 +67,7 @@ resource "azurerm_lb_nat_pool" "lbNat" {
   frontend_ip_configuration_name = "app${random_id.app.hex}"
 }
 resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
-  name                = "appvmss"
+  name                = "appvmss${random_id.app.hex}"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   upgrade_policy_mode = "Manual"
@@ -118,7 +118,7 @@ output "UserName" {
 output "Password" {
     value = "${var.password}"
 }
-output "appfqdn" {
+output "Vm_Scale_Set fqdn" {
     value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}"
 }
 
