@@ -118,6 +118,15 @@ output "UserName" {
 output "Password" {
     value = "${var.password}"
 }
-output "Vm_Scale_Setfqdn" {
+output "Vm_Scale_Set_fqdn" {
     value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}"
+}
+output "SSH_access_to_instace1" {
+    value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}:5000"
+}
+output "SSH_access_to_instace2" {
+    value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}:5001"
+}
+output "SSH_access_to_instace3" {
+    value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}:5002"
 }
