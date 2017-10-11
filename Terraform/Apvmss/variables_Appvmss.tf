@@ -34,10 +34,6 @@ variable "DynamicIP"{
 description =  "public_ip_address_allocation dynamic type"
 default = ""
 }
-variable "storageAccType"{
-description = "storage account type"
-default = "Standard_LRS"
-}
 variable "vmSize" {
 description = "virtual machine size"
 default = "Standard_DS1_v2"
