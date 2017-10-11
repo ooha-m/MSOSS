@@ -64,7 +64,7 @@ resource "azurerm_lb_nat_pool" "lbNat" {
   frontend_port_start            = 50000
   frontend_port_end              = 50119
   backend_port                   = 22
-  frontend_ip_configuration_name = "app${random_id.app.hex}"
+  frontend_ip_configuration_name = "ipconfig"
 }
 resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
   name                = "appvmss${random_id.app.hex}"
