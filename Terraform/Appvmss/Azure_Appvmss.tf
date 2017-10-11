@@ -64,7 +64,7 @@ resource "azurerm_lb_nat_pool" "lbNat" {
   frontend_port_start            = 50000
   frontend_port_end              = 50119
   backend_port                   = 22
-  frontend_ip_configuration_name = "app${random_id.app.hex}"
+  frontend_ip_configuration_name = "ipconfig"
 }
 resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
   name                = "appvmss${random_id.app.hex}"
@@ -101,7 +101,7 @@ resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
     primary = true
 
     ip_configuration {
-      name                                   = "ipconfig1"
+      name                                   = "ipconfig${random_id.app.hex}"
       subnet_id                              = "/subscriptions/${var.subscription_id}/resourceGroups/${var.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/${var.vnetName}/subnets/${var.subnetName}"
       load_balancer_backend_address_pool_ids = ["${azurerm_lb_backend_address_pool.backendpool.id}"]
       load_balancer_inbound_nat_rules_ids    = ["${element(azurerm_lb_nat_pool.lbNat.*.id, count.index)}"]
