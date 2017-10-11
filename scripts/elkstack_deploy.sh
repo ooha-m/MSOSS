@@ -5,6 +5,8 @@
 DATE=`date +%Y%m%d%T`
 LOG=/tmp/elkstack_deploy.log.$DATE
 HOSTIP=`hostname -i`
+storageAccount=$1
+
 
 # Configure Repos for Java, Elasticsearch, Kibana Packages
 echo "---Configure Repos for Java, Elasticsearch, Kibana Packages---"	>> $LOG
@@ -85,3 +87,8 @@ echo "---Load Filebeat Index Template in Elasticsearch---" >> $LOG
 cd ~ 
 curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/d8c479e2a1adcea8b1fe86570e42abab0f10f364/filebeat-index-template.json >> $LOG
 curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json >> $LOG
+cd /etc/pki/tls/certs/
+az login --service-principal -u $2 --password $3 --tenant $4 >> $LOG
+az storage container create --name kibanaclientkey --output table >> $LOG
+az storage blob upload --container-name kibanaclientkey -f logstash-forwarder.crt -n logstash-forwarder.crt > /dev/null
+
