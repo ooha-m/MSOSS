@@ -72,19 +72,12 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
     capacity = 5
   }
 
-  storage_profile_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-
   storage_profile_os_disk {
-    name = "osDiskProfile"
+    name           = "osDiskProfile"
     caching        = "ReadWrite"
-    os_type = "linux"
+    os_type        = "linux"
     create_option  = "FromImage"
-    image_uri 	  = "${var.imageUri}"
+    image_uri 	   = "${var.imageUri}"
     vhd_containers = ["${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}"]
   }
 
