@@ -42,7 +42,7 @@
       <doNotApply>false</doNotApply>
       <config>
         <value>file</value>
-        <fileConfig>/var/lib/jenkins/workspace/VMSSjob/Terraform/Apvmss</fileConfig>
+        <fileConfig>/var/lib/jenkins/workspace/VMSSjob/Terraform/Appvmss</fileConfig>
         <mode>FILE</mode>
       </config>
       <terraformInstallation>Terraform 0.9.11</terraformInstallation>
