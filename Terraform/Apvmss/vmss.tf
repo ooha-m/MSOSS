@@ -83,7 +83,7 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
     name = "osDiskProfile"
     caching        = "ReadWrite"
     create_option  = "FromImage"
-    vhd_containers = "${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}/osdisk1.vhd""
+    vhd_containers = "${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}/osdisk1.vhd"
   }
 
   os_profile {
