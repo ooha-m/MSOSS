@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "resourceGroup" {
 }
 resource "random_id" "uniqueString" {
   keepers = {
-    uniqueid = "mongodb"
+    uniqueid = "app"
   }
   byte_length = 6
 }
