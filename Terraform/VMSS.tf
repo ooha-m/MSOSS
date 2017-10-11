@@ -1,20 +1,20 @@
-resource "azurerm_resource_group" "rgvmss" {
-    name = "${var.ResourceGroup}"
-    location = "${var.Location}"
+resource "azurerm_resource_group" "resourceGroup" {
+  name     =  "${var.ResourceGroup}"
+  location = "${var.Location}"
 }
-resource "azurerm_virtual_network" "vmssvnet" {
-  name                = "scaleset-vnet"
-  address_space       =  ["${var.Vnet_AddressPrefix}"]
-  location            = "${var.Location}"
-  resource_group_name = "${azurerm_resource_group.rgvmss.name}"
-}
+#resource "azurerm_virtual_network" "vmssvnet" {
+#  name                = "scaleset-vnet"
+#  address_space       =  ["${var.Vnet_AddressPrefix}"]
+#  location            = "${var.Location}"
+#  resource_group_name = "${azurerm_resource_group.rgvmss.name}"
+#}
 
-resource "azurerm_subnet" "vmsssnet" {
-  name                 = "scaleset.snet"
-  resource_group_name  = "${azurerm_resource_group.rgvmss.name}"
-  virtual_network_name = "${azurerm_virtual_network.vmssvnet.name}"
-  address_prefix       =  "${var.Subnet2}"
-}
+#resource "azurerm_subnet" "vmsssnet" {
+#  name                 = "scaleset.snet"
+#  resource_group_name  = "${azurerm_resource_group.rgvmss.name}"
+#  virtual_network_name = "${azurerm_virtual_network.vmssvnet.name}"
+#  address_prefix       =  "${var.Subnet2}"
+#}
 resource "random_id" "dns" {
   keepers = {
     dnsid = "${var.DynamicDNS}"
@@ -24,7 +24,7 @@ resource "random_id" "dns" {
 resource "azurerm_public_ip" "vmsspublicip" {
   name                         = "scaleset-pip"
   location                     = "${var.Location}"
-  resource_group_name          = "${azurerm_resource_group.rgvmss.name}"
+  resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
   domain_name_label            = "saf${random_id.dns.hex}"
   tags {
@@ -35,7 +35,7 @@ resource "azurerm_public_ip" "vmsspublicip" {
 resource "azurerm_lb" "vmsslb" {
   name                = "scaleset-lb"
   location            = "${var.Location}"
-  resource_group_name = "${azurerm_resource_group.rgvmss.name}"
+  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 
   frontend_ip_configuration {
     name                 = "${var.frontEndip}"
@@ -44,14 +44,14 @@ resource "azurerm_lb" "vmsslb" {
 }
 
 resource "azurerm_lb_backend_address_pool" "backendpool" {
-  resource_group_name = "${azurerm_resource_group.rgvmss.name}"
+  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   loadbalancer_id     = "${azurerm_lb.vmsslb.id}"
   name                = "BackEndPool"
 }
 
 resource "azurerm_lb_nat_pool" "lbNat" {
 count                           = 4
-  resource_group_name            = "${azurerm_resource_group.rgvmss.name}"
+  resource_group_name            = "${azurerm_resource_group.resourceGroup.name}"
   name                           = "ssh"
   loadbalancer_id                = "${azurerm_lb.vmsslb.id}"
   protocol                       = "Tcp"
@@ -64,7 +64,7 @@ count                           = 4
 resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
   name                = "${var.scalesetVmname}"
   location            = "${var.Location}"
-  resource_group_name = "${azurerm_resource_group.rgvmss.name}"
+  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   upgrade_policy_mode = "Manual"
 
   sku {
