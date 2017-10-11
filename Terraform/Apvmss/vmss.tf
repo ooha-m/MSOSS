@@ -2,7 +2,6 @@ resource "azurerm_resource_group" "resourceGroup" {
   name     =  "${var.ResourceGroup}"
   location = "${var.Location}"
 }
-
 resource "random_id" "app" {
   keepers = {
     dnsid = "app"
@@ -10,7 +9,7 @@ resource "random_id" "app" {
   byte_length = 6
 }
 resource "azurerm_public_ip" "vmsspublicip" {
-  name                         = "scaleset-pip"
+  name                         = "appscaleset-pip"
   location                     = "${var.Location}"
   resource_group_name          = "${azurerm_resource_group.resourceGroup.name}"
   public_ip_address_allocation = "${var.DynamicIP}"
@@ -19,34 +18,53 @@ resource "azurerm_public_ip" "vmsspublicip" {
     environment = "staging"
   }
 }
-
-resource "azurerm_lb" "vmsslb" {
+resource "azurerm_lb" "applb" {
   name                = "scaleset-lb"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
 
   frontend_ip_configuration {
-    name                 = "${var.frontEndip}"
+    name                 = "app${random_id.app.hex}"
     public_ip_address_id = "${azurerm_public_ip.vmsspublicip.id}"
   }
 }
-
 resource "azurerm_lb_backend_address_pool" "backendpool" {
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
-  loadbalancer_id     = "${azurerm_lb.vmsslb.id}"
+  loadbalancer_id     = "${azurerm_lb.applb.id}"
   name                = "BackEndPool"
 }
-
+resource "azurerm_lb_probe" "probe" {
+  resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
+  loadbalancer_id     = "${azurerm_lb.applb.id}"
+  name                = "runningprobe"
+  port                = 8080
+   interval_in_seconds = 30
+number_of_probes    = 3
+}
+resource "azurerm_lb_rule" "rule1" {
+  resource_group_name            = "${azurerm_resource_group.resourceGroup.name}"
+  loadbalancer_id                = "${azurerm_lb.applb.id}"
+  name                           = "http-internal"
+  protocol                       = "Tcp"
+  frontend_port                  = 8080
+  backend_port                   = 8080
+  frontend_ip_configuration_name = "app${random_id.app.hex}"
+  enable_floating_ip             = false
+  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.backendpool.id}"
+ idle_timeout_in_minutes        = 5
+ probe_id                       = "${azurerm_lb_probe.probe.id}"
+  depends_on                     = ["azurerm_lb_probe.probe"]
+}
 resource "azurerm_lb_nat_pool" "lbNat" {
-  count                          = 4
+  count                          = 2
   resource_group_name            = "${azurerm_resource_group.resourceGroup.name}"
   name                           = "ssh"
-  loadbalancer_id                = "${azurerm_lb.vmsslb.id}"
+  loadbalancer_id                = "${azurerm_lb.applb.id}"
   protocol                       = "Tcp"
   frontend_port_start            = 50000
   frontend_port_end              = 50119
   backend_port                   = 22
-  frontend_ip_configuration_name = "${var.frontEndip}"
+  frontend_ip_configuration_name = "app${random_id.app.hex}"
 }
 resource "azurerm_storage_account" "storageAccount" {
   name                = "${var.sharedStorage}"
@@ -60,8 +78,8 @@ resource "azurerm_storage_container" "storageContainer" {
   storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
   container_access_type = "private"
 }
-resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
-  name                = "testvmss"
+resource "azurerm_virtual_machine_scale_set" "appscalesetvm" {
+  name                = "appvmss"
   location            = "${var.Location}"
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   upgrade_policy_mode = "Manual"
@@ -69,7 +87,7 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
   sku {
     name     = "${var.vmSize}"
     tier     = "Standard"
-    capacity = 5
+    capacity = 3
   }
 
   storage_profile_os_disk {
@@ -82,8 +100,8 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
 
   os_profile {
     computer_name_prefix = "vmss"
-    admin_username       = "adminuser"
-    admin_password       = "Passwword@1234"
+    admin_username = "${var.userName}"
+    admin_password = "${var.password}"
   }
 
   os_profile_linux_config {
@@ -106,3 +124,13 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
     environment = "staging"
   }
 }
+output "UserName" {
+    value = "${var.userName}"
+}
+output "Password" {
+    value = "${var.password}"
+}
+output "appfqdn" {
+    value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}"
+}
+
