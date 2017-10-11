@@ -30,7 +30,7 @@ sudo apt-get update
 
 #Installing Packages for ELK Stack
 echo "---Installing Packages for ELK Stack---"	>> $LOG
-sudo apt-get -y install oracle-java8-installer elasticsearch kibana nginx logstash unzip >> $LOG
+sudo apt-get -y install oracle-java8-installer elasticsearch kibana nginx logstash unzip apt-transport-https azure-cli >> $LOG
 
 #Configuring Elasticsearch
 echo "---Configuring Elasticsearch---" >> $LOG
