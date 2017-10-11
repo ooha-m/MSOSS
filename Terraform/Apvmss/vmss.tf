@@ -5,9 +5,9 @@ resource "azurerm_resource_group" "resourceGroup" {
 
 resource "random_id" "app" {
   keepers = {
-    dnsid = "${var.DynamicDNS}"
+    dnsid = "app"
   }
-  byte_length = 8
+  byte_length = 6
 }
 resource "azurerm_public_ip" "vmsspublicip" {
   name                         = "scaleset-pip"
