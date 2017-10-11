@@ -76,10 +76,10 @@ resource "azurerm_virtual_machine_scale_set" "vmscalesetvm" {
   }
 
   storage_profile_data_disk {
-      lun          = 0
+    name = "osDiskProfile"
     caching        = "ReadWrite"
-    create_option  = "Empty"
-    disk_size_gb   = 10
+    create_option  = "FromImage"
+    vhd_containers = "${azurerm_storage_account.storageAccount.primary_blob_endpoint}${azurerm_storage_container.storageContainer.name}/osdisk1.vhd"
   }
 
   os_profile {
