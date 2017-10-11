@@ -28,7 +28,7 @@ sudo apt-get -y install apt-transport-https azure-cli html-xml-utils xmlstarlet 
 echo "---Download the Required Jenkins Files---" >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/elk-config.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/MongoDBTerraformjob.xml >> $LOG
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/AppTerraformjob.xml >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/VMSSjob.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/MongoDBPackerjob.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/AppPackerjob.xml >> $LOG
 
