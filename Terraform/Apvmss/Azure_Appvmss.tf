@@ -121,4 +121,3 @@ output "Password" {
 output "Vm_Scale_Set fqdn" {
     value = "${azurerm_public_ip.vmsspublicip.domain_name_label}.${var.Location}.cloudapp.azure.com}"
 }
-
