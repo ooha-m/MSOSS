@@ -75,7 +75,7 @@ Elasticsearch is an open-source, broadly-distributable, readily-scalable, enterp
 ### The following logs are visualized in Kibana:
 
 | S.NO | Nodes            | Logs Path|
-| ---- |:-------------:   | --------:|
+| ---- |-------------     | -------- |
 | 1    | Application Node | /hab/svc/national-parks/logs/, /hab/pkgs/core/tomcat8/8.5.9/20170514144202/tc/logs/, /root/sup-national-parks.log|
 | 2    | mongoDB          | /hab/svc/mongodb/logs, /hab/svc/mongodb/var/mongod.log, /root/sup.mongodb.log|
 
@@ -289,6 +289,17 @@ You will receive the following output:_
 ## Environment Details:
 
 The ARM template will deploy the following resources on Azure:
+
+| S.NO | Nodes                | Installed application            | No of nodes          |Node Purpose                                                                                                       | Ports
+| ---- |-------------         | --------------------             | ------------         |-------------                                                                                                      | -----
+| 1    |Jenkins server        | Jekins                           | 1                    |Install and configure plugins and jobs                                                                             | 8080   
+| 2    |Build Instance        | Chef Habitat                     | 1                    |Creating habitat packages                                                                                          | 9631,9638
+| 3    |Application Node      | Web Application (National Parks) | 1                    |To run National Park application                                                                                   | 8080,9631,9638,27017
+| 4    |VM ScaleSets          | Mongo DB                         | 1                    |To run mongo DB                                                                                                    | 9631,9638,27017
+| 5    |ELK Stack             | Elasticsearch, Kibana, Filebeat  | 1                    |Elasticsearch:Contains Index data, Kibana:Segregate logs to visualize as graphs, Filebeat:Forwarding logs to Kibana| 80
+| 6    |Load Balancer         | -                                | 1                    |Directs traffic to Application Nodes                                                                                  |
+| 7    |Azure Storage Account | -                                | 1                    |To store the Packer VHD’s                                                                                             |
+
 
 ## Solution Workflow:
 
