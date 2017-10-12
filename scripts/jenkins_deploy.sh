@@ -28,7 +28,6 @@ sudo apt-get -y install apt-transport-https azure-cli html-xml-utils xmlstarlet 
 echo "---Download the Required Jenkins Files---" >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/elk-config.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/VMSSjob.xml >> $LOG
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/AppPackerjob.xml >> $LOG
 
 #Configuring Jenkins
 echo "---Configuring Jenkins---"
@@ -79,15 +78,7 @@ password = &quot;${14}&quot;
 imageUri = &quot;UpdateUrl&quot;" $srcdir/VMSSjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/VMSSjob.xml-newconfig.xml
 fi
 
-if [ ! -f "AppPackerjob.xml" ]
-then
-    xmlstarlet ed -u '//publishers/biz.neustar.jenkins.plugins.packer.PackerPublisher/params' -v "-var &apos;client_id=$2&apos; -var &apos;client_secret=$3&apos; -var &apos;resource_group=$5&apos; -var &apos;storage_account=${15}&apos; -var &apos;subscription_id=$1&apos; -var &apos;tenant_id=$4&apos; -var &apos;Hartfile=UpdateHartFile&apos;" $srcdir/AppPackerjob.xml | sed "s/amp;//g" > $srcdir/AppPackerjob-newconfig.xml
-
-fi
-	
-wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml
 wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/org.jenkinsci.plugins.terraform.TerraformBuildWrapper.xml
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd && sleep 30
 curl -X POST "http://$user:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
-curl -X POST "http://$user:$api@$url/createItem?name=AppPackerjob" --data-binary "@$srcdir/AppPackerjob-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/VMSSjob.xml-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
