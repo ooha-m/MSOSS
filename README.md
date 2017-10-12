@@ -76,12 +76,8 @@ Elasticsearch is an open-source, broadly-distributable, readily-scalable, enterp
 
 | S.NO | Nodes            | Logs Path|
 | ---- |-------------     | -------- |
-| 1    | Application Node | /hab/svc/national-parks/logs/,
- /hab/pkgs/core/tomcat8/8.5.9/20170514144202/tc/logs/,
-/root/sup-national-parks.log|
-| 2    | mongoDB          | /hab/svc/mongodb/logs,
- /hab/svc/mongodb/var/mongod.log,
-/root/sup.mongodb.log|
+| 1    | Application Node | /hab/svc/national-parks/logs/, /hab/pkgs/core/tomcat8/8.5.9/20170514144202/tc/logs/, /root/sup-national-parks.log|
+| 2    | mongoDB          | /hab/svc/mongodb/logs, /hab/svc/mongodb/var/mongod.log, /root/sup.mongodb.log|
 
 
 ## Jenkins:
