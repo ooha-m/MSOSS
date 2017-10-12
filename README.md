@@ -74,6 +74,16 @@ Elasticsearch is an open-source, broadly-distributable, readily-scalable, enterp
 
 ### The following logs are visualized in Kibana:
 
+| S.NO | Nodes            | Logs Path|
+| ---- |:-------------:   | --------:|
+| 1    | Application Node | /hab/svc/national-parks/logs/ 
+                            /hab/pkgs/core/tomcat8/8.5.9/20170514144202/tc/logs/
+                            /root/sup-national-parks.log|
+| 2    | mongoDB          | /hab/svc/mongodb/logs 
+                            /hab/svc/mongodb/var/mongod.log 
+                            /root/sup.mongodb.log|
+
+
 ## Jenkins:
 
 **Jenkins**  is an open-source, continuous integration software tool written in the Java programming language for testing and reporting on isolated changes in a larger code base in real time. This software enables developers to find and solve defects in a code base rapidly and automate testing of their builds. There are also hundreds of **plugins**  available to enhance its power and usability.
