@@ -184,7 +184,6 @@
             "kubernetesClusterName": "[parameters('kubernetesClusterName')]",
             "agentCount": "[parameters('agentCount')]",
             "agentVmSize": "[parameters('agentVmSize')]",
-            "kubernetesDnsPrefix": "[parameters('kubernetesDnsPrefix')]",
             "masterCount": "[parameters('masterCount')]",
             "masterVmSize": "[parameters('masterVmSize')]",
             "AzureUsername":"[parameters('AzureUsername')]",
