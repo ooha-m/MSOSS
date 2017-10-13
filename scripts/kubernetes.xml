@@ -22,8 +22,8 @@
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
           <credentialsId>LoginCredentials</credentialsId>
-          <usernameVariable></usernameVariable>
-          <passwordVariable></passwordVariable>
+          <usernameVariable>FTP_USER</usernameVariable>
+          <passwordVariable>FTP_PASSWORD</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
