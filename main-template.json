@@ -2,7 +2,7 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "adminUsername": {
+                "adminUsername": {
             "type": "string",
             "defaultValue": "adminuser",
             "metadata": {
@@ -64,6 +64,48 @@
             "metadata": {
                 "description": "Azure Tenant ID"
             }
+        },
+        "kubernetesClusterName":{
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Name of Kubernetes Cluster"
+            }
+        },
+        "agentCount":{
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Number of Agents"
+            }
+        },
+        "agentVmSize":{
+            "type": "string",
+            "defaultValue": "Standard_DS1_v2",
+            "metadata": {
+                "description": "Size of Agent VM"
+            }
+        },
+        "kubernetesDnsPrefix":{
+            "type": "string",
+            "defaultValue": "kub",
+            "metadata": {
+                "description": "Dns prefix for Kubernetes Cluster"
+            }
+        },
+        "masterCount":{
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Number of Agents"
+            }
+        },
+        "masterVmSize":{
+            "type": "string",
+            "defaultValue": "Standard_DS1_v2",
+            "metadata": {
+                "description": "Size of Master VM"
+            }
         }
     },
     "variables": {
@@ -122,6 +164,15 @@
             "buildInstanceVmSize": "[parameters('buildInstanceVmSize')]",
             "ubuntuSku": "16.04-LTS",
             "buildScriptUrl": "[concat(variables('baseUrl'),'scripts/build.sh')]"
+        },
+        "kubernetesSettings":{
+        "kubDnsLabelPrefix": "[concat(parameters('kubernetesDnsPrefix'),variables('suffix'))]",
+        "kubernetesClusterName":"[parameters('kubernetesClusterName')]",
+        "agentCount":"[parameters('agentCount')]",
+        "agentVmSize":"[parameters('agentVmSize')]",
+        "kubernetesDnsPrefix":"[parameters('kubernetesDnsPrefix')]",
+        "masterCount":"[parameters('masterCount')]",
+        "masterVmSize":"[parameters('masterVmSize')]"
         },
         "resourceGroupName": "[resourceGroup().name]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
@@ -250,6 +301,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "kubernetesSettings":{
+                        "value": "[variables('kubernetesSettings')]"
+                    },
                     "jenkinsSettings": {
                         "value": "[variables('jenkinsSettings')]"
                     },
