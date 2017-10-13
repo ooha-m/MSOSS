@@ -28,6 +28,7 @@ sudo apt-get -y install apt-transport-https azure-cli html-xml-utils xmlstarlet 
 echo "---Download the Required Jenkins Files---" >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/elk-config.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/VMSSjob.xml >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/kubernetes.xml >> $LOG
 
 #Configuring Jenkins
 echo "---Configuring Jenkins---"
@@ -77,8 +78,13 @@ userName = &quot;${13}&quot;
 password = &quot;${14}&quot;
 imageUri = &quot;UpdateUrl&quot;" $srcdir/VMSSjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/VMSSjob.xml-newconfig.xml
 fi
+if [ ! -f "kubernetes.xml" ]
+then
+    xmlstarlet ed -u '//builders/hudson.tasks.Shell/command' -v "az login -u UpdateUserName -p UpdatePassword
+az acs create --orchestrator-type kubernetes --name ${18} --resource-group $5 --admin-username ${13} --agent-count ${19} --agent-vm-size ${22} --dns-prefix ${17} --master-count ${21} --master-vm-size ${22} --generate-ssh-keys" $srcdir/kubernetes.xml | sed "s/&amp;quot;/\"/g" > $srcdir/kubernetes-newconfig.xml
 
 wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/org.jenkinsci.plugins.terraform.TerraformBuildWrapper.xml
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd && sleep 30
 curl -X POST "http://$user:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/VMSSjob.xml-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
+curl -X POST "http://$user:$api@$url/createItem?name=KubernetesClusterjob" --data-binary "@$srcdir/kubernetes-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
