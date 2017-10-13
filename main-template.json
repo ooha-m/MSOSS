@@ -88,7 +88,7 @@
         },
         "agentCount": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "3",
             "metadata": {
                 "description": "Number of Agents"
             }
@@ -109,7 +109,7 @@
         },
         "masterCount": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "1",
             "metadata": {
                 "description": "Number of Agents"
             }
