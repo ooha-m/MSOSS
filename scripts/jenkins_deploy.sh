@@ -50,8 +50,8 @@ path=$(pwd)
 cd $jenkinsdir
 if [ ! -f "credentialsconfig.xml" ]
 then
-    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/username' -v "${23}" $jenkinsdir/credentialsconfig.xml > credentials.xml
-    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/password' -v "${24}" $jenkinsdir/credentialsconfig.xml >> credentials.xml
+    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/username' -v "${23}" $jenkinsdir/credentialsconfig.xml | | sed "s/&amp;quot;/\"/g" > $jenkinsdir/credentials.xml
+    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/password' -v "${24}" $jenkinsdir/credentialsconfig.xml | | sed "s/&amp;quot;/\"/g" >> $jenkinsdir/credentials.xml
 fi
 cd $path
 
