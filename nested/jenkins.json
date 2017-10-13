@@ -5,6 +5,9 @@
         "jenkinsSettings": {
             "type": "object"
         },
+        "kubernetesSettings":{
+            "type":"object"
+        },
         "apiVersions": {
             "type": "object"
         },
@@ -201,6 +204,9 @@
                     },
                     "jenkinsSettings": {
                         "value": "[parameters('jenkinsSettings')]"
+                    },
+                    "kubernetesSettings":{
+                        "value": "[parameters('kubernetesSettings')]"
                     },
                     "resourceGroupName": {
                         "value": "[parameters('resourceGroupName')]"
