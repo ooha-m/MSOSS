@@ -29,6 +29,7 @@ echo "---Download the Required Jenkins Files---" >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/elk-config.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/VMSSjob.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/kubernetes.xml >> $LOG
+wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/credentialsconfig.xml >> $LOG
 
 #Configuring Jenkins
 echo "---Configuring Jenkins---"
@@ -44,6 +45,16 @@ curl -X POST -d '<jenkins><install plugin="terraform@current" /></jenkins>' --he
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd
 #creating jenkins user
 echo "jenkins.model.Jenkins.instance.securityRealm.createAccount("\'"jenkinsadmin"\'","\'"Password4321"\'")" | java -jar $srcdir/jenkins-cli.jar -auth admin:`cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080 groovy =
+#updating credentials to credentials file
+pwd
+cd $jenkinsdir
+if [ ! -f "credentialsconfig.xml" ]
+then
+    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/username' -v "${23}" $jenkinsdir/credentialsconfig.xml > credentials.xml
+    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/password' -v "${24}" $jenkinsdir/credentialsconfig.xml >> credentials.xml
+fi
+cd $scrdir
+
 if [ ! -f "elk-config.xml" ]
 then
     xmlstarlet ed -u '//buildWrappers/org.jenkinsci.plugins.terraform.TerraformBuildWrapper/variables' -v "subscription_id = &quot;$1&quot;
