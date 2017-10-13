@@ -12,7 +12,7 @@ addgroup hab
 sudo useradd -g hab hab
 usermod -aG sudo hab
 sleep 30
-curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh | sudo bash
+curl https://raw.githubusercontent.com/habitat-sh/habitat/staging/components/hab/install.sh | sudo bash
 mkdir /scripts
 echo "#!/bin/sh" >> /scripts/uploadhart.sh
 echo "HARTFILE=\$1" >> /scripts/uploadhart.sh
