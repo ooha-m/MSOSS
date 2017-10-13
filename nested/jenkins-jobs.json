@@ -5,6 +5,9 @@
         "jenkinsSettings": {
             "type": "object"
         },
+        "kubernetesSettings":{
+            "type":"object"
+        },
         "apiVersions": {
             "type": "object"
         },
