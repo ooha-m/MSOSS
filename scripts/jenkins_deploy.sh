@@ -29,7 +29,7 @@ echo "---Download the Required Jenkins Files---" >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/elk-config.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/VMSSjob.xml >> $LOG
 wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/kubernetes.xml >> $LOG
-wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/credentialsconfig.xml >> $LOG
+wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/credentialsconfig.xml >> $LOG
 
 #Configuring Jenkins
 echo "---Configuring Jenkins---"
@@ -46,14 +46,12 @@ sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username
 #creating jenkins user
 echo "jenkins.model.Jenkins.instance.securityRealm.createAccount("\'"jenkinsadmin"\'","\'"Password4321"\'")" | java -jar $srcdir/jenkins-cli.jar -auth admin:`cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080 groovy =
 #updating credentials to credentials file
-path=$(pwd)
-cd $jenkinsdir
+
 if [ ! -f "credentialsconfig.xml" ]
 then
-    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/username' -v "${23}" $jenkinsdir/credentialsconfig.xml | sed "s/&amp;quot;/\"/g" > $jenkinsdir/credentials.xml
-    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/password' -v "${24}" $jenkinsdir/credentialsconfig.xml | sed "s/&amp;quot;/\"/g" >> $jenkinsdir/credentials.xml
+    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/username' -v "${23}" $srcdir/credentialsconfig.xml | sed "s/&amp;quot;/\"/g" > $jenkinsdir/credentials.xml
+    xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl/password' -v "${24}" $srcdir/credentialsconfig.xml | sed "s/&amp;quot;/\"/g" >> $jenkinsdir/credentials.xml
 fi
-cd $path
 
 if [ ! -f "elk-config.xml" ]
 then
