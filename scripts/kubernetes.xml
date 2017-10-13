@@ -14,8 +14,6 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-az login -u UpdateUserName -p UpdatePassword
-az acs create --orchestrator-type kubernetes --name ${18} --resource-group $5 --admin-username ${13} --agent-count ${19} --agent-vm-size ${22} --dns-prefix ${17} --master-count ${21} --master-vm-size ${22} --generate-ssh-keys
 </command>
     </hudson.tasks.Shell>
   </builders>
