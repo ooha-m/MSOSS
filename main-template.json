@@ -2,11 +2,25 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-                "adminUsername": {
+        "adminUsername": {
             "type": "string",
             "defaultValue": "adminuser",
             "metadata": {
                 "description": "User name for the Virtual Machines."
+            }
+        },
+        "AzureUsername": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure login name"
+            }
+        },
+         "AzurePassword": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Azure login Password"
             }
         },
         "authenticationType": {
@@ -65,42 +79,42 @@
                 "description": "Azure Tenant ID"
             }
         },
-        "kubernetesClusterName":{
+        "kubernetesClusterName": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
                 "description": "Name of Kubernetes Cluster"
             }
         },
-        "agentCount":{
+        "agentCount": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
                 "description": "Number of Agents"
             }
         },
-        "agentVmSize":{
+        "agentVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS1_v2",
             "metadata": {
                 "description": "Size of Agent VM"
             }
         },
-        "kubernetesDnsPrefix":{
+        "kubernetesDnsPrefix": {
             "type": "string",
             "defaultValue": "kub",
             "metadata": {
                 "description": "Dns prefix for Kubernetes Cluster"
             }
         },
-        "masterCount":{
+        "masterCount": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
                 "description": "Number of Agents"
             }
         },
-        "masterVmSize":{
+        "masterVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS1_v2",
             "metadata": {
@@ -165,14 +179,16 @@
             "ubuntuSku": "16.04-LTS",
             "buildScriptUrl": "[concat(variables('baseUrl'),'scripts/build.sh')]"
         },
-        "kubernetesSettings":{
-        "kubDnsLabelPrefix": "[concat(parameters('kubernetesDnsPrefix'),variables('suffix'))]",
-        "kubernetesClusterName":"[parameters('kubernetesClusterName')]",
-        "agentCount":"[parameters('agentCount')]",
-        "agentVmSize":"[parameters('agentVmSize')]",
-        "kubernetesDnsPrefix":"[parameters('kubernetesDnsPrefix')]",
-        "masterCount":"[parameters('masterCount')]",
-        "masterVmSize":"[parameters('masterVmSize')]"
+        "kubernetesSettings": {
+            "kubDnsLabelPrefix": "[concat(parameters('kubernetesDnsPrefix'),variables('suffix'))]",
+            "kubernetesClusterName": "[parameters('kubernetesClusterName')]",
+            "agentCount": "[parameters('agentCount')]",
+            "agentVmSize": "[parameters('agentVmSize')]",
+            "kubernetesDnsPrefix": "[parameters('kubernetesDnsPrefix')]",
+            "masterCount": "[parameters('masterCount')]",
+            "masterVmSize": "[parameters('masterVmSize')]",
+            "AzureUsername":"[parameters('AzureUsername')]",
+            "AzurePassword":"[parameters('AzurePassword')]" 
         },
         "resourceGroupName": "[resourceGroup().name]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
@@ -301,7 +317,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "kubernetesSettings":{
+                    "kubernetesSettings": {
                         "value": "[variables('kubernetesSettings')]"
                     },
                     "jenkinsSettings": {
