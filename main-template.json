@@ -62,7 +62,7 @@
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "azure tenant id"
+                "description": "Azure tenant id"
             }
         }
     },
