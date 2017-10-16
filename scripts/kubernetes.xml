@@ -13,7 +13,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command></command>
+      <command> </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
@@ -24,6 +24,11 @@
           <credentialsId>LoginCredentials</credentialsId>
           <usernameVariable>FTP_USER</usernameVariable>
           <passwordVariable>FTP_PASSWORD</passwordVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+          <credentialsId>subscriptiondetails</credentialsId>
+          <usernameVariable>FTP_SUBID</usernameVariable>
+          <passwordVariable>FTP_SUBIDVALUE</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
