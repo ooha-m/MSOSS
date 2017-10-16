@@ -22,13 +22,13 @@
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
           <credentialsId>LoginCredentials</credentialsId>
-          <usernameVariable>FTP_USER</usernameVariable>
-          <passwordVariable>FTP_PASSWORD</passwordVariable>
+          <usernameVariable>AZ_USER</usernameVariable>
+          <passwordVariable>AZ_PASSWORD</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
           <credentialsId>subscriptiondetails</credentialsId>
-          <usernameVariable>FTP_SUBID</usernameVariable>
-          <passwordVariable>FTP_SUBIDVALUE</passwordVariable>
+          <usernameVariable>AZ_SUBIDUSER</usernameVariable>
+          <passwordVariable>AZ_SUBID</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
