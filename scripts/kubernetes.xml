@@ -27,8 +27,13 @@
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
           <credentialsId>subscriptiondetails</credentialsId>
-          <usernameVariable>AZ_SUBIDUSER</usernameVariable>
+          <usernameVariable>AZ_SUBIDNAME</usernameVariable>
           <passwordVariable>AZ_SUBID</passwordVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+          <credentialsId>sshKey</credentialsId>
+          <usernameVariable>AZ_KEYID</usernameVariable>
+          <passwordVariable>AZ_KEY</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
