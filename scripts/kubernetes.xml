@@ -13,7 +13,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command> </command>
+      <command></command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
@@ -30,11 +30,12 @@
           <usernameVariable>AZ_SUBIDNAME</usernameVariable>
           <passwordVariable>AZ_SUBID</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
-        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
-          <credentialsId>sshKey</credentialsId>
-          <usernameVariable>AZ_KEYID</usernameVariable>
-          <passwordVariable>AZ_KEY</passwordVariable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
+          <credentialsId>sshkeyid</credentialsId>
+          <keyFileVariable>SSH_KEY</keyFileVariable>
+          <usernameVariable>USERNAME</usernameVariable>
+          <passphraseVariable>PASSPHRASE</passphraseVariable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.SSHUserPrivateKeyBinding>
       </bindings>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
   </buildWrappers>
