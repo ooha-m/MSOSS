@@ -92,8 +92,9 @@ if [ ! -f "kubernetes.xml" ]
 then
     usrname="\$FTP_USER"
     paswd="\$FTP_PASSWORD"
+    subID="\$FTP_SUBIDVALUE"
     xmlstarlet ed -u '//builders/hudson.tasks.Shell/command' -v "az login -u $usrname -p $paswd
-az account set --subscription $1
+az account set --subscription $subID
 az acs create --orchestrator-type kubernetes --name ${18} --resource-group $5 --admin-username ${13} --agent-count ${19} --agent-vm-size ${22} --dns-prefix ${17} --master-count ${21} --master-vm-size ${22} --generate-ssh-keys" $srcdir/kubernetes.xml | sed "s/&amp;quot;/\"/g" > $srcdir/kubernetes-newconfig.xml
 fi
 
