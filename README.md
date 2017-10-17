@@ -11,7 +11,7 @@
 	- [Why Packer?](#why-packer)
 - [ELK Stack:](#elk-stack)
 	- [Elasticsearch](#elasticsearch)
-	- [Logstash — Routing Your Log Data](#logstash — routing-your-log-data)
+	- [Logstash — Routing Your Log Data](#logstash-—-routing-your-log-data)
 	- [Kibana — Visualizing Your Log Data](#)
 	- [Beats —  Lightweight Data Shippers](#)
 	- [The following logs are visualized in Kibana:](#)
