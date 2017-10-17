@@ -88,5 +88,5 @@ curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/
 curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json >> $LOG
 cd /etc/pki/tls/certs/
 az login --service-principal -u $1 --password $2 --tenant $3 >> $LOG
-#az storag#e container create --name kibanaclientkey --output table >> $LOG
+az storage container create --name kibanaclientkey --output table >> $LOG
 #az storag#e blob upload --container-name kibanaclientkey -f logstash-forwarder.crt -n logstash-forwarder.crt > /dev/null#
