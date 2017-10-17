@@ -5,7 +5,7 @@
 
 **Table of Contents**  
 
-* [Solution Architecture:](#Solution Architecture:)
+- [Solution Architecture:](#)
 - [Terraform:](#)
 - [Packer:](#)
 	- [Why Packer?](#)
@@ -47,7 +47,6 @@
 	- [Uploading HART file to the Storage account](#)
 
 Solution Architecture:
-======================
 
 ![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/1.png)
 
