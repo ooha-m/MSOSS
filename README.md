@@ -5,7 +5,7 @@
 
 **Table of Contents**  
 
-- [Solution Architecture:](#Solution Architecture:)
+- [Solution Architecture:](#)
 - [Terraform:](#)
 - [Packer:](#)
 	- [Why Packer?](#)
