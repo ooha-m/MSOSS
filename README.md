@@ -5,7 +5,6 @@
 
 **Table of Contents**  
 
-
 - [Solution Architecture:](#)
 - [Terraform:](#)
 - [Packer:](#)
