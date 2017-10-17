@@ -11,9 +11,9 @@
 	- [Why Packer?](#why-packer)
 - [ELK Stack:](#elk-stack)
 	- [Elasticsearch](#elasticsearch)
-	- [Logstash — Routing Your Log Data](#logstash-—-routing-your-log-data)
-	- [Kibana — Visualizing Your Log Data](#)
-	- [Beats —  Lightweight Data Shippers](#)
+	- [Logstash—Routing Your Log Data](#logstash—routing-your-log-data)
+	- [Kibana—Visualizing Your Log Data](#)
+	- [Beats—Lightweight Data Shippers](#)
 	- [The following logs are visualized in Kibana:](#)
 - [Jenkins:](#)
 	- [Plugins:](#)
@@ -94,15 +94,15 @@ Elasticsearch is an open-source, broadly-distributable, readily-scalable, enterp
 - **Full text search: ** Elasticsearch uses Lucene to provide the most powerful full-text search capabilities available in any open-source product. The search features come with multi-language support, an extensive query language, geolocation support, context-sensitive suggestions, and autocompletion.
 - **Document orientation:**  You can store complex, real-world entities in Elasticsearch as structured JSON documents. All fields have a default index, and you can use all the indices in a single query to get precise results in the blink of an eye.
 
-### Logstash — Routing Your Log Data
+### Logstash—Routing Your Log Data
 
 **Logstash** is a tool for log data intake, processing, and output. This includes virtually any type of log that you manage: system logs, webserver logs, error logs, and app logs.  You can save a lot of time by training Logstash to normalize the data, getting Elasticsearch to process the data, and then visualizing it with Kibana. With Logstash, it&#39;s easy to take all those logs and store them in a central location. The only prerequisite is a Java runtime, and it takes just two commands to get Logstash up and running. Logstash will serve as the workhorse for storage, querying, and analysis of your logs. Since it has an arsenal of ready-made inputs, filters, codecs, and outputs, you can grab hold of a very powerful feature-set with a very little effort on your part. Think of Logstash as a pipeline for event processing: it takes precious little time to choose the inputs, configure the filters, and extract the relevant, high-value data from your log.
 
-### Kibana — Visualizing Your Log Data
+### Kibana—Visualizing Your Log Data
 
 **Kibana ** is your log-data dashboard. Get a better grip on your large data stores with point-and-click pie charts, bar graphs, trendlines, maps, and scatter plots. You can visualize trends and patterns for data that would otherwise be extremely tedious to read and interpret. Eventually, each business line can make practical use of your data collection as you help them customize their dashboards. Save it, share it, and link your data visualizations for quick and smart communication.
 
-### Beats —  Lightweight Data Shippers
+### Beats—Lightweight Data Shippers
 
 **Beats** is the platform for single-purpose data shippers. They install as lightweight agents and send data from hundreds or thousands of machines to Logstash or Elasticsearch. ELK allows Filebeat, Packetbeat, Metricbeat and Winlogbeat to ship log data from client servers.
 
