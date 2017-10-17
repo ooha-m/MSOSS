@@ -5,8 +5,8 @@
 
 **Table of Contents**  
 
-- [Solution Architecture:] (# solution architecture:)
-- [Terraform:](#)
+- [Solution Architecture:](#solution architecture:)
+- [Terraform:](#terraform)
 - [Packer:](#)
 	- [Why Packer?](#)
 - [ELK Stack:](#)
