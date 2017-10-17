@@ -3,8 +3,10 @@
 
 # OSS Quickstart (Phase-1)
 
-**Table of Contents** 
+**Table of Contents**  
 
+- [Microsoft](#)
+- [OSS Quickstart (Phase-1)](#)
 	- [Solution Architecture:](#)
 	- [Terraform:](#)
 	- [Packer:](#)
