@@ -87,6 +87,7 @@ echo "---Load Filebeat Index Template in Elasticsearch---" >> $LOG
 curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/d8c479e2a1adcea8b1fe86570e42abab0f10f364/filebeat-index-template.json >> $LOG
 curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json >> $LOG
 cd /etc/pki/tls/certs/
-az login --service-principal -u $1 --password $2 --tenant $3 >> $LOG
+az login --service-principal -u $1 --password $2 --tenant $3 > /dev/null
+export AZURE_STORAGE_ACCOUNT=$4
 az storage container create --name kibanaclientkey --output table >> $LOG
-#az storag#e blob upload --container-name kibanaclientkey -f logstash-forwarder.crt -n logstash-forwarder.crt > /dev/null#
+az storage blob upload --container-name kibanaclientkey -f logstash-forwarder.crt -n logstash-forwarder.crt > /dev/null#
