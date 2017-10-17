@@ -44,7 +44,7 @@
 - [Chef Habitat:](#chef-habitat)
 	- [Configuring Habitat:](#configuring-habitat)
 	- [Creating Hart File:](#creating-hart-file)
-	- [Uploading HART file to the Storage account](#uploading-hart-file-to the Storage account)
+	- [Uploading HART file to the Storage account](#uploading-hart-file-to-the-storage-account)
 
 ## Solution Architecture:
 
