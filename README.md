@@ -46,7 +46,7 @@
 	- [Creating Hart File:](#)
 	- [Uploading HART file to the Storage account](#)
 
-Solution Architecture:
+## Solution Architecture:
 
 ![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/1.png)
 
