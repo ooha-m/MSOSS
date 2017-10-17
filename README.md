@@ -5,7 +5,7 @@
 
 **Table of Contents**  
 
-- [Microsoft](#)
+
 - [OSS Quickstart (Phase-1)](#)
 	- [Solution Architecture:](#)
 	- [Terraform:](#)
