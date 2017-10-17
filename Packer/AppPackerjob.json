@@ -42,8 +42,11 @@
       "echo '---Configure Repos for Azure Cli 2.0---'",
       "echo \"deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main\" | sudo tee /etc/apt/sources.list.d/azure-cli.list",
       "sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893",
+      "echo \"deb https://packages.elastic.co/beats/apt stable main" |  sudo tee -a /etc/apt/sources.list.d/beats.list",
+      "wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -",
       "apt-get update",
-      "sudo apt-get install openjdk-8-jdk apt-transport-https azure-cli -y",
+      "sudo apt-get install openjdk-8-jdk apt-transport-https azure-cli filebeat -y",
+      echo "deb https://packages.elastic.co/beats/apt stable main" |  sudo tee -a /etc/apt/sources.list.d/beats.list
       "addgroup hab",
       "sudo useradd -g hab hab",
       "usermod -aG sudo hab",
