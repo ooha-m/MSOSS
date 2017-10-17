@@ -60,6 +60,7 @@ subnetName = &quot;$9&quot;
 storageAccType = &quot;${10}&quot;
 vmSize = &quot;${11}&quot;
 vmName = &quot;${12}&quot;
+storage_account = &quot;${15}&quot;
 userName = &quot;${13}&quot;
 password = &quot;${14}&quot;" $srcdir/elk-config.xml | sed "s/&amp;quot;/\"/g" > $srcdir/elk-newconfig.xml
 fi
