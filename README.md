@@ -8,7 +8,7 @@
 - [Solution Architecture:](#solution-architecture)
 - [Terraform:](#terraform)
 - [Packer:](#packer)
-	- [Why Packer?](#)
+	- [Why Packer?](#why-packer)
 - [ELK Stack:](#)
 	- [Elasticsearch](#)
 	- [Logstash — Routing Your Log Data](#)
