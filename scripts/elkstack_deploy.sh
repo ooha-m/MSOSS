@@ -48,7 +48,7 @@ sudo systemctl start kibana >> $LOG
 
 #Configuring Nginx
 echo "---Configuring Nginx---" >> $LOG
-sudo -v >> $LOG
+sudo sudo -v >> $LOG
 echo "admin:`openssl passwd -apr1 'Password4321'`" | sudo tee -a /etc/nginx/htpasswd.users >> $LOG
 #cat /dev/null > /etc/nginx/sites-available/default >> $LOG
 #wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/default -O /etc/nginx/sites-available/default >> $LOG
@@ -92,6 +92,7 @@ curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/
 curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json >> $LOG
 cd /etc/pki/tls/certs/
 az login --service-principal -u $1 --password $2 --tenant $3 > /dev/null
+az account set --subscription $5
 export AZURE_STORAGE_ACCOUNT=$4
 az storage container create --name kibanaclientkey --output table >> $LOG
 az storage blob upload --container-name kibanaclientkey -f logstash-forwarder.crt -n logstash-forwarder.crt > /dev/null#
