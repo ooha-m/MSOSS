@@ -320,6 +320,9 @@
                     "networkSettings": {
                         "value": "[variables('networkSettings')]"
                     },
+                    "AzureSubscriptionId": {
+                        "value": "[parameters('AzureSubscriptionId')]"
+                    },
                     "AzureApplicationId": {
                         "value": "[parameters('AzureApplicationId')]"
                     },
