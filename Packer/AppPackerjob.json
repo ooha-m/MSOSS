@@ -64,7 +64,7 @@
       "echo cp -vrf '$DIR'\/*.pub /hab/cache/keys >> /scripts/downloadhart.sh",
       "sudo wget -O /scripts/run_national-parks.sh https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/run_national-parks.sh",
       "echo \"#!/bin/sh\" >> /scripts/filebeat.sh",
-      "echo \"sudo mkdir -p /etc/pki/tls/certs\" >> /scripts/filebeat.sh",,
+      "echo \"sudo mkdir -p /etc/pki/tls/certs\" >> /scripts/filebeat.sh",
       "echo \"cd /etc/filebeat\" >> /scripts/filebeat.sh",
       "echo \"rm filebeat.yml\" >> /scripts/filebeat.sh",
       "echo \"wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/filebeat.yml\" >> /scripts/filebeat.sh",
