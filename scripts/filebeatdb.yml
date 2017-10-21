@@ -13,7 +13,7 @@ filebeat:
       # Make sure not file is defined twice as this can lead to unexpected behaviour.
       paths:
 #        - /var/log/*.log
-	 - /hab/svc/mongodb/logs/*.log
+         - /hab/svc/mongodb/logs/*.log
 
        #- c:\programdata\elasticsearch\logs\*
 
