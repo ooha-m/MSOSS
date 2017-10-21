@@ -49,7 +49,7 @@
       "echo \"sudo mkdir -p /etc/pki/tls/certs\" >> /scripts/filebeat.sh",
       "echo \"cd /etc/filebeat\" >> /scripts/filebeat.sh",
       "echo \"rm filebeat.yml\" >> /scripts/filebeat.sh",
-      "echo \"wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/filebeatconfig.yml\" >> /scripts/filebeat.sh",
+      "echo \"wget https://raw.githubusercontent.com/sysgain/MSOSS/staging/scripts/filebeatdb.yml\" >> /scripts/filebeat.sh",
       "echo \"storageAccount=\"{{user `storage_account`}}\"\" >> /scripts/filebeat.sh",
       "echo \"export AZURE_STORAGE_ACCOUNT=\"{{user `storage_account`}}\"\" >> /scripts/filebeat.sh",
       "echo \"az login --service-principal -u \"{{user `client_id`}}\" --password \"{{user `client_secret`}}\" --tenant \"{{user `tenant_id`}}\" > /dev/null\" >> /scripts/filebeat.sh",
