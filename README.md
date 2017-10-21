@@ -667,7 +667,7 @@ Click **Apply** and **Save.**
 
 ![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/68.png)
 
-15. Use the FQDN of ELKJob output from the Jenkins to log into Kibana DashBoard and credentials from output section of ARM template from Azure portal.
+15. Use the **FQDN** of **ELKJob** output from the Jenkins to log into **Kibana DashBoard** and credentials from output section of ARM template from Azure portal.
 
 16. After log into Kibana Dashboard, Click on **&quot;filebeat&quot;** from left side menu and Click on star icon.
 
