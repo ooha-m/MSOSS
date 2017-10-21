@@ -21,4 +21,5 @@ echo "export AZURE_STORAGE_ACCOUNT='$storageAcc'" >> /scripts/uploadhart.sh
 echo "az login --service-principal -u '$appID' --password '$password' --tenant '$tenantID' > /dev/null" >> /scripts/uploadhart.sh
 echo "az storage container create --name apphart --output table > /dev/null" >> /scripts/uploadhart.sh
 echo "az storage blob upload --container-name apphart -f \$HARTFILE -n \$HARTFILE > /dev/null" >> /scripts/uploadhart.sh
+echo "apt install docker.io" >> /scripts/uploadhart.sh
 chmod +x /scripts/uploadhart.sh
