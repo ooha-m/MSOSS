@@ -669,7 +669,22 @@ Click **Apply** and **Save.**
 
 15. Use the **FQDN** of **ELKJob** output from the Jenkins to log into **Kibana DashBoard** and credentials from output section of ARM template from Azure portal.
 
+![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/69.PNG)
+
 16. After log into Kibana Dashboard, Click on **&quot;filebeat&quot;** from left side menu and Click on star icon.
+
+![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/70.PNG)
+
+![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/71.PNG)
 
 17. Click on **&quot;Discover&quot;** from top menu to view the vmss and mongoDB logs.
 
+![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/72.PNG)
+
+![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/73.PNG)
+
+18. By default last 15 min logs will be displayed, you can change it as per log search and also you can set auto refresh time as shown below.
+
+![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/74.PNG)
+
+![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/75.PNG)
