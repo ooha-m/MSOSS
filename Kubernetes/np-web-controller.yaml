@@ -14,7 +14,7 @@ spec:
         name: web
     spec:
       containers:
-      - image: kbhimanavarjula/national-parks:latest
+      - image: ossacr.azurecr.io/national-parks:latest
         name: web
         args:
           - "--peer"
