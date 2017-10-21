@@ -8,7 +8,7 @@ echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy ma
 sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
 sudo apt-get update
 sudo apt-get install apt-transport-https azure-cli openjdk-8-jdk -y
-sudo apt install docker.io
+sudo apt install docker.io -y
 addgroup hab
 sudo useradd -g hab hab
 usermod -aG sudo hab
