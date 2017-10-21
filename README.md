@@ -666,3 +666,10 @@ Click **Apply** and **Save.**
 14. In a new browser tab, paste **&lt;Application\_URL &gt;:8080/national-parks**.
 
 ![alt text](https://github.com/sysgain/MSOSS/raw/staging/images/68.png)
+
+15. Use the FQDN of ELKJob output from the Jenkins to log into Kibana DashBoard and credentials from output section of ARM template from Azure portal.
+
+16. After log into Kibana Dashboard, Click on **&quot;filebeat&quot;** from left side menu and Click on star icon.
+
+17. Click on **&quot;Discover&quot;** from top menu to view the vmss and mongoDB logs.
+
