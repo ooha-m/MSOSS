@@ -6,7 +6,7 @@ metadata:
   name: mongodb-pod
 spec:
   containers:
-  - image: kbhimanavarjula/mongodb:latest
+  - image: ossacr.azurecr.io/mongodb:latest
     name: mongodb-pod
     env:
     - name: HAB_MONGODB
