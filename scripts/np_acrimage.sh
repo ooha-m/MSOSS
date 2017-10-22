@@ -5,7 +5,7 @@ ACR=ossacr
 Uname=ossAcr
 Password=$1  # Input password of ACR
 
-SRC_DIR="/root/MSOSS/national-parks-plan/results"
+SRC_DIR="/root/MSOSS/national-parks-plan-kubernetes/results"
 FILEEXT="hart"
 HART=`ls -tr1d "${SRC_DIR}/"*.${FILEEXT} 2>/dev/null | tail -1`
 
