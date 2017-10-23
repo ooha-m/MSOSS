@@ -85,7 +85,7 @@ then
     xmlstarlet ed -u '//builders/hudson.tasks.Shell/command' -v "az login -u $usrname -p $paswd
 az account set --subscription $subID
 az acs create --orchestrator-type kubernetes --name ${18} --resource-group $5 --admin-username ${13} --agent-count ${19} --agent-vm-size ${22} --dns-prefix ${17} --master-count ${21} --master-vm-size ${22} --ssh-key-value &quot;$sshKey&quot;
-az acr create --resource-group $5 --name ossAcr --sku Basic --admin-enabled true" $srcdir/kubernetes.xml | sed "s/&amp;quot;/\"/g" > $srcdir/kubernetes-newconfig.xml
+az acr create --resource-group $5 --name ${26} --sku Basic --admin-enabled true" $srcdir/kubernetes.xml | sed "s/&amp;quot;/\"/g" > $srcdir/kubernetes-newconfig.xml
 fi
 
 wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/org.jenkinsci.plugins.terraform.TerraformBuildWrapper.xml
