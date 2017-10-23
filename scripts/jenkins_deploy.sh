@@ -73,19 +73,7 @@ fi
 
 if [ ! -f "VMSSjob.xml" ]
 then
-    xmlstarlet ed -u '//buildWrappers/org.jenkinsci.plugins.terraform.TerraformBuildWrapper/variables' -v "subscription_id = &quot;$1&quot;
-client_id = &quot;$2&quot;
-client_secret = &quot;$3&quot;
-tenant_id = &quot;$4&quot;
-ResourceGroup = &quot;$5&quot;
-Location = &quot;$6&quot;
-vnetName = &quot;$7&quot;
-DynamicIP = &quot;$8&quot;
-subnetName = &quot;${20}&quot;
-vmSize = &quot;${11}&quot;
-userName = &quot;${13}&quot;
-password = &quot;${14}&quot;
-imageUri = &quot;UpdateUrl&quot;" $srcdir/VMSSjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/VMSSjob.xml-newconfig.xml
+    xmlstarlet ed -u '//builders/com.microsoft.jenkins.kubernetes.KubernetesDeploy/context/ssh/sshServer' -v "${17}mgmt.westus.cloudapp.azure.com" -u '//builders/com.microsoft.jenkins.kubernetes.KubernetesDeploy/context/dockerCredentials/org.jenkinsci.plugins.docker.commons.credentials.DockerRegistryEndpoint/url' -v "http://${26}.azurecr.io" $srcdir/VMSSjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/VMSSjob.xml-newconfig.xml
 fi
 
 if [ ! -f "kubernetes.xml" ]
