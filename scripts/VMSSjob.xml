@@ -4,12 +4,11 @@
   <description>VM Scale sets job</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.6.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <url>https://github.com/sysgain/MSOSS.git</url>
-        <credentialsId></credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -27,25 +26,35 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
+  <builders>
+    <com.microsoft.jenkins.kubernetes.KubernetesDeploy plugin="kubernetes-cd@0.1.3">
+      <context>
+        <credentialsType>SSH</credentialsType>
+        <ssh>
+          <sshServer></sshServer>
+          <sshCredentialsId>adminuserID</sshCredentialsId>
+        </ssh>
+        <kubeConfig>
+          <path></path>
+        </kubeConfig>
+        <textCredentials>
+          <serverUrl>https://</serverUrl>
+          <certificateAuthorityData></certificateAuthorityData>
+          <clientCertificateData></clientCertificateData>
+          <clientKeyData></clientKeyData>
+        </textCredentials>
+        <configs>**/*.yaml</configs>
+        <enableConfigSubstitution>true</enableConfigSubstitution>
+        <secretName></secretName>
+        <dockerCredentials>
+          <org.jenkinsci.plugins.docker.commons.credentials.DockerRegistryEndpoint plugin="docker-commons@1.9">
+            <url></url>
+            <credentialsId>ossacrID</credentialsId>
+          </org.jenkinsci.plugins.docker.commons.credentials.DockerRegistryEndpoint>
+        </dockerCredentials>
+      </context>
+    </com.microsoft.jenkins.kubernetes.KubernetesDeploy>
+  </builders>
   <publishers/>
-  <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
-      <deleteDirs>false</deleteDirs>
-      <cleanupParameter></cleanupParameter>
-      <externalDelete></externalDelete>
-    </hudson.plugins.ws__cleanup.PreBuildCleanup>
-    <org.jenkinsci.plugins.terraform.TerraformBuildWrapper plugin="terraform@1.0.9">
-      <variables> </variables>
-      <doDestroy>false</doDestroy>
-      <doGetUpdate>true</doGetUpdate>
-      <doNotApply>false</doNotApply>
-      <config>
-        <value>file</value>
-        <fileConfig>/var/lib/jenkins/workspace/VMSSjob/Terraform/Appvmss</fileConfig>
-        <mode>FILE</mode>
-      </config>
-      <terraformInstallation>Terraform 0.9.11</terraformInstallation>
-    </org.jenkinsci.plugins.terraform.TerraformBuildWrapper>
-  </buildWrappers>
+  <buildWrappers/>
 </project>
