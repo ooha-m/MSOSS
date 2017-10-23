@@ -120,6 +120,13 @@
             "metadata": {
                 "description": "Size of Master VM"
             }
+        },
+        "containerRegistry": {
+            "type": "string",
+            "defaultValue": "ossAcr",
+            "metadata": {
+                "description": "Name of container registry"
+            }
         }
     },
     "variables": {
@@ -187,7 +194,8 @@
             "masterCount": "[parameters('masterCount')]",
             "masterVmSize": "[parameters('masterVmSize')]",
             "AzureUsername":"[parameters('AzureUsername')]",
-            "AzurePassword":"[parameters('AzurePassword')]" 
+            "AzurePassword":"[parameters('AzurePassword')]",
+            "containerRegistry":"[concat(parameters('containerRegistry'),variables('suffix'))]"
         },
         "resourceGroupName": "[resourceGroup().name]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
