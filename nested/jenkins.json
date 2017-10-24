@@ -66,9 +66,10 @@
     },
     "resources": [
         {
+            "comments": "This storage account is used to store the Boot diagnostic reports of Jenkins server",
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[parameters('jenkinsSettings').jenkinsDiagnosticsStorageAccountName]",
-            "apiVersion": "[parameters('apiVersions').storageApiVersion]",
+            "apiVersion": "2016-01-01",
             "location": "[parameters('jenkinsSettings').location]",
             "sku": {
                 "name": "Standard_LRS"
@@ -77,9 +78,10 @@
             "properties": {}
         },
         {
+            "comments": "This public ip is used for Jenkins server",
             "name": "[parameters('jenkinsSettings').jenkinsPipName]",
             "type": "Microsoft.Network/publicIpAddresses",
-            "apiVersion": "[parameters('apiVersions').networkApiVersion]",
+            "apiVersion": "2016-09-01",
             "location": "[parameters('jenkinsSettings').location]",
             "properties": {
                 "publicIpAllocationMethod": "[parameters('jenkinsSettings').publicIpAddressType]",
@@ -89,9 +91,10 @@
             }
         },
         {
+            "comments": "This network interface is used for jenkins server.",
             "name": "[parameters('jenkinsSettings').jenkinsNicName]",
             "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "[parameters('apiVersions').networkApiVersion]",
+            "apiVersion": "2016-09-01",
             "location": "[parameters('jenkinsSettings').location]",
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIpAddresses/', parameters('jenkinsSettings').jenkinsPipName)]"
@@ -115,9 +118,10 @@
             }
         },
         {
+            "comments": "This is the virtual machine resource of jenkins server.",
             "name": "[parameters('jenkinsSettings').jenkinsVmName]",
             "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "[parameters('apiVersions').computeApiVersion]",
+            "apiVersion": "2016-04-30-preview",
             "location": "[parameters('jenkinsSettings').location]",
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('jenkinsSettings').jenkinsDiagnosticsStorageAccountName)]",
@@ -136,7 +140,7 @@
                         "version": "latest"
                     },
                     "osDisk": {
-                        "createOption": "fromImage",
+                        "createOption": "FromImage",
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS"
                         }
@@ -159,9 +163,10 @@
             }
         },
         {
+            "comments": "This custom script extension is used to install jenkins.",
             "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/Init')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "[parameters('apiVersions').computeApiVersion]",
+            "apiVersion": "2016-04-30-preview",
             "location": "[parameters('jenkinsSettings').location]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]"
@@ -182,9 +187,10 @@
             }
         },
         {
+            "comments": "This is the deployment of jenkins related nested resources",
             "type": "Microsoft.Resources/deployments",
             "name": "Extension",
-            "apiVersion": "[parameters('deploymentApiVersion')]",
+            "apiVersion": "2016-02-01",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName)]",
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('jenkinsSettings').jenkinsVmName,'/extensions/Init')]"

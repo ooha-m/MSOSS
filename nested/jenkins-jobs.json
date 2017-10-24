@@ -38,9 +38,10 @@
     },
     "resources": [
         {
+            "comments": "This custom script extension is used to create jobs in jenkins.", 
             "name": "[concat(parameters('jenkinsSettings').jenkinsVmName, '/Init')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "[parameters('apiVersions').computeApiVersion]",
+            "apiVersion": "2016-04-30-preview",
             "location": "[parameters('jenkinsSettings').location]",
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
