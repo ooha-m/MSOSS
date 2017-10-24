@@ -93,6 +93,7 @@ resource "azurerm_storage_account" "storageAccount" {
 }
 resource "azurerm_storage_container" "storageContainer" {
   name                  = "container1"
+  depends_on            = ["azurerm_storage_account.storageAccount"]
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
   storage_account_name  = "${azurerm_storage_account.storageAccount.name}"
   container_access_type = "private"
@@ -100,6 +101,7 @@ resource "azurerm_storage_container" "storageContainer" {
 resource "azurerm_network_interface" "networkInterfaceElk" {
   name                = "NetworkinterfaceELK"
   location            = "${var.Location}"
+  depends_on            = ["azurerm_network_security_group.Nsg"]
   resource_group_name = "${azurerm_resource_group.resourceGroup.name}"
   network_security_group_id = "${azurerm_network_security_group.Nsg.id}"
   ip_configuration {
@@ -112,6 +114,8 @@ resource "azurerm_network_interface" "networkInterfaceElk" {
 resource "azurerm_virtual_machine" "mastervm" {
   name                  = "ELK_KibanaVM${random_id.uniqueString.hex}"
   location              = "${var.Location}"
+  depends_on            = ["azurerm_network_interface.networkInterfaceElk"]
+  depends_on            = ["azurerm_storage_account.storageAccount"]
   resource_group_name   = "${azurerm_resource_group.resourceGroup.name}"
    network_interface_ids = ["${azurerm_network_interface.networkInterfaceElk.id}"]
   vm_size               = "${var.vmSize}"
