@@ -34,7 +34,7 @@
       <context>
 	          <credentialsType>SSH</credentialsType>
         <ssh>
-          <sshServer>kubcsfvsmgmt.westus.cloudapp.azure.com</sshServer>
+          <sshServer></sshServer>
           <sshCredentialsId>adminuserID</sshCredentialsId>
         </ssh>
         <kubeConfig>
