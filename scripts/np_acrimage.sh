@@ -18,8 +18,8 @@ then
 else
         hab pkg export docker $HART >> /scripts/np-dockerimage.log
         DIMAGE=`docker images | grep -E 'root/national-parks.*latest' | awk -e '{print $3}'`
-        docker tag $DIMAGE $ACR.azurecr.io/national-parks:latest
-        docker login https://$ACR.azurecr.io --username $Uname --password $Password
-        docker push $ACR.azurecr.io/national-parks:latest
+        docker tag $DIMAGE $ACR/national-parks:latest
+        docker login https://$ACR --username $Uname --password $Password
+        docker push $ACR/national-parks:latest
 
 fi
