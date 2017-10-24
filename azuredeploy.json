@@ -9,16 +9,16 @@
                 "description": "User name for the Virtual Machines."
             }
         },
-        "AzureUsername": {
+        "azureUsername": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "azureuser",
             "metadata": {
                 "description": "Azure login name"
             }
         },
-         "AzurePassword": {
+        "azurePassword": {
             "type": "securestring",
-            "defaultValue": "",
+            "defaultValue": "Password@1234",
             "metadata": {
                 "description": "Azure login Password"
             }
@@ -29,6 +29,13 @@
             "allowedValues": [
                 "sshPublicKey"
             ]
+        },
+        "password": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "password for elk,vmss and mongodbterraform virtual machines"
+            }
         },
         "sshPublicKey": {
             "type": "string",
@@ -51,37 +58,23 @@
                 "description": "vm size"
             }
         },
-        "AzureSubscriptionId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Azure Subscription ID"
-            }
-        },
-        "AzureApplicationId": {
+        "azureApplicationId": {
             "type": "securestring",
             "defaultValue": "",
             "metadata": {
                 "description": "AD Application ID"
             }
         },
-        "AzureClientSecret": {
+        "azureClientSecret": {
             "type": "securestring",
             "defaultValue": "",
             "metadata": {
                 "description": "AD ClientSecret"
             }
         },
-        "AzureTenantId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Azure Tenant ID"
-            }
-        },
         "kubernetesClusterName": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "ku",
             "metadata": {
                 "description": "Name of Kubernetes Cluster"
             }
@@ -100,32 +93,25 @@
                 "description": "Size of Agent VM"
             }
         },
-        "kubernetesDnsPrefix": {
-            "type": "string",
-            "defaultValue": "kub",
-            "metadata": {
-                "description": "Dns prefix for Kubernetes Cluster"
-            }
-        },
         "masterCount": {
             "type": "string",
             "defaultValue": "1",
             "metadata": {
-                "description": "Number of Agents"
+                "description": "number of agents"
             }
         },
         "masterVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS1_v2",
             "metadata": {
-                "description": "Size of Master VM"
+                "description": "size of master vM"
             }
         },
-        "containerRegistry": {
+        "_artifactsLocation": {
             "type": "string",
-            "defaultValue": "ossacr",
+            "defaultValue": "https://raw.githubusercontent.com/sysgain/MSOSS/quickstart-p2",
             "metadata": {
-                "description": "Name of container registry"
+                "description": "artifacts Url"
             }
         }
     },
@@ -159,6 +145,7 @@
             "jenkinsVmPrivateIP": "10.0.0.5",
             "jenkinsVmName": "jenkinsserver",
             "adminUsername": "[parameters('adminUsername')]",
+            "password": "[parameters('password')]",
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "jenkinsVmSize": "[parameters('jenkinsVmSize')]",
@@ -167,8 +154,8 @@
             "installJenkinsScriptName": "install_jenkins.sh",
             "jenkinsReleaseType": "LTS",
             "baseUrl": "[variables('baseUrl')]",
-            "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'scripts/install_jenkins.sh')]",
-            "installJenkinsjobsScriptUrl": "[concat(variables('baseUrl'),'scripts/jenkins_deploy.sh')]"
+            "installJenkinsScriptUrl": "[concat(variables('baseUrl'),'/scripts/install_jenkins.sh')]",
+            "installJenkinsjobsScriptUrl": "[concat(variables('baseUrl'),'/scripts/jenkins_deploy.sh')]"
         },
         "buildInstanceSettings": {
             "location": "[variables('location')]",
@@ -184,26 +171,30 @@
             "sshPublicKey": "[parameters('sshPublicKey')]",
             "buildInstanceVmSize": "[parameters('buildInstanceVmSize')]",
             "ubuntuSku": "16.04-LTS",
-            "buildScriptUrl": "[concat(variables('baseUrl'),'scripts/build.sh')]"
+            "buildScriptUrl": "[concat(variables('baseUrl'),'/scripts/build.sh')]"
         },
         "kubernetesSettings": {
-            "kubDnsLabelPrefix": "[concat(parameters('kubernetesDnsPrefix'),variables('suffix'))]",
+            "kubDnsLabelPrefix": "[concat(variables('kubernetesDnsPrefix'),variables('suffix'))]",
             "kubernetesClusterName": "[parameters('kubernetesClusterName')]",
             "agentCount": "[parameters('agentCount')]",
             "agentVmSize": "[parameters('agentVmSize')]",
             "masterCount": "[parameters('masterCount')]",
             "masterVmSize": "[parameters('masterVmSize')]",
-            "AzureUsername":"[parameters('AzureUsername')]",
-            "AzurePassword":"[parameters('AzurePassword')]",
-            "containerRegistry":"[concat(parameters('containerRegistry'),variables('suffix'))]"
+            "AzureUsername": "[parameters('AzureUsername')]",
+            "AzurePassword": "[parameters('AzurePassword')]",
+            "containerRegistry": "[concat(variables('containerRegistry'),variables('suffix'))]"
         },
         "resourceGroupName": "[resourceGroup().name]",
+        "kubernetesDnsPrefix": "kub",
+        "containerRegistry": "osscr",
+        "azureSubscriptionId": "[subscription().subscriptionId]",
+        "azureTenantId": "[subscription().tenantId]",
         "packerStorageAccountName": "[concat('packerstrg',variables('suffix'))]",
         "publicIpAddressType": "Dynamic",
         "location": "[resourceGroup().location]",
         "deploymentApiVersion": "2016-02-01",
         "suffix": "[substring(uniqueString(resourceGroup().id), 0, 5)]",
-        "baseUrl": "https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/"
+        "baseUrl": "[parameters('_artifactsLocation')]"
     },
     "resources": [
         {
@@ -320,7 +311,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('baseUrl'),'nested/jenkins.json')]",
+                    "uri": "[concat(variables('baseUrl'),'/nested/jenkins.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -346,7 +337,7 @@
                         "value": "[variables('resourceGroupName')]"
                     },
                     "AzureSubscriptionId": {
-                        "value": "[parameters('AzureSubscriptionId')]"
+                        "value": "[variables('AzureSubscriptionId')]"
                     },
                     "AzureApplicationId": {
                         "value": "[parameters('AzureApplicationId')]"
@@ -355,7 +346,7 @@
                         "value": "[parameters('AzureClientSecret')]"
                     },
                     "AzureTenantId": {
-                        "value": "[parameters('AzureTenantId')]"
+                        "value": "[variables('AzureTenantId')]"
                     },
                     "deploymentApiVersion": {
                         "value": "[variables('deploymentApiVersion')]"
@@ -376,7 +367,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('baseUrl'),'nested/build-instance.json')]",
+                    "uri": "[concat(variables('baseUrl'),'/nested/build-instance.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -396,7 +387,7 @@
                         "value": "[parameters('AzureClientSecret')]"
                     },
                     "AzureTenantId": {
-                        "value": "[parameters('AzureTenantId')]"
+                        "value": "[variables('AzureTenantId')]"
                     },
                     "packerStorageAccName": {
                         "value": "[variables('packerStorageAccountName')]"

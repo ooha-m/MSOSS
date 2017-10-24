@@ -1,0 +1,51 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "value": "adminuser"
+        },
+        "azureUsername": {
+            "value": "azureuser"
+        },
+        "azurePassword": {
+            "value": "GEN-PASSWORD"
+        },
+        "authenticationType": {
+            "value": "sshPublicKey"
+        },
+        "sshPublicKey": {
+            "value": "GEN-SSH-PUB-KEY"
+        },
+        "jenkinsVmSize": {
+            "value": "Standard_DS2_v2"
+        },
+        "buildInstanceVmSize": {
+            "value": "Standard_DS1_v2"
+        },
+        "azureApplicationId": {
+            "value": "GEN-UNIQUE"
+        },
+        "azureClientSecret": {
+            "value": "GEN-UNIQUE"
+        },
+        "kubernetesClusterName": {
+            "value": "ku"
+        },
+        "agentCount": {
+            "value": "3"
+        },
+        "agentVmSize": {
+            "value": "Standard_DS1_v2"
+        },
+        "masterCount": {
+            "value": "1"
+        },
+        "masterVmSize": {
+            "value": "Standard_DS1_v2"
+        },
+        "_artifactsLocation": {
+            "value": "https://raw.githubusercontent.com/sysgain/MSOSS/kubstage"
+        }
+    }
+}

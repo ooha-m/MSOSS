@@ -26,10 +26,10 @@ sudo apt-get -y install apt-transport-https azure-cli html-xml-utils xmlstarlet 
 
 #Download the Required Jenkins Files
 echo "---Download the Required Jenkins Files---" >> $LOG
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/elk-config.xml >> $LOG
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/VMSSjob.xml >> $LOG
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/kubernetes.xml >> $LOG
-wget -P $srcdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/credentialsconfig.xml >> $LOG
+wget -P $srcdir ${27}/scripts/elk-config.xml >> $LOG
+wget -P $srcdir ${27}/scripts/VMSSjob.xml >> $LOG
+wget -P $srcdir ${27}/scripts/kubernetes.xml >> $LOG
+wget -P $srcdir ${27}/scripts/credentialsconfig.xml >> $LOG
 
 #Configuring Jenkins
 echo "---Configuring Jenkins---"
@@ -68,7 +68,8 @@ storageAccType = &quot;${10}&quot;
 vmSize = &quot;${11}&quot;
 vmName = &quot;${12}&quot;
 userName = &quot;${13}&quot;
-password = &quot;${14}&quot;" $srcdir/elk-config.xml | sed "s/&amp;quot;/\"/g" > $srcdir/elk-newconfig.xml
+password = &quot;${14}&quot;
+_artifactsLocation = &quot;${27}&quot;" $srcdir/elk-config.xml | sed "s/&amp;quot;/\"/g" > $srcdir/elk-newconfig.xml
 fi
 
 if [ ! -f "VMSSjob.xml" ]
@@ -94,7 +95,7 @@ az acs create --orchestrator-type kubernetes --name ${18} --resource-group $5 --
 az acr create --resource-group $5 --name ${26} --sku Basic --admin-enabled true" $srcdir/kubernetes.xml | sed "s/&amp;quot;/\"/g" > $srcdir/kubernetes-newconfig.xml
 fi
 
-wget -P $jenkinsdir https://raw.githubusercontent.com/sysgain/MSOSS/kubstage/scripts/org.jenkinsci.plugins.terraform.TerraformBuildWrapper.xml
+wget -P $jenkinsdir ${27}/scripts/org.jenkinsci.plugins.terraform.TerraformBuildWrapper.xml
 sleep 30 && java -jar $srcdir/jenkins-cli.jar -s  http://$url restart --username $user --password $passwd && sleep 30
 curl -X POST "http://$user:$api@$url/createItem?name=ELKJob" --data-binary "@$srcdir/elk-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
 curl -X POST "http://$user:$api@$url/createItem?name=VMSSJob" --data-binary "@$srcdir/VMSSjob.xml-newconfig.xml" -H "$CRUMB" -H "Content-Type: text/xml"
