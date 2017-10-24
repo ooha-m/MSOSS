@@ -1,9 +1,9 @@
 #!/bin/bash
 exec 2>&1
 
-ACR=ossacr
-Uname=ossAcr
-Password=$1  # Input password of ACR
+ACR=$1.azurecr.io
+Uname=$1
+Password=$2  # Input password of ACR
 
 SRC_DIR="/root/MSOSS/national-parks-plan-kubernetes/results"
 FILEEXT="hart"
