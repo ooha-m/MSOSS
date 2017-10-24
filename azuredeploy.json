@@ -11,14 +11,14 @@
         },
         "azureUsername": {
             "type": "string",
-            "defaultValue": "azureuser",
+            "defaultValue": "",
             "metadata": {
                 "description": "Azure login name"
             }
         },
         "azurePassword": {
             "type": "securestring",
-            "defaultValue": "Password@1234",
+            "defaultValue": "",
             "metadata": {
                 "description": "Azure login Password"
             }
@@ -32,7 +32,7 @@
         },
         "password": {
             "type": "securestring",
-            "defaultValue": "",
+            "defaultValue": "Password@1234",
             "metadata": {
                 "description": "password for elk,vmss and mongodbterraform virtual machines"
             }
