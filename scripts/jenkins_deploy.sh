@@ -73,7 +73,13 @@ fi
 
 if [ ! -f "VMSSjob.xml" ]
 then
-    xmlstarlet ed -u '//builders/com.microsoft.jenkins.kubernetes.KubernetesDeploy/context/ssh/sshServer' -v "${17}mgmt.westus.cloudapp.azure.com" -u '//builders/com.microsoft.jenkins.kubernetes.KubernetesDeploy/context/dockerCredentials/org.jenkinsci.plugins.docker.commons.credentials.DockerRegistryEndpoint/url' -v "http://${26}.azurecr.io" $srcdir/VMSSjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/VMSSjob.xml-newconfig.xml
+    xmlstarlet ed -u '//builders/hudson.tasks.Shell/command' -v "cd /var/lib/jenkins/workspace/VMSSJob/Kubernetes
+cp np-mongo-controller.yaml /var/lib/jenkins/np-mongo-controllernew
+cat /var/lib/jenkins/np-mongo-controllernew | sed &quot;s:ossacr.azurecr.io/mongodb:${17}.azurecr.io/mongodb:g&quot; &gt; np-mongo-controller.yaml
+cp np-web-controller.yaml /var/lib/jenkins/np-web-controllernew
+cat /var/lib/jenkins/np-web-controllernew | sed &quot;s:ossacr.azurecr.io/national-parks:${17}.azurecr.io/national-parks:g&quot; &gt; np-web-controller.yaml
+rm /var/lib/jenkins/np-mongo-controllernew
+rm /var/lib/jenkins/np-web-controllernew" -u '//builders/com.microsoft.jenkins.kubernetes.KubernetesDeploy/context/ssh/sshServer' -v "${17}mgmt.westus.cloudapp.azure.com" -u '//builders/com.microsoft.jenkins.kubernetes.KubernetesDeploy/context/dockerCredentials/org.jenkinsci.plugins.docker.commons.credentials.DockerRegistryEndpoint/url' -v "http://${26}.azurecr.io" $srcdir/VMSSjob.xml | sed "s/&amp;quot;/\"/g" > $srcdir/VMSSjob.xml-newconfig.xml
 fi
 
 if [ ! -f "kubernetes.xml" ]
