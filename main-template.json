@@ -37,13 +37,6 @@
                 "description": "generate SSH public key"
             }
         },
-        "sshPrivateKey": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "SSH private key for kubernetes plugin"
-            }
-        },
         "jenkinsVmSize": {
             "type": "string",
             "defaultValue": "Standard_DS2_v2",
@@ -168,7 +161,6 @@
             "adminUsername": "[parameters('adminUsername')]",
             "authenticationType": "[parameters('authenticationType')]",
             "sshPublicKey": "[parameters('sshPublicKey')]",
-            "sshPrivateKey":"[parameters('sshPrivateKey')]",
             "jenkinsVmSize": "[parameters('jenkinsVmSize')]",
             "ubuntuSku": "16.04-LTS",
             "storageAccountType": "Standard_LRS",
