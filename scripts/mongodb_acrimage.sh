@@ -1,9 +1,10 @@
 #!/bin/bash
 exec 2>&1
 
-ACR=ossacr
-Uname=ossAcr
-Password=$1
+ACR=$1.azurecr.io
+Uname=$1
+Password=$2  # Input password of ACR
+
 DIRECTORY="/scripts/MongoDBHart"
 
 if [ -d "$DIRECTORY" ] > /dev/null
