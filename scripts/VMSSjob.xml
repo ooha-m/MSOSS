@@ -4,7 +4,7 @@
   <description>VM Scale sets job</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.6.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.6.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -27,6 +27,11 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
+    <hudson.tasks.Shell>
+      <command>cp /var/lib/jenkins/credentials.xml /var/lib/jenkins/credentialsnew.xml
+xmlstarlet ed -u '//domainCredentialsMap/entry/java.util.concurrent.CopyOnWriteArrayList/com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey[id="adminuserID"]/privateKeySource/privateKey' -v "`cat /var/lib/jenkins/.ssh/id_rsa`" /var/lib/jenkins/credentialsnew.xml > /var/lib/jenkins/credentials.xml
+rm /var/lib/jenkins/credentialsnew.xml</command>
+    </hudson.tasks.Shell>
     <com.microsoft.jenkins.kubernetes.KubernetesDeploy plugin="kubernetes-cd@0.1.3">
       <context>
         <credentialsType>SSH</credentialsType>
