@@ -17,8 +17,8 @@ else
         cp -vrf /scripts/MongoDBHart/root-20171009044452.pub /hab/cache/keys
         hab pkg export docker /scripts/MongoDBHart/root-mongodb-3.2.9-20171009054024-x86_64-linux.hart >> /scripts/mongodb-dockerimage.log
         DIMAGE=`docker images | grep -E 'root/mongo.*latest' | awk -e '{print $3}'`
-        docker tag $DIMAGE $ACR.azurecr.io/mongodb:latest
-        docker login https://$ACR.azurecr.io --username $Uname --password $Password
-        docker push $ACR.azurecr.io/mongodb:latest
+        docker tag $DIMAGE $ACR/mongodb:latest
+        docker login https://$ACR --username $Uname --password $Password
+        docker push $ACR/mongodb:latest
 
 fi
